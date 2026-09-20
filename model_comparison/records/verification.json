@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-20",
+  "unit_tests": {
+    "passed": 17,
+    "scope": "synthetic file-contract tests; no CAD/simulation/model experiment"
+  },
+  "cli_checks": [
+    {
+      "command": [
+        "python3",
+        "model_comparison/tools/experiment.py",
+        "verify-inputs"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "output": "Input snapshot verified: 31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d\n"
+    },
+    {
+      "command": [
+        "python3",
+        "model_comparison/tools/experiment.py",
+        "validate",
+        "model_comparison/submissions/pilot/model_A/01"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "output": "{\n  \"submission_path\": \"/home/camus/Downloads/gpt_/model_comparison/submissions/pilot/model_A/01\",\n  \"intake_status\": \"INVALID\",\n  \"errors\": [\n    \"Attempt not completed: NOT_STARTED\",\n    \"Missing metadata: model_provider\",\n    \"Missing metadata: model_exact_version\",\n    \"Missing metadata: invocation_mode\",\n    \"Missing metadata: session_id\",\n    \"Invalid metadata: actual_elapsed_s\",\n    \"Invalid metadata: human_edit_minutes\",\n    \"Invalid feedback_rounds\",\n    \"Raw logs required\",\n    \"Explain unknown cost/token/seed fields\"\n  ],\n  \"engineering_evaluation\": \"NOT_RUN\",\n  \"quality_score\": null,\n  \"scope\": \"file contract and declarations only; no geometry, dynamics or authenticity validation\",\n  \"evidence_sha256\": {\n    \"submission.json\": \"6d217f033d6c6ed98431c352a8f5f1fc95e79d3f940bf7d5f9780ce1c3054f0a\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "model_comparison/tools/experiment.py",
+        "freeze",
+        "--out",
+        "model_comparison/records/not_created_freeze.json"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "output": "Fill model configuration before freeze: model_A/provider\n"
+    }
+  ],
+  "planned_attempts": 18,
+  "actual_model_runs": 0,
+  "quality_scores_populated": 0,
+  "public_input_files": 13,
+  "source_snapshot_updated_after_repository_cleanup": true
+}

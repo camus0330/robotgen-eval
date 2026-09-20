@@ -1,0 +1,661 @@
+{
+  "method": "Every recorded frame uses triangle-mesh FCL candidates, followed by OpenCascade BREP intersection volume. Ground uses transformed vertices of delivered mesh geometry.",
+  "length_unit": "mm",
+  "volume_tolerance_mm3": 0.001,
+  "ground_penetration_tolerance_mm": 0.5,
+  "declared_contact_gap_tolerance_mm": null,
+  "input_kind": "actual_simulation_qpos",
+  "simulation_trace": "output/simulation_runs/supported_palm_walk_final_cad/trace.json",
+  "trace_contract": {
+    "joint_order": [
+      "left_shoulder_pitch",
+      "left_elbow_pitch",
+      "right_shoulder_pitch",
+      "right_elbow_pitch",
+      "left_hip_pitch",
+      "left_knee_pitch",
+      "right_hip_pitch",
+      "right_knee_pitch"
+    ],
+    "root_input_unit": "m",
+    "joint_input_unit": "rad",
+    "root_quaternion_order": "wxyz",
+    "world_frame": "+X forward, +Y left, +Z up",
+    "fields_used": [
+      "t",
+      "root",
+      "root_quat_wxyz",
+      "q"
+    ],
+    "sample_intervals_s": [
+      0.04
+    ]
+  },
+  "geometry_contract": [
+    {
+      "name": "left_arm",
+      "origin_mm": [
+        20,
+        56,
+        0
+      ],
+      "lengths_mm": [
+        60,
+        76
+      ],
+      "limits_deg": [
+        [
+          -135,
+          -2
+        ],
+        [
+          5,
+          125
+        ]
+      ],
+      "q2_sign": 1,
+      "side": 1
+    },
+    {
+      "name": "right_arm",
+      "origin_mm": [
+        20,
+        -56,
+        0
+      ],
+      "lengths_mm": [
+        60,
+        76
+      ],
+      "limits_deg": [
+        [
+          -135,
+          -2
+        ],
+        [
+          5,
+          125
+        ]
+      ],
+      "q2_sign": 1,
+      "side": -1
+    },
+    {
+      "name": "left_leg",
+      "origin_mm": [
+        -20,
+        52,
+        -33
+      ],
+      "lengths_mm": [
+        55,
+        52
+      ],
+      "limits_deg": [
+        [
+          5,
+          85
+        ],
+        [
+          -125,
+          -5
+        ]
+      ],
+      "q2_sign": -1,
+      "side": 1
+    },
+    {
+      "name": "right_leg",
+      "origin_mm": [
+        -20,
+        -52,
+        -33
+      ],
+      "lengths_mm": [
+        55,
+        52
+      ],
+      "limits_deg": [
+        [
+          5,
+          85
+        ],
+        [
+          -125,
+          -5
+        ]
+      ],
+      "q2_sign": -1,
+      "side": -1
+    }
+  ],
+  "mesh_object_count": 33,
+  "cad_contains_added_fasteners": false,
+  "frame_count": 289,
+  "exhaustive_exact": true,
+  "motion_directories": [],
+  "excluded_pairs": [
+    {
+      "pair": [
+        "left_arm_motor_0_case",
+        "left_arm_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_arm_motor_1_case",
+        "left_arm_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_leg_motor_0_case",
+        "left_leg_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_leg_motor_1_case",
+        "left_leg_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_arm_motor_0_case",
+        "right_arm_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_arm_motor_1_case",
+        "right_arm_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_leg_motor_0_case",
+        "right_leg_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_leg_motor_1_case",
+        "right_leg_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    }
+  ],
+  "pair_checks": [
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P03_forearm_hand",
+        "left_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P03_forearm_hand",
+        "right_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P05_shin_foot",
+        "left_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P05_shin_foot",
+        "right_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "supported_palm_walk_final_cad",
+        "frame": 0,
+        "stage": "actual_simulation",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "supported_palm_walk_final_cad",
+          "frame": 0,
+          "stage": "actual_simulation",
+          "intersection_mm3": 0.0
+        }
+      ]
+    }
+  ],
+  "ground": {
+    "supported_palm_walk_final_cad": {
+      "min_mesh_z_mm": -0.1986649338809059,
+      "minimum_at": {
+        "frame": 237,
+        "part": "left_leg_P07_foot_pad",
+        "stage": "actual_simulation"
+      },
+      "min_nonpad_mesh_z_mm": 1.7512138037148546,
+      "nonpad_minimum_at": {
+        "frame": 238,
+        "part": "right_leg_P05_shin_foot",
+        "stage": "actual_simulation"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": -0.16452828768527183,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": -0.16665951010136837,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": -0.1986649338809059,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": -0.1947729000284184,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        }
+      },
+      "frame_count": 289
+    }
+  },
+  "positive_interference_pairs": [],
+  "self_collision_passed": true,
+  "ground_within_tolerance": true,
+  "passed": true,
+  "limitations": [
+    "No continuous collision detection between recorded frames.",
+    "Added screws, nuts and cables are represented by assembly instructions/mass allowance, not solid geometry in this scan.",
+    "A sampled BREP follow-up is diagnostic only unless exhaustive_exact is true."
+  ]
+}

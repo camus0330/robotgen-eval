@@ -1,0 +1,49 @@
+{
+  "scope": "read-only source audit; not proof of engineering adapter readiness",
+  "files": [
+    {
+      "path": "scripts/benchmark/prepare_rebuild.py",
+      "sha256": "a354b4d02d7a2db7ccfa61c7a283a9dac5ceeff2adf7677a9bdd144c1c5550ed"
+    },
+    {
+      "path": "scripts/benchmark/run_rebuild.py",
+      "sha256": "c5c99e530ee8758d2161b4e08312fe0c51826bdd511d0a959ed3ed37b9a33b49"
+    },
+    {
+      "path": "scripts/benchmark/digital_geometry.py",
+      "sha256": "46566836f69df80a8797449c9e91b9f9cca2d8ce6a9f8477fa6c97f53297a244"
+    },
+    {
+      "path": "scripts/benchmark/evaluate_digital.py",
+      "sha256": "0842cc1ef2e53e4975ab1fbbe8fac42ed94feb59d119ece3992ffef90840b359"
+    },
+    {
+      "path": "scripts/benchmark/evaluate.py",
+      "sha256": "aa361fd35f9523d8821d8c8e4de3189adb93d5e8fc835d0baf701cf55e605cad"
+    },
+    {
+      "path": "scripts/benchmark/simulate_cases.py",
+      "sha256": "66c5410651e1c31e08add72bc4ced62386e0e3c24705b9354578ab650b1cea4d"
+    },
+    {
+      "path": "scripts/benchmark/compare.py",
+      "sha256": "36d7be9d1eb5320838ec821302c4b551fa0758ba01d9d12e54218699499a9ebc"
+    },
+    {
+      "path": "configs/benchmark/profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+    },
+    {
+      "path": "configs/benchmark/digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+    },
+    {
+      "path": "configs/benchmark/digital_metrics.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+    },
+    {
+      "path": "scripts/benchmark/run_digital.py",
+      "sha256": "0111d42bf77b9b5b796c5de48446dc94bd1b365a87f7b583523f154bed1fce26"
+    }
+  ]
+}

@@ -1,8 +1,0 @@
-cadquery==2.7.0
-numpy==2.2.6
-scipy==1.15.3
-trimesh==5.1.0
-python-fcl==0.7.0.11
-mujoco==3.13.0
-matplotlib==3.10.9
-Pillow==12.3.0

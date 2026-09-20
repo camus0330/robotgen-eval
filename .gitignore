@@ -8,6 +8,10 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Generated evaluation/build artifacts
 **/output/
@@ -15,11 +19,23 @@ __pycache__/
 **/results/
 **/runs/
 *.log
+build/
+dist/
+*.egg-info/
+
+# Large generated CAD, simulation and media files
+*.stl
+*.glb
+*.npz
+*.mp4
+*.zip
+__cadgen__/
 
 # Local secrets and editor/OS files
 .env
 .env.*
 !.env.example
+model_comparison/submissions/**/api_config.json
 *.pem
 *.key
 .DS_Store
