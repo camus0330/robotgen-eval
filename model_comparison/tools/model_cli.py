@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -22,8 +23,18 @@ def load_config(path):
     def reject_constant(value):
         raise ValueError(f"non-finite JSON value is not allowed: {value}")
 
+    def parse_finite_float(value):
+        number = float(value)
+        if not math.isfinite(number):
+            raise ValueError("non-finite JSON number is not allowed")
+        return number
+
     try:
-        config = json.loads(path.read_text(encoding="utf-8"), parse_constant=reject_constant)
+        config = json.loads(
+            path.read_text(encoding="utf-8"),
+            parse_constant=reject_constant,
+            parse_float=parse_finite_float,
+        )
     except UnicodeDecodeError as error:
         raise ValueError("config must be valid UTF-8") from error
     except json.JSONDecodeError as error:
