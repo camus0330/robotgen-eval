@@ -1,0 +1,22 @@
+{
+  "submission_id": "formal_model_B_03",
+  "model_slot": "model_B",
+  "phase": "formal",
+  "attempt": 3,
+  "status": "NOT_STARTED",
+  "model_provider": null,
+  "model_exact_version": null,
+  "invocation_mode": null,
+  "session_id": null,
+  "generation_seed": null,
+  "input_manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+  "prompt_sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2",
+  "actual_elapsed_s": null,
+  "feedback_rounds": null,
+  "human_edit_minutes": null,
+  "human_edits": [],
+  "actual_cost": null,
+  "usage_tokens": null,
+  "unknown_fields_reason": null,
+  "logs": []
+}

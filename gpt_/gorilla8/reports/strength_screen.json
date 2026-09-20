@@ -1,0 +1,138 @@
+{
+  "method": "Euler-Bernoulli idealized sections; NOT FEA or material certification",
+  "torque_nm": 0.1,
+  "stress_concentration_assumption": 2,
+  "transient_multiplier_assumption": 3,
+  "PETG_effective_E_assumed_MPa": 1000,
+  "PETG_allowable_assumed_MPa": 8,
+  "requires_full_infill_at_sections": true,
+  "sections": [
+    {
+      "section": "upper side spine",
+      "I_mm4": 364.5,
+      "nominal_bending_MPa": 1.2345679012345678,
+      "screening_stress_MPa": 7.4074074074074066,
+      "assumed_allowable_MPa": 8.0,
+      "screening_margin": 1.08,
+      "nominal_end_deflection_mm": 0.3429355281207133
+    },
+    {
+      "section": "fork slotted rails, both cheeks",
+      "I_mm4": 1309.5,
+      "nominal_bending_MPa": 0.5345551737304315,
+      "screening_stress_MPa": 3.207331042382589,
+      "assumed_allowable_MPa": 8.0,
+      "screening_margin": 2.494285714285714,
+      "nominal_end_deflection_mm": 0.05513554791905308
+    },
+    {
+      "section": "lower hollow stem",
+      "I_mm4": 2990.4166666666665,
+      "nominal_bending_MPa": 0.2340810923784311,
+      "screening_stress_MPa": 1.4044865542705867,
+      "assumed_allowable_MPa": 8.0,
+      "screening_margin": 5.696031746031745,
+      "nominal_end_deflection_mm": 0.02675212484324927
+    }
+  ],
+  "OEM_thread_pullout_validated": false,
+  "layer_adhesion_validated": false,
+  "horn_screw_nominal_shear_N": 4.166666666666667,
+  "printed_horn_edge_ligament_mm": 0.85,
+  "flat_palm": {
+    "mass_kg": 0.5605794217046942,
+    "load_case": "two palms equally share gravity; load at sole extremity",
+    "rear_plate_mm": [
+      34.0,
+      2.0
+    ],
+    "toe_plate_mm": [
+      34.0,
+      3
+    ],
+    "two_ribs_each_mm": [
+      4.0,
+      6.0
+    ],
+    "heel_centroid_z_mm": -7.344827586206897,
+    "sections": [
+      {
+        "section": "ribbed heel",
+        "I_mm4": 616.8735632183908,
+        "section_modulus_mm3": 115.41505376344085,
+        "load_per_palm_N": 2.749642063461525,
+        "lever_mm": 45.0,
+        "nominal_bending_MPa": 1.0720775914498848,
+        "screening_stress_MPa": 6.432465548699309,
+        "screening_margin": 1.2436910760629971,
+        "nominal_end_deflection_mm": 0.13539302485568705,
+        "point_load_limit_for_assumed_screen_N": 3.419705296694544,
+        "entire_weight_on_one_palm_screen_MPa": 12.864931097398618,
+        "entire_weight_on_one_palm_screen_passed": false
+      },
+      {
+        "section": "toe beyond rib end",
+        "I_mm4": 76.5,
+        "section_modulus_mm3": 51.0,
+        "load_per_palm_N": 2.749642063461525,
+        "lever_mm": 9.0,
+        "nominal_bending_MPa": 0.48523095237556324,
+        "screening_stress_MPa": 2.911385714253379,
+        "screening_margin": 2.74783240188138,
+        "nominal_end_deflection_mm": 0.008734157142760138,
+        "point_load_limit_for_assumed_screen_N": 7.555555555555555,
+        "entire_weight_on_one_palm_screen_MPa": 5.822771428506758,
+        "entire_weight_on_one_palm_screen_passed": true
+      }
+    ],
+    "adhesive_strength_validated": false,
+    "single_palm_edge_load_covered": false,
+    "note": "Not proof of transient, layer, rib-root, bolt-bearing or adhesive strength."
+  },
+  "torso_bridges": [
+    {
+      "section": "shoulder rectangular bridge",
+      "I_mm4": 2929.3333333333335,
+      "section_modulus_mm3": 450.6666666666667,
+      "span_mm": 27.0,
+      "reference_force_N": 2.749642063461525,
+      "reference_case": "half body gravity on one limb",
+      "nominal_bending_MPa": 0.16473447273697006,
+      "screening_stress_MPa": 0.9884068364218203,
+      "screening_margin": 8.093833131467594,
+      "point_load_limit_for_assumed_screen_N": 22.255144032921812,
+      "nominal_end_deflection_mm": 0.006158534903859035,
+      "scope": "Vertical-load bending only; not bridge torsion, joint-local bearing or dynamic certification."
+    },
+    {
+      "section": "shoulder at inner-fork relief",
+      "I_mm4": 2563.1666666666665,
+      "section_modulus_mm3": 394.3333333333333,
+      "span_mm": 21.0,
+      "reference_force_N": 2.749642063461525,
+      "reference_case": "half body gravity on one limb",
+      "nominal_bending_MPa": 0.1464306424328623,
+      "screening_stress_MPa": 0.8785838545971737,
+      "screening_margin": 9.105562272901043,
+      "point_load_limit_for_assumed_screen_N": 25.037037037037035,
+      "nominal_end_deflection_mm": 0.0033115852980970394,
+      "scope": "Vertical-load bending only; not bridge torsion, joint-local bearing or dynamic certification."
+    },
+    {
+      "section": "hip bridge",
+      "I_mm4": 158.88533333333336,
+      "section_modulus_mm3": 51.253333333333345,
+      "span_mm": 21.0,
+      "reference_force_N": 2.749642063461525,
+      "reference_case": "half body gravity on one limb",
+      "nominal_bending_MPa": 1.1266093262101722,
+      "screening_stress_MPa": 6.759655957261032,
+      "screening_margin": 1.1834921851912634,
+      "point_load_limit_for_assumed_screen_N": 3.2541798941798947,
+      "nominal_end_deflection_mm": 0.05342308740415977,
+      "scope": "Vertical-load bending only; not bridge torsion, joint-local bearing or dynamic certification."
+    }
+  ],
+  "actual_contact_load_audit": "See reports/strength_actual_loads.json, generated separately by src/audit_strength.py from both final simulation results.",
+  "scope": "Arithmetic screen only. Exact curves, print anisotropy, screws and OEM plastic threads need tests."
+}

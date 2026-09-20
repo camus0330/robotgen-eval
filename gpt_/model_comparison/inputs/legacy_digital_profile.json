@@ -1,0 +1,25 @@
+{
+  "benchmark_version": "gorilla-digital-bench/0.2",
+  "profile_id": "gorilla8-digital-screen-v0.2",
+  "purpose": "Physical-prototype-free preliminary screening; not manufacturing or hardware certification",
+  "frozen_date": "2026-09-20",
+  "threshold_source": "pilot project choices; retained v0.1 motion/export/torque thresholds",
+  "print_bed_mm": [220, 220, 250],
+  "minimum_limit_margin_deg": 1.0,
+  "reproduction_tolerances": {
+    "mass_kg": 1e-8,
+    "relative_part_volume": 0.001,
+    "root_peak_error_difference_mm": 0.1,
+    "joint_peak_error_difference_deg": 0.1,
+    "forward_difference_mm": 0.1
+  },
+  "gates": {
+    "可解析与制造几何": ["DA01", "DA02", "DA03", "DA04", "DB01"],
+    "数字接口初筛": ["DA05", "DA06", "DC03"],
+    "标称任务完成": ["DB02", "DB03", "DB04", "DB06"],
+    "控制与鲁棒性": ["DB05", "DB07", "DC04"],
+    "工程计算与复现": ["DC01", "DC02", "DD01", "DD02", "DD03"]
+  },
+  "hardware_required": false,
+  "not_scored_as_pass": ["actual_temperature", "material_fatigue", "physical_assembly", "real_electrical_safety", "continuous_full_geometry_collision", "full_tool_insertion_path", "cable_life"]
+}

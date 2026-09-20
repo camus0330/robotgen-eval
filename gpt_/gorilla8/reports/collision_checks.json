@@ -1,0 +1,870 @@
+{
+  "method": "Every recorded frame uses triangle-mesh FCL candidates, followed by OpenCascade BREP intersection volume. Ground uses transformed vertices of delivered mesh geometry.",
+  "length_unit": "mm",
+  "volume_tolerance_mm3": 0.001,
+  "ground_penetration_tolerance_mm": 0.05,
+  "declared_contact_gap_tolerance_mm": 0.15,
+  "input_kind": "reference_poses",
+  "simulation_trace": null,
+  "trace_contract": null,
+  "geometry_contract": [
+    {
+      "name": "left_arm",
+      "origin_mm": [
+        20,
+        56,
+        0
+      ],
+      "lengths_mm": [
+        60,
+        76
+      ],
+      "limits_deg": [
+        [
+          -135,
+          -2
+        ],
+        [
+          5,
+          125
+        ]
+      ],
+      "q2_sign": 1,
+      "side": 1
+    },
+    {
+      "name": "right_arm",
+      "origin_mm": [
+        20,
+        -56,
+        0
+      ],
+      "lengths_mm": [
+        60,
+        76
+      ],
+      "limits_deg": [
+        [
+          -135,
+          -2
+        ],
+        [
+          5,
+          125
+        ]
+      ],
+      "q2_sign": 1,
+      "side": -1
+    },
+    {
+      "name": "left_leg",
+      "origin_mm": [
+        -20,
+        52,
+        -33
+      ],
+      "lengths_mm": [
+        55,
+        52
+      ],
+      "limits_deg": [
+        [
+          5,
+          85
+        ],
+        [
+          -125,
+          -5
+        ]
+      ],
+      "q2_sign": -1,
+      "side": 1
+    },
+    {
+      "name": "right_leg",
+      "origin_mm": [
+        -20,
+        -52,
+        -33
+      ],
+      "lengths_mm": [
+        55,
+        52
+      ],
+      "limits_deg": [
+        [
+          5,
+          85
+        ],
+        [
+          -125,
+          -5
+        ]
+      ],
+      "q2_sign": -1,
+      "side": -1
+    }
+  ],
+  "mesh_object_count": 33,
+  "cad_contains_added_fasteners": false,
+  "frame_count": 568,
+  "exhaustive_exact": true,
+  "motion_directories": [
+    "supported_palm_walk",
+    "left_hand_wave"
+  ],
+  "excluded_pairs": [
+    {
+      "pair": [
+        "left_arm_motor_0_case",
+        "left_arm_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_arm_motor_1_case",
+        "left_arm_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_leg_motor_0_case",
+        "left_leg_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "left_leg_motor_1_case",
+        "left_leg_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_arm_motor_0_case",
+        "right_arm_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_arm_motor_1_case",
+        "right_arm_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_leg_motor_0_case",
+        "right_leg_motor_0_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    },
+    {
+      "pair": [
+        "right_leg_motor_1_case",
+        "right_leg_motor_1_rotors"
+      ],
+      "reason": "OEM stator/rotor bearing engagement retained unchanged from supplied actuator assembly"
+    }
+  ],
+  "pair_checks": [
+    {
+      "pair": [
+        "P01_torso_frame",
+        "P08_chest_shell"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "P09_head_shell"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P03_forearm_hand",
+        "left_arm_P06_palm_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P03_forearm_hand",
+        "left_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P03_forearm_hand",
+        "right_arm_P06_palm_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P03_forearm_hand",
+        "right_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P05_shin_foot",
+        "left_leg_P07_foot_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P05_shin_foot",
+        "left_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P05_shin_foot",
+        "right_leg_P07_foot_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P05_shin_foot",
+        "right_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "neutral",
+        "frame": 0,
+        "stage": "neutral",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "neutral",
+          "frame": 0,
+          "stage": "neutral",
+          "intersection_mm3": 0.0
+        }
+      ]
+    }
+  ],
+  "ground": {
+    "neutral": {
+      "min_mesh_z_mm": 3.2444826786104386e-05,
+      "minimum_at": {
+        "frame": 0,
+        "part": "left_arm_P06_palm_pad",
+        "stage": "neutral"
+      },
+      "min_nonpad_mesh_z_mm": 6.039250677261826,
+      "nonpad_minimum_at": {
+        "frame": 0,
+        "part": "left_leg_P05_shin_foot",
+        "stage": "neutral"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": 3.2444826786104386e-05,
+          "max_z_during_declared_contact_mm": 3.2444826786104386e-05,
+          "worst_contact_frame": 0
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": 3.2444826786104386e-05,
+          "max_z_during_declared_contact_mm": 3.2444826786104386e-05,
+          "worst_contact_frame": 0
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": 0.0017047495871267415,
+          "max_z_during_declared_contact_mm": 0.0017047495871267415,
+          "worst_contact_frame": 0
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": 0.0017047495871267415,
+          "max_z_during_declared_contact_mm": 0.0017047495871267415,
+          "worst_contact_frame": 0
+        }
+      },
+      "frame_count": 1
+    },
+    "supported_palm_walk": {
+      "min_mesh_z_mm": -3.4147935394912565e-06,
+      "minimum_at": {
+        "frame": 174,
+        "part": "left_arm_P06_palm_pad",
+        "stage": "shift_back_for_hand_steps"
+      },
+      "min_nonpad_mesh_z_mm": 2.4127409105481874,
+      "nonpad_minimum_at": {
+        "frame": 188,
+        "part": "left_leg_P05_shin_foot",
+        "stage": "shift_back_for_hand_steps"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": -3.4147935394912565e-06,
+          "max_z_during_declared_contact_mm": 0.002377316493948456,
+          "worst_contact_frame": 254
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": -3.4147935394912565e-06,
+          "max_z_during_declared_contact_mm": 0.002377316493948456,
+          "worst_contact_frame": 254
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": -1.6255678403354068e-06,
+          "max_z_during_declared_contact_mm": 0.0023836396973777596,
+          "worst_contact_frame": 42
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": -1.6255678403354068e-06,
+          "max_z_during_declared_contact_mm": 0.0023836396973777596,
+          "worst_contact_frame": 42
+        }
+      },
+      "frame_count": 289
+    },
+    "left_hand_wave": {
+      "min_mesh_z_mm": -1.766296477967444e-06,
+      "minimum_at": {
+        "frame": 6,
+        "part": "left_arm_P06_palm_pad",
+        "stage": "shift_back_for_wave"
+      },
+      "min_nonpad_mesh_z_mm": 2.579394739492159,
+      "nonpad_minimum_at": {
+        "frame": 50,
+        "part": "left_leg_P05_shin_foot",
+        "stage": "shift_back_for_wave"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": -1.766296477967444e-06,
+          "max_z_during_declared_contact_mm": 0.002305934178309599,
+          "worst_contact_frame": 46
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": -1.766296477967444e-06,
+          "max_z_during_declared_contact_mm": 0.002305934178309599,
+          "worst_contact_frame": 46
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": -3.572366011894701e-07,
+          "max_z_during_declared_contact_mm": 0.002336132006220737,
+          "worst_contact_frame": 28
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": -3.572366011894701e-07,
+          "max_z_during_declared_contact_mm": 0.002336132006220737,
+          "worst_contact_frame": 28
+        }
+      },
+      "frame_count": 278
+    }
+  },
+  "positive_interference_pairs": [],
+  "self_collision_passed": true,
+  "ground_within_tolerance": true,
+  "passed": true,
+  "limitations": [
+    "No continuous collision detection between recorded frames.",
+    "Added screws, nuts and cables are represented by assembly instructions/mass allowance, not solid geometry in this scan.",
+    "A sampled BREP follow-up is diagnostic only unless exhaustive_exact is true."
+  ]
+}

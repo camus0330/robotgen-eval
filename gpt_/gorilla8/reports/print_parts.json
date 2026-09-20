@@ -1,0 +1,242 @@
+[
+  {
+    "name": "P01_torso_frame",
+    "quantity": 1,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 74061.71360614052,
+    "bbox_mm": [
+      66.80000020000003,
+      141.00083041496572,
+      72.00022752076444
+    ],
+    "mass_full_solid_g": 94.05837627979845,
+    "print_bbox_mm": [
+      66.79999999999998,
+      141.0,
+      72.0
+    ]
+  },
+  {
+    "name": "P02_upper_arm",
+    "quantity": 2,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 15464.945882319298,
+    "bbox_mm": [
+      42.900000200000036,
+      40.004171872136396,
+      98.50000020000009
+    ],
+    "mass_full_solid_g": 19.640481270545507,
+    "print_bbox_mm": [
+      42.9,
+      98.49791416393187,
+      40.0
+    ]
+  },
+  {
+    "name": "P03_forearm_hand",
+    "quantity": 2,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 24511.804894868837,
+    "bbox_mm": [
+      65.00000020000012,
+      40.004171872136396,
+      96.5005141425979
+    ],
+    "mass_full_solid_g": 31.129992216483423,
+    "print_bbox_mm": [
+      65.0,
+      96.49791416393187,
+      40.00000000000001
+    ]
+  },
+  {
+    "name": "P04_thigh",
+    "quantity": 2,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 15119.9458823193,
+    "bbox_mm": [
+      42.900000200000036,
+      40.004171872136396,
+      93.50000020000009
+    ],
+    "mass_full_solid_g": 19.20233127054551,
+    "print_bbox_mm": [
+      42.9,
+      93.49791416393187,
+      40.0
+    ]
+  },
+  {
+    "name": "P05_shin_foot",
+    "quantity": 2,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 14678.603323449313,
+    "bbox_mm": [
+      24.06279170620659,
+      40.004171872136396,
+      65.50445065203766
+    ],
+    "mass_full_solid_g": 18.64182622078063,
+    "print_bbox_mm": [
+      23.99999287594219,
+      65.49791416393188,
+      40.00000000000001
+    ]
+  },
+  {
+    "name": "P06_palm_pad",
+    "quantity": 2,
+    "material": "TPU",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 4335.051334646933,
+    "bbox_mm": [
+      65.00000020000002,
+      34.000000200000024,
+      2.0010280851956637
+    ],
+    "mass_full_solid_g": 5.2454121149227895,
+    "print_bbox_mm": [
+      65.0,
+      34.0,
+      2.0000000000000044
+    ]
+  },
+  {
+    "name": "P07_foot_pad",
+    "quantity": 2,
+    "material": "TPU",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 5713.854126492606,
+    "bbox_mm": [
+      23.242686426638386,
+      38.00478634939389,
+      9.004786349393886
+    ],
+    "mass_full_solid_g": 6.913763493056053,
+    "print_bbox_mm": [
+      23.237900077244497,
+      38.0,
+      9.000000000000004
+    ]
+  },
+  {
+    "name": "P08_chest_shell",
+    "quantity": 1,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 4703.891494759416,
+    "bbox_mm": [
+      8.444453326734159,
+      56.1639937596547,
+      56.16255470191438
+    ],
+    "mass_full_solid_g": 5.973942198344458,
+    "print_bbox_mm": [
+      8.000000000000004,
+      55.71954043292054,
+      55.71810137518022
+    ]
+  },
+  {
+    "name": "P09_head_shell",
+    "quantity": 1,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 17461.659859694435,
+    "bbox_mm": [
+      45.232671659957184,
+      58.003010983548045,
+      52.11731108360103
+    ],
+    "mass_full_solid_g": 22.17630802181193,
+    "print_bbox_mm": [
+      44.999770782618654,
+      58.0,
+      52.0
+    ]
+  },
+  {
+    "name": "P10_eye_insert",
+    "quantity": 2,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 717.7882016029338,
+    "bbox_mm": [
+      9.546110110987254,
+      11.690240163654575,
+      11.690243319675147
+    ],
+    "mass_full_solid_g": 0.9115910160357259,
+    "print_bbox_mm": [
+      11.599999999999994,
+      11.599996843979422,
+      9.5
+    ]
+  },
+  {
+    "name": "C01_horn_fit_coupon",
+    "quantity": 1,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 1324.6908135018136,
+    "bbox_mm": [
+      21.004012789947993,
+      5.503667397907675,
+      22.500000200000237
+    ],
+    "mass_full_solid_g": 1.6823573331473032,
+    "print_bbox_mm": [
+      20.999840917811596,
+      22.49791416393186,
+      5.500000000000002
+    ]
+  },
+  {
+    "name": "C02_body_fit_coupon",
+    "quantity": 1,
+    "material": "PETG",
+    "solid_count": 1,
+    "valid": true,
+    "watertight": true,
+    "volume_mm3": 5349.164255315691,
+    "bbox_mm": [
+      26.800000200000017,
+      29.000830414965733,
+      13.000000200000017
+    ],
+    "mass_full_solid_g": 6.793438604250928,
+    "print_bbox_mm": [
+      26.8,
+      13.000000000000002,
+      29.0
+    ]
+  }
+]

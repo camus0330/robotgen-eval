@@ -1,0 +1,5 @@
+# Local gateway credentials/configs
+submissions/**/api_config.json
+.env
+.env.*
+!.env.example

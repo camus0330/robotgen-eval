@@ -1,0 +1,70 @@
+{
+  "units": {
+    "cad": "mm",
+    "simulation": "m/kg/s/rad"
+  },
+  "files": {
+    "cad_source": null,
+    "assembly_step": null,
+    "bom": null,
+    "mjcf": null,
+    "urdf": null,
+    "controller": null,
+    "readme": null,
+    "limitations": null,
+    "dependencies": null
+  },
+  "rebuild_command": [],
+  "parts": [],
+  "joints": [
+    {
+      "role": "left_shoulder_pitch",
+      "name": null
+    },
+    {
+      "role": "left_elbow_pitch",
+      "name": null
+    },
+    {
+      "role": "right_shoulder_pitch",
+      "name": null
+    },
+    {
+      "role": "right_elbow_pitch",
+      "name": null
+    },
+    {
+      "role": "left_hip_pitch",
+      "name": null
+    },
+    {
+      "role": "left_knee_pitch",
+      "name": null
+    },
+    {
+      "role": "right_hip_pitch",
+      "name": null
+    },
+    {
+      "role": "right_knee_pitch",
+      "name": null
+    }
+  ],
+  "contacts": {
+    "left_hand": null,
+    "right_hand": null,
+    "left_foot": null,
+    "right_foot": null
+  },
+  "motions": {
+    "swing": {
+      "reference": null,
+      "config": null
+    },
+    "wave": {
+      "reference": null,
+      "config": null
+    }
+  },
+  "interfaces": []
+}

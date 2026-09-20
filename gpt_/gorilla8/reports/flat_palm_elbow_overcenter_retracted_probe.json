@@ -1,0 +1,4862 @@
+{
+  "purpose": "Independent proposed joint-range geometry probe; no CAD or joint limits changed.",
+  "input": "Current delivered actual mesh and matching STEP assembly",
+  "pose_count": 62,
+  "shoulder_deg": [
+    -10,
+    20
+  ],
+  "shoulder_step_deg": 1,
+  "elbow_deg": "minus shoulder",
+  "leg_postures_hip_knee_deg": [
+    [
+      50.0,
+      -90.0
+    ],
+    [
+      60.0,
+      -100.0
+    ]
+  ],
+  "root_orientation": "identity",
+  "root_formula_mm": "x=35+60*sin(shoulder); z=88+60*cos(shoulder)",
+  "root_x_progress_minus10_to_plus10_mm": 20.837781320031638,
+  "method": "FCL candidate detection at all poses; exact STEP common volume for every candidate relative transform.",
+  "interference_tolerance_mm3": 0.001,
+  "ground": {
+    "hip_50.0_knee_-90.0": {
+      "min_mesh_z_mm": -1.4210854715202004e-14,
+      "minimum_at": {
+        "frame": 2,
+        "part": "left_arm_P06_palm_pad",
+        "stage": "overcenter_static_probe"
+      },
+      "min_nonpad_mesh_z_mm": 1.9999999999999858,
+      "nonpad_minimum_at": {
+        "frame": 2,
+        "part": "left_arm_P03_forearm_hand",
+        "stage": "overcenter_static_probe"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": -1.4210854715202004e-14,
+          "max_z_during_declared_contact_mm": 1.4210854715202004e-14,
+          "worst_contact_frame": 0
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": -1.4210854715202004e-14,
+          "max_z_during_declared_contact_mm": 1.4210854715202004e-14,
+          "worst_contact_frame": 0
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": 24.196116372251346,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": 24.196116372251346,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        }
+      },
+      "frame_count": 31
+    },
+    "hip_60.0_knee_-100.0": {
+      "min_mesh_z_mm": -1.4210854715202004e-14,
+      "minimum_at": {
+        "frame": 2,
+        "part": "left_arm_P06_palm_pad",
+        "stage": "overcenter_static_probe"
+      },
+      "min_nonpad_mesh_z_mm": 1.9999999999999858,
+      "nonpad_minimum_at": {
+        "frame": 2,
+        "part": "left_arm_P03_forearm_hand",
+        "stage": "overcenter_static_probe"
+      },
+      "contacts": {
+        "left_arm_P06_palm_pad": {
+          "min_z_mm": -1.4210854715202004e-14,
+          "max_z_during_declared_contact_mm": 1.4210854715202004e-14,
+          "worst_contact_frame": 0
+        },
+        "right_arm_P06_palm_pad": {
+          "min_z_mm": -1.4210854715202004e-14,
+          "max_z_during_declared_contact_mm": 1.4210854715202004e-14,
+          "worst_contact_frame": 0
+        },
+        "left_leg_P07_foot_pad": {
+          "min_z_mm": 32.049434905011005,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        },
+        "right_leg_P07_foot_pad": {
+          "min_z_mm": 32.049434905011005,
+          "max_z_during_declared_contact_mm": null,
+          "worst_contact_frame": null
+        }
+      },
+      "frame_count": 31
+    }
+  },
+  "pair_checks": [
+    {
+      "pair": [
+        "P01_torso_frame",
+        "P08_chest_shell"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "P09_head_shell"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_leg_motor_0_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P02_upper_arm",
+        "left_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P03_forearm_hand",
+        "left_arm_P06_palm_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_P03_forearm_hand",
+        "left_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P02_upper_arm",
+        "right_arm_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P03_forearm_hand",
+        "right_arm_P06_palm_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_P03_forearm_hand",
+        "right_arm_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P04_thigh",
+        "left_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P05_shin_foot",
+        "left_leg_P07_foot_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_leg_P05_shin_foot",
+        "left_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_0_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P04_thigh",
+        "right_leg_motor_1_case"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P05_shin_foot",
+        "right_leg_P07_foot_pad"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_leg_P05_shin_foot",
+        "right_leg_motor_1_rotors"
+      ],
+      "same_link": true,
+      "mesh_candidate_frames": 1,
+      "exact_evaluations": 1,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 0.0,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 0,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 0.0
+      },
+      "positive_interference": false,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 0,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_P03_forearm_hand"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 46,
+      "exact_evaluations": 23,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 300.38523014876733,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 300.38523014876733
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.3594670481294795
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864264
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.441875912973188
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087627
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607344
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832608
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.9616982686703
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938092
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.21121871960551
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.6376350475426
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.4514319169045
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525695
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.16895881420854
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.94398914691754
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.38523014876733
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.3594670481294795
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864264
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.441875912973188
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087627
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607344
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832608
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.9616982686703
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938092
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.21121871960551
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.6376350475426
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.4514319169045
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525695
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.16895881420854
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.94398914691754
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.38523014876733
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_P03_forearm_hand"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 46,
+      "exact_evaluations": 23,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 300.3852301487673,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 300.3852301487673
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.35946704812948
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864263
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.44187591297318
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087625
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607343
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832612
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.96169826867032
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938094
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.2112187196055
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.63763504754263
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.45143191690457
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525693
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.1689588142085
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.9439891469176
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.3852301487673
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.35946704812948
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864263
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.44187591297318
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087625
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607343
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832612
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.96169826867032
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938094
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.2112187196055
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.63763504754263
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.45143191690457
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525693
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.1689588142085
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.9439891469176
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.3852301487673
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_1_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 44,
+      "exact_evaluations": 22,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 177.97754949195385,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 177.97754949195385
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.936585266013317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.784000000000034
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523085
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.74438078074256
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.91472408037102
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.10531462044878
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982607311622
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.07683867986367
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593137200317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.19649766555317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.450935549868817
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.34252568460413
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926756527653
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604772305478
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049219098848
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.68028810230433
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.28272076136533
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90515084785305
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483385062621
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506633687295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754949195385
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.936585266013317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.784000000000034
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523085
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.74438078074256
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.91472408037102
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.10531462044878
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982607311622
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.07683867986367
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593137200317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.19649766555317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.450935549868817
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.34252568460413
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926756527653
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604772305478
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049219098848
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.68028810230433
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.28272076136533
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90515084785305
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483385062621
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506633687295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754949195385
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_1_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 44,
+      "exact_evaluations": 22,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 177.97754977909787,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 177.97754977909787
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.93658526601334
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.78400000000004
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523086
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.7443807807426
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.914724080371
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.1053146207074
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982630893818
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.076838942418583
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593563898098
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.1964974534966
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.45093992000621
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.3425253303926
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926577081588
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604774051943
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049052459823
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.680286864984794
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.282719796874176
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90514895387359
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483046808736
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506653741812
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754977909787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.93658526601334
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.78400000000004
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523086
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.7443807807426
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.914724080371
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.1053146207074
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982630893818
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.076838942418583
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593563898098
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.1964974534966
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.45093992000621
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.3425253303926
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926577081588
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604774051943
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049052459823
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.680286864984794
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.282719796874176
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90514895387359
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483046808736
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506653741812
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754977909787
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_1_rotors"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 42,
+      "exact_evaluations": 21,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 138.96348542134612,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 138.96348542134612
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548570261
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847223354
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485095597
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004179885
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298274793097
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424435057893
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.141135286190604
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092074677537
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754340782995
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.989778472636054
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.843154864404
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.6860307798231
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942753515786
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.3436877685099
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417478373447
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02162778584041
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476932
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.14576761375481
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451649556
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134612
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548570261
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847223354
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485095597
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004179885
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298274793097
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424435057893
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.141135286190604
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092074677537
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754340782995
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.989778472636054
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.843154864404
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.6860307798231
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942753515786
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.3436877685099
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417478373447
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02162778584041
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476932
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.14576761375481
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451649556
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134612
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_1_rotors"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 42,
+      "exact_evaluations": 21,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 138.96348542134353,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 138.96348542134353
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548580642
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847233424
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485096516
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004180689
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298328065624
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424474378799
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.14113569419568
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092112570991
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754684186544
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.98977832918913
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.84315539014574
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.68603130573855
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942782602815
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.34368774940478
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417479683821
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02161821640952
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476933
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.1457676137548
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451648553
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134353
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548580642
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847233424
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485096516
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004180689
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298328065624
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424474378799
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.14113569419568
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092112570991
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754684186544
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.98977832918913
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.84315539014574
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.68603130573855
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942782602815
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.34368774940478
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417479683821
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02161821640952
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476933
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.1457676137548
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451648553
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134353
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_P02_upper_arm"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 20,
+      "exact_evaluations": 10,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 43.75736248280732,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 43.75736248280732
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412643
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.608423047674492
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578433
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.58087265661166
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412643
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.608423047674492
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578433
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.58087265661166
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_P02_upper_arm"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 20,
+      "exact_evaluations": 10,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 43.75736248280732,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 43.75736248280732
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412639
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.6084230476744916
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578432
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.580872656611657
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412639
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.6084230476744916
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578432
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.580872656611657
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_motor_1_case",
+        "left_leg_motor_0_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 4,
+      "exact_evaluations": 2,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 49.50022413900723,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 49.50022413900723
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.03859248683368089
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.50022413900723
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.03859248683368089
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.50022413900723
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_motor_1_case",
+        "right_leg_motor_0_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 4,
+      "exact_evaluations": 2,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 49.66796742768874,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 49.66796742768874
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.038592486833657416
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.66796742768874
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.038592486833657416
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.66796742768874
+        }
+      ]
+    }
+  ],
+  "positive_interference_pairs": [
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_P03_forearm_hand"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 46,
+      "exact_evaluations": 23,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 300.38523014876733,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 300.38523014876733
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.3594670481294795
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864264
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.441875912973188
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087627
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607344
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832608
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.9616982686703
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938092
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.21121871960551
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.6376350475426
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.4514319169045
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525695
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.16895881420854
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.94398914691754
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.38523014876733
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.3594670481294795
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864264
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.441875912973188
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087627
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607344
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832608
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.9616982686703
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938092
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.21121871960551
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.6376350475426
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.4514319169045
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525695
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.16895881420854
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.94398914691754
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.38523014876733
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_P03_forearm_hand"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 46,
+      "exact_evaluations": 23,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 300.3852301487673,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 300.3852301487673
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.35946704812948
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864263
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.44187591297318
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087625
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607343
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832612
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.96169826867032
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938094
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.2112187196055
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.63763504754263
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.45143191690457
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525693
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.1689588142085
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.9439891469176
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.3852301487673
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 8,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 3.35946704812948
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 13.394331923864263
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 23.44187591297318
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.32088895353295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.37826903208982
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.53915689981722
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 73.79307471087625
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.16476393607343
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.05035753832612
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.96169826867032
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.92112959277434
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 79.95448384938094
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 80.09183818471755
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.83467466922461
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.2112187196055
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 118.32851535764962
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 133.63763504754263
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 157.45143191690457
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 182.5189393574127
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 212.47749104525693
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 242.1689588142085
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 273.9439891469176
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 300.3852301487673
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_1_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 44,
+      "exact_evaluations": 22,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 177.97754949195385,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 177.97754949195385
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.936585266013317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.784000000000034
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523085
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.74438078074256
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.91472408037102
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.10531462044878
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982607311622
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.07683867986367
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593137200317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.19649766555317
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.450935549868817
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.34252568460413
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926756527653
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604772305478
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049219098848
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.68028810230433
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.28272076136533
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90515084785305
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483385062621
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506633687295
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754949195385
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.936585266013317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.784000000000034
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523085
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.74438078074256
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.91472408037102
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.10531462044878
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982607311622
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.07683867986367
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593137200317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.19649766555317
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.450935549868817
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.34252568460413
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926756527653
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604772305478
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049219098848
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.68028810230433
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.28272076136533
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90515084785305
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483385062621
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506633687295
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754949195385
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_1_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 44,
+      "exact_evaluations": 22,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 177.97754977909787,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 177.97754977909787
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.93658526601334
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.78400000000004
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523086
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.7443807807426
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.914724080371
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.1053146207074
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982630893818
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.076838942418583
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593563898098
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.1964974534966
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.45093992000621
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.3425253303926
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926577081588
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604774051943
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049052459823
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.680286864984794
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.282719796874176
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90514895387359
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483046808736
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506653741812
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754977909787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 9,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.93658526601334
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 47.78400000000004
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 72.68916151523086
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.7443807807426
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.914724080371
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 146.106546492787
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 173.1053146207074
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.545982630893818
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 16.076838942418583
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.603593563898098
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 57.1964974534966
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 29.45093992000621
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 34.3425253303926
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 35.83926577081588
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.87604774051943
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 42.23049052459823
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.680286864984794
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 54.282719796874176
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 63.90514895387359
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 81.52483046808736
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 147.81506653741812
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 177.97754977909787
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_motor_1_rotors"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 42,
+      "exact_evaluations": 21,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 138.96348542134612,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 138.96348542134612
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548570261
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847223354
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485095597
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004179885
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298274793097
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424435057893
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.141135286190604
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092074677537
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754340782995
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.989778472636054
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.843154864404
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.6860307798231
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942753515786
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.3436877685099
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417478373447
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02162778584041
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476932
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.14576761375481
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451649556
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134612
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548570261
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847223354
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485095597
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004179885
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298274793097
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424435057893
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.141135286190604
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092074677537
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754340782995
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.989778472636054
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.843154864404
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.6860307798231
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942753515786
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.3436877685099
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417478373447
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02162778584041
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476932
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.14576761375481
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451649556
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134612
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_motor_1_rotors"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 42,
+      "exact_evaluations": 21,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 138.96348542134353,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 138.96348542134353
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548580642
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847233424
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485096516
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004180689
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298328065624
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424474378799
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.14113569419568
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092112570991
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754684186544
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.98977832918913
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.84315539014574
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.68603130573855
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942782602815
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.34368774940478
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417479683821
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02161821640952
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476933
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.1457676137548
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451648553
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134353
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 10,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.0
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 11,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 8.883319548580642
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 12,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 15.266264847233424
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 13,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.52386485096516
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 14,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 32.26052004180689
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 15,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 37.80298328065624
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 16,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.20424474378799
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 17,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.14113569419568
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 18,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.11092112570991
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 19,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.135754684186544
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 20,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 40.98977832918913
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 45.84315539014574
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 55.68603130573855
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 66.20942782602815
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 75.34368774940478
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 88.77417479683821
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 96.02161821640952
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 101.29656374476933
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 107.1457676137548
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 120.46225451648553
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 138.96348542134353
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "left_arm_P02_upper_arm"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 20,
+      "exact_evaluations": 10,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 43.75736248280732,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 43.75736248280732
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412643
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.608423047674492
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578433
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.58087265661166
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412643
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.608423047674492
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578433
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.58087265661166
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        }
+      ]
+    },
+    {
+      "pair": [
+        "P01_torso_frame",
+        "right_arm_P02_upper_arm"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 20,
+      "exact_evaluations": 10,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 43.75736248280732,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 43.75736248280732
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412639
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.6084230476744916
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578432
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.580872656611657
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 21,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.04187622404412639
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 22,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 2.6084230476744916
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 23,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 7.478870402578432
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 24,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 12.4469249328886
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 25,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 17.479602653301114
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 26,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 22.580872656611657
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 27,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 27.754869944819063
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 28,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 33.00590928207921
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 38.33850008787675
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 43.75736248280732
+        }
+      ]
+    },
+    {
+      "pair": [
+        "left_arm_motor_1_case",
+        "left_leg_motor_0_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 4,
+      "exact_evaluations": 2,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 49.50022413900723,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 49.50022413900723
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.03859248683368089
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.50022413900723
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.03859248683368089
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.50022413900723
+        }
+      ]
+    },
+    {
+      "pair": [
+        "right_arm_motor_1_case",
+        "right_leg_motor_0_case"
+      ],
+      "same_link": false,
+      "mesh_candidate_frames": 4,
+      "exact_evaluations": 2,
+      "all_candidate_frames_checked": true,
+      "max_intersection_mm3": 49.66796742768874,
+      "worst": {
+        "run": "hip_50.0_knee_-90.0",
+        "frame": 30,
+        "stage": "overcenter_static_probe",
+        "intersection_mm3": 49.66796742768874
+      },
+      "positive_interference": true,
+      "exact_samples": [
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.038592486833657416
+        },
+        {
+          "run": "hip_50.0_knee_-90.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.66796742768874
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 29,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 0.038592486833657416
+        },
+        {
+          "run": "hip_60.0_knee_-100.0",
+          "frame": 30,
+          "stage": "overcenter_static_probe",
+          "intersection_mm3": 49.66796742768874
+        }
+      ]
+    }
+  ],
+  "stock_bearing_pairs_excluded": [
+    [
+      "left_arm_motor_0_case",
+      "left_arm_motor_0_rotors"
+    ],
+    [
+      "left_arm_motor_1_case",
+      "left_arm_motor_1_rotors"
+    ],
+    [
+      "left_leg_motor_0_case",
+      "left_leg_motor_0_rotors"
+    ],
+    [
+      "left_leg_motor_1_case",
+      "left_leg_motor_1_rotors"
+    ],
+    [
+      "right_arm_motor_0_case",
+      "right_arm_motor_0_rotors"
+    ],
+    [
+      "right_arm_motor_1_case",
+      "right_arm_motor_1_rotors"
+    ],
+    [
+      "right_leg_motor_0_case",
+      "right_leg_motor_0_rotors"
+    ],
+    [
+      "right_leg_motor_1_case",
+      "right_leg_motor_1_rotors"
+    ]
+  ],
+  "passed": false,
+  "limitations": [
+    "Static one-degree sampling, not continuous collision checking.",
+    "No new joint range approved by this probe.",
+    "No torque, dead-center load controllability or dynamics validation."
+  ]
+}

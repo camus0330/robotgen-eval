@@ -1,0 +1,12 @@
+﻿id,location,finding,acceptance_requirement,status
+AD01,prepare_rebuild.py,固定目录与父级资产,manifest驱动重建,OPEN
+AD02,run_rebuild.py,固定10阶段程序,独立重建入口,OPEN
+AD03,digital_geometry.py,固定零件名与探针坐标,接口变换驱动独立BREP,OPEN
+AD04,evaluate_digital.py:bed,固定12件,全部申报打印件且查漏,OPEN
+AD05,evaluate_digital.py:geometry,固定3条长度链,完整接口长度链,OPEN
+AD06,evaluate.py:strength,固定结构截面集合,形态对应的载荷与截面,OPEN
+AD07,simulate_cases.py:run_one,固定控制器和接触几何,统一重放控制协议,OPEN
+AD08,simulate_cases.py:apply_case,固定附件位置,实际附件质心惯量,OPEN
+AD09,evaluate_digital.py:robustness,绑定公开集,隐藏集可配置且隔离,OPEN
+AD10,evaluate_digital.py,报告自报字段,独立计算和证据绑定,OPEN
+AD11,compare.py,不核验模型预算身份,实验协议资格核查,OPEN

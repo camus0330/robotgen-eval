@@ -1,0 +1,24 @@
+{
+  "benchmark_version": "gorilla-assembly-bench/0.1",
+  "profile_id": "gorilla8-pitch-external5v-v0.1",
+  "status": "pilot_thresholds_not_industry_standard",
+  "joint_order": ["left_shoulder_pitch", "left_elbow_pitch", "right_shoulder_pitch", "right_elbow_pitch", "left_hip_pitch", "left_knee_pitch", "right_hip_pitch", "right_knee_pitch"],
+  "joint_limits_deg": [[-135, 12], [-12, 125], [-135, 12], [-12, 125], [5, 85], [-125, -5], [5, 85], [-125, -5]],
+  "runs": ["flat_palm_swing_release", "flat_palm_wave_release"],
+  "motion_names": ["flat_palm_swing", "flat_palm_wave"],
+  "max_motion_duration_s": [16.0, 15.0],
+  "sample_dt_s": 0.04,
+  "swing": {"foot_clearance_m": 0.002, "min_airborne_s": 0.5, "min_forward_m": 0.01},
+  "wave": {"hand_clearance_m": 0.05, "min_contiguous_s": 1.0, "min_joint_excursion_rad": 0.1},
+  "landing": {"min_duration_s": 1.0, "min_up_z": 0.95, "min_force_N": 0.01, "max_linear_speed_m_s": 0.02, "max_angular_speed_rad_s": 0.2},
+  "tracking": {"max_joint_error_deg": 5.0, "max_root_error_mm": 5.0},
+  "actuation": {"max_torque_nm": 0.100001, "max_saturation_fraction": 0.001, "max_limit_force_nm": 0.001},
+  "collision": {"max_volume_tolerance_mm3": 0.001, "reference_ground_tolerance_mm": 0.05, "actual_ground_tolerance_mm": 0.5},
+  "gates": {
+    "G0_数字提交有效": ["A01", "A02", "A03", "A04", "B01"],
+    "G1_标称有限动作": ["B02", "B03", "B04", "B07"],
+    "G2_装配准备充分": ["A05", "A06", "A07", "A08", "A09", "A10", "B05", "C02"],
+    "G3_实机工程验证": ["C01", "C04", "C05", "C06", "C07"],
+    "G4_正式比较资格": ["B08", "D01", "D02", "D03", "D04"]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "scope": "read-only source audit; not proof of engineering adapter readiness",
+  "files": [
+    {
+      "path": "gorilla8/benchmark/prepare_rebuild.py",
+      "sha256": "7ef77c5b7fbe63eaec8b02b8c5789a31178723aa47392af9ee25b5bd61f2a01b"
+    },
+    {
+      "path": "gorilla8/benchmark/run_rebuild.py",
+      "sha256": "c5c99e530ee8758d2161b4e08312fe0c51826bdd511d0a959ed3ed37b9a33b49"
+    },
+    {
+      "path": "gorilla8/benchmark/digital_geometry.py",
+      "sha256": "46566836f69df80a8797449c9e91b9f9cca2d8ce6a9f8477fa6c97f53297a244"
+    },
+    {
+      "path": "gorilla8/benchmark/evaluate_digital.py",
+      "sha256": "283a2f0b28bf3b5aba53a6ad21df4f3fa38407c731126d8e0a289b1980017b63"
+    },
+    {
+      "path": "gorilla8/benchmark/evaluate.py",
+      "sha256": "a6aef88ec85f3e2a02db13a41fa9536a0a3f0cca5672990f572d84e090756ddb"
+    },
+    {
+      "path": "gorilla8/benchmark/simulate_cases.py",
+      "sha256": "3669c9eda788e4f1f65da43296323eecaa7e5c827d76179dabbf8862e0a2738a"
+    },
+    {
+      "path": "gorilla8/benchmark/compare.py",
+      "sha256": "36d7be9d1eb5320838ec821302c4b551fa0758ba01d9d12e54218699499a9ebc"
+    },
+    {
+      "path": "gorilla8/benchmark/profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+    },
+    {
+      "path": "gorilla8/benchmark/digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+    },
+    {
+      "path": "gorilla8/benchmark/digital_metrics.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+    },
+    {
+      "path": "gorilla8/benchmark/run_digital.py",
+      "sha256": "b947fe1e54aadd4fa9df1b72052ad38fdcf4bc7a39b27856b2d3b7a89237ba72"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "experiment_id": "robot-model-comparison-pilot-v0.1",
+  "status": "PILOT_DRAFT",
+  "track": "joint_design_and_control",
+  "models": [
+    {
+      "slot": "model_A",
+      "provider": null,
+      "exact_version": null,
+      "invocation_mode": null,
+      "settings": null
+    },
+    {
+      "slot": "model_B",
+      "provider": null,
+      "exact_version": null,
+      "invocation_mode": null,
+      "settings": null
+    },
+    {
+      "slot": "model_C",
+      "provider": null,
+      "exact_version": null,
+      "invocation_mode": null,
+      "settings": null
+    }
+  ],
+  "environment_description": null,
+  "budget": {
+    "wall_time_s": 3600,
+    "max_feedback_rounds": 2,
+    "human_design_edit_minutes": 0,
+    "token_limit": null,
+    "network": "disabled_except_model_service"
+  },
+  "replicates": {
+    "pilot_per_model": 1,
+    "formal_per_model": 5
+  },
+  "schedule_seed": 20260920,
+  "formal_scoring_ready": false,
+  "engineering_evaluator_version": null,
+  "hidden_cases_manifest_sha256": null,
+  "note": "Budget is a pilot proposal; do not infer exact model IDs from meeting notes."
+}

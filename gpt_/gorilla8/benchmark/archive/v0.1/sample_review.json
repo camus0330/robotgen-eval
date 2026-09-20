@@ -1,0 +1,24 @@
+[
+  {
+    "metric_id": "D03",
+    "status": "FAIL",
+    "level": "E2",
+    "reviewer": "本次benchmark文件审阅",
+    "review_date": "2026-09-18",
+    "reason": "reports/manufacturing_validation_notes.md 未标历史，仍称最终质量0.5220157988653644kg及旧动作帧数；当前README/release为0.5605794217046942kg。设计早期建议目标不视为最终硬约束。",
+    "evidence": [
+      {
+        "path": "reports/manufacturing_validation_notes.md",
+        "sha256": "385611465e7c48170ff87d8b0123e66fceb290b4a54d6db5ed23bff164e8f9ba"
+      },
+      {
+        "path": "README.md",
+        "sha256": "6997e4d6d216b0f891992e5f345872a0197e5c96ffcc5abccd6f553db0d3cbeb"
+      },
+      {
+        "path": "reports/release_status.json",
+        "sha256": "45885cb6c0ed71fb411314cf0b6e525745e4b80516b911333b8c293541631116"
+      }
+    ]
+  }
+]

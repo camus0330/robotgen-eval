@@ -1,0 +1,153 @@
+{
+  "config_count": 18,
+  "configs": [
+    {
+      "path": "submissions/formal/model_A/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_A/02/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_A/03/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_A/04/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_A/05/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_B/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_B/02/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_B/03/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_B/04/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_B/05/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_C/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_C/02/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_C/03/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_C/04/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/formal/model_C/05/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/pilot/model_A/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/pilot/model_B/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    },
+    {
+      "path": "submissions/pilot/model_C/01/api_config.json",
+      "identity_matches": true,
+      "paths_resolve": true,
+      "empty_key": true,
+      "model_pending": true,
+      "mode": "0600"
+    }
+  ],
+  "live_api_calls": 0,
+  "endpoint_protocol_verified": false,
+  "existing_input_hashes_unchanged": true,
+  "scope": "Static JSON, identity, path and permission checks only"
+}

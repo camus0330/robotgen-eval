@@ -1,0 +1,522 @@
+{
+  "base": {
+    "mass_kg": 0.23423180853202635,
+    "items": [
+      {
+        "name": "P01_torso_frame",
+        "mass_kg": 0.09405837627979845,
+        "com_mm": [
+          -0.1944773788305131,
+          -3.4384637364818677e-15,
+          -30.371751338373162
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "P08_chest_shell",
+        "mass_kg": 0.005973942198344458,
+        "com_mm": [
+          23.50538561383822,
+          0.00020966455375418143,
+          -25.352296713380646
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "P09_head_shell",
+        "mass_kg": 0.022176308021811933,
+        "com_mm": [
+          8.368663154909024,
+          0.0009052061072909707,
+          31.628223793231168
+        ],
+        "material": "face"
+      },
+      {
+        "name": "eye_0",
+        "mass_kg": 0.0009115910160357259,
+        "com_mm": [
+          24.481253149578688,
+          -10.000000000003666,
+          39.99998857517336
+        ],
+        "material": "eyes"
+      },
+      {
+        "name": "eye_1",
+        "mass_kg": 0.0009115910160357259,
+        "com_mm": [
+          24.481253149578695,
+          9.999999999996334,
+          39.999988575173376
+        ],
+        "material": "eyes"
+      },
+      {
+        "name": "left_arm_motor_0_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          19.995165335888768,
+          56.14459345568379,
+          -7.429801225101801
+        ],
+        "material": "motor"
+      },
+      {
+        "name": "right_arm_motor_0_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          20.004834664111232,
+          -56.14459345568379,
+          -7.4298012251017935
+        ],
+        "material": "motor"
+      },
+      {
+        "name": "left_leg_motor_0_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          -20.004834664111232,
+          52.1445934556838,
+          -40.42980122510178
+        ],
+        "material": "motor"
+      },
+      {
+        "name": "right_leg_motor_0_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          -19.995165335888768,
+          -52.1445934556838,
+          -40.429801225101784
+        ],
+        "material": "motor"
+      },
+      {
+        "link": "base",
+        "mass_kg": 0.035,
+        "com_mm": [
+          0,
+          0,
+          -46
+        ],
+        "description": "external-power controller + distribution + torso wiring"
+      },
+      {
+        "link": "base",
+        "mass_kg": 0.008,
+        "com_mm": [
+          0,
+          0,
+          -20
+        ],
+        "description": "torso screws/nuts/straps"
+      }
+    ],
+    "com_mm": [
+      1.5042680302820477,
+      9.104934769652682e-05,
+      -23.958867733828303
+    ]
+  },
+  "left_arm_upper": {
+    "mass_kg": 0.043640481270545504,
+    "items": [
+      {
+        "name": "left_arm_P02_upper_arm",
+        "mass_kg": 0.019640481270545507,
+        "com_mm": [
+          4.773443150835583,
+          -6.813699091808258e-16,
+          -51.18086704515778
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "left_arm_motor_0_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          0.0002607953378009381,
+          1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "name": "left_arm_motor_1_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          -0.004834664111233,
+          0.14459345568380755,
+          -67.42980122510178
+        ],
+        "material": "motor"
+      },
+      {
+        "link": "left_arm_upper",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -30.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      2.146449110218613,
+      0.1191140496375974,
+      -52.42933343659476
+    ]
+  },
+  "left_arm_lower": {
+    "mass_kg": 0.04357540433140621,
+    "items": [
+      {
+        "name": "left_arm_P03_forearm_hand",
+        "mass_kg": 0.031129992216483424,
+        "com_mm": [
+          -3.776360518789814,
+          -4.765811214114839e-06,
+          -59.179658504958724
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "left_arm_P06_palm_pad",
+        "mass_kg": 0.00524541211492279,
+        "com_mm": [
+          -12.744947114795771,
+          1.4423764776935765e-16,
+          -86.99999999999999
+        ],
+        "material": "TPU"
+      },
+      {
+        "name": "left_arm_motor_1_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          0.0002607953378009381,
+          1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "link": "left_arm_lower",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -38.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      -4.231974496537459,
+      0.06354217659246882,
+      -57.110588495736685
+    ]
+  },
+  "right_arm_upper": {
+    "mass_kg": 0.043640481270545504,
+    "items": [
+      {
+        "name": "right_arm_P02_upper_arm",
+        "mass_kg": 0.019640481270545507,
+        "com_mm": [
+          4.773443150835583,
+          -6.813699091808258e-16,
+          -51.18086704515778
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "right_arm_motor_0_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          -0.0002607953378009381,
+          -1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "name": "right_arm_motor_1_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          0.004834664111233,
+          -0.14459345568380755,
+          -67.42980122510178
+        ],
+        "material": "motor"
+      },
+      {
+        "link": "right_arm_upper",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -30.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      2.1501451559531035,
+      -0.11911404963759802,
+      -52.42933343659476
+    ]
+  },
+  "right_arm_lower": {
+    "mass_kg": 0.04357540433140621,
+    "items": [
+      {
+        "name": "right_arm_P03_forearm_hand",
+        "mass_kg": 0.031129992216483424,
+        "com_mm": [
+          -3.776360518789814,
+          -4.765811214114839e-06,
+          -59.179658504958724
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "right_arm_P06_palm_pad",
+        "mass_kg": 0.00524541211492279,
+        "com_mm": [
+          -12.744947114795771,
+          1.4423764776935765e-16,
+          -86.99999999999999
+        ],
+        "material": "TPU"
+      },
+      {
+        "name": "right_arm_motor_1_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          -0.0002607953378009381,
+          -1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "link": "right_arm_lower",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -38.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      -4.232000830188379,
+      -0.06354898592302012,
+      -57.110588495736685
+    ]
+  },
+  "left_leg_upper": {
+    "mass_kg": 0.043202331270545506,
+    "items": [
+      {
+        "name": "left_leg_P04_thigh",
+        "mass_kg": 0.01920233127054551,
+        "com_mm": [
+          -4.617810178913809,
+          -3.550846645345115e-15,
+          -48.63684853838666
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "left_leg_motor_0_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          0.0002607953378009381,
+          1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "name": "left_leg_motor_1_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          -0.004834664111232855,
+          0.1445934556838111,
+          -62.42980122510178
+        ],
+        "material": "motor"
+      },
+      {
+        "link": "left_leg_upper",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -27.5
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      -2.0543652806957624,
+      0.12032208215144233,
+      -49.07756823510124
+    ]
+  },
+  "left_leg_lower": {
+    "mass_kg": 0.032755589713836686,
+    "items": [
+      {
+        "name": "left_leg_P05_shin_foot",
+        "mass_kg": 0.01864182622078063,
+        "com_mm": [
+          0.2797043558875136,
+          -2.5465485938282076e-05,
+          -35.556836086127724
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "left_leg_P07_foot_pad",
+        "mass_kg": 0.006913763493056055,
+        "com_mm": [
+          -4.791258815233305e-05,
+          1.1251494702615753e-06,
+          -58.67417524016298
+        ],
+        "material": "TPU"
+      },
+      {
+        "name": "left_leg_motor_1_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          0.0002607953378009381,
+          1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "link": "left_leg_lower",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -26.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      0.15919244729360035,
+      0.08452167940865331,
+      -36.58940544755934
+    ]
+  },
+  "right_leg_upper": {
+    "mass_kg": 0.043202331270545506,
+    "items": [
+      {
+        "name": "right_leg_P04_thigh",
+        "mass_kg": 0.01920233127054551,
+        "com_mm": [
+          -4.617810178913809,
+          -3.550846645345115e-15,
+          -48.63684853838666
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "right_leg_motor_0_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          -0.0002607953378009381,
+          -1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "name": "right_leg_motor_1_case",
+        "mass_kg": 0.0168,
+        "com_mm": [
+          0.004834664111232855,
+          -0.1445934556838111,
+          -62.42980122510178
+        ],
+        "material": "motor"
+      },
+      {
+        "link": "right_leg_upper",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -27.5
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      -2.0506317503535914,
+      -0.12032208215144548,
+      -49.07756823510124
+    ]
+  },
+  "right_leg_lower": {
+    "mass_kg": 0.032755589713836686,
+    "items": [
+      {
+        "name": "right_leg_P05_shin_foot",
+        "mass_kg": 0.01864182622078063,
+        "com_mm": [
+          0.2797043558875136,
+          -2.5465485938282076e-05,
+          -35.556836086127724
+        ],
+        "material": "PETG"
+      },
+      {
+        "name": "right_leg_P07_foot_pad",
+        "mass_kg": 0.006913763493056055,
+        "com_mm": [
+          -4.791258815233305e-05,
+          1.1251494702615753e-06,
+          -58.67417524016298
+        ],
+        "material": "TPU"
+      },
+      {
+        "name": "right_leg_motor_1_rotors",
+        "mass_kg": 0.0022,
+        "com_mm": [
+          -0.0002607953378009381,
+          -1.2586474530820198,
+          -0.0017375793125666073
+        ],
+        "material": "horn"
+      },
+      {
+        "link": "right_leg_lower",
+        "mass_kg": 0.005,
+        "com_mm": [
+          0,
+          0,
+          -26.0
+        ],
+        "description": "screws, nuts and flexible cable allowance"
+      }
+    ],
+    "com_mm": [
+      0.1591574151205774,
+      -0.08455019021552546,
+      -36.58940544755934
+    ]
+  }
+}

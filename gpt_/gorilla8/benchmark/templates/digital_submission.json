@@ -1,0 +1,21 @@
+{
+  "submission_id": "fill_unique_id",
+  "benchmark_version": "gorilla-digital-bench/0.2",
+  "profile_id": "gorilla8-digital-screen-v0.2",
+  "model_provider": null,
+  "model_exact_version": null,
+  "generation_seed": null,
+  "original_prompt_path_and_sha256": null,
+  "input_asset_manifest_sha256": null,
+  "generation_time_budget_s": null,
+  "generation_token_budget": null,
+  "actual_elapsed_s": null,
+  "actual_cost_currency_and_amount": null,
+  "human_edits_diff_path": null,
+  "human_edit_minutes": null,
+  "controller_track": "joint_design_and_control",
+  "controller_config_path_and_sha256": null,
+  "all_attempt_logs": [],
+  "hardware_measurements_required": false,
+  "note": "Null is unknown. Metadata is required for fair AI comparison even though it does not earn digital robot-quality points."
+}

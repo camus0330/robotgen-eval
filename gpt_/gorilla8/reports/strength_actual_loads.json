@@ -1,0 +1,2854 @@
+{
+  "passed": true,
+  "mass_kg": 0.5605794217046942,
+  "errors": [],
+  "sources": [
+    {
+      "path": "output/simulation_runs/flat_palm_swing_release/result.json",
+      "mass_kg": 0.5605794217046942,
+      "timestep_s": 0.002,
+      "duration_s": 15.88
+    },
+    {
+      "path": "output/simulation_runs/flat_palm_wave_release/result.json",
+      "mass_kg": 0.5605794217046942,
+      "timestep_s": 0.002,
+      "duration_s": 14.88
+    }
+  ],
+  "case_count": 20,
+  "cases": [
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "left_arm",
+      "section": "rear_extension",
+      "force_component_abs_envelope_N": [
+        0.18667437740659903,
+        0.2442102244148734,
+        2.6375042126454984
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.011941384428983416,
+        0.08889981073789582,
+        0.010821426742888433
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.7824348477485045,
+        "torsion_shear_estimate_MPa": 0.20107018058288537,
+        "transverse_shear_bound_MPa": 0.08780899688961756,
+        "von_mises_bound_MPa": 0.9287399143478194,
+        "stress_with_concentration_2_MPa": 1.8574798286956389,
+        "stress_with_concentration_2_and_reserve_3_MPa": 5.572439486086917,
+        "margin_to_assumed_8_MPa": 1.4356369449994273,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 12.932,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.03066954359938879,
+              -0.16832418065811777,
+              0.8293358349316226
+            ],
+            "moment_about_section_local_Nm": [
+              -0.011941384428983416,
+              0.028054823985848194,
+              0.006614524004513806
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.24979910005556172,
+            "torsion_shear_estimate_MPa": 0.20107018058288537,
+            "transverse_shear_bound_MPa": 0.02962977823848345,
+            "von_mises_bound_MPa": 0.4712398575981369,
+            "stress_with_concentration_2_MPa": 0.9424797151962738,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.8274391455888215,
+            "margin_to_assumed_8_MPa": 2.8294154491286068,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 6.96,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.16621716550415913,
+              3.309796556630425e-06,
+              2.6371923558671826
+            ],
+            "moment_about_section_local_Nm": [
+              1.4868035240478417e-08,
+              0.08889981073789582,
+              -1.0926149559306424e-07
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.7716948451350133,
+            "torsion_shear_estimate_MPa": 2.5034940868830235e-07,
+            "transverse_shear_bound_MPa": 0.08241233413106762,
+            "von_mises_bound_MPa": 0.7847855989059732,
+            "stress_with_concentration_2_MPa": 1.5695711978119464,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.7087135934358395,
+            "margin_to_assumed_8_MPa": 1.698977829348628,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.002829800110848796,
+              0.2442102244148734,
+              1.5630091946472806
+            ],
+            "moment_about_section_local_Nm": [
+              -0.0022635280514986516,
+              0.053128613614403894,
+              -0.010821426742888433
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.47091469967088184,
+            "torsion_shear_estimate_MPa": 0.03811350323540385,
+            "transverse_shear_bound_MPa": 0.054231027577173255,
+            "von_mises_bound_MPa": 0.49733609508973087,
+            "stress_with_concentration_2_MPa": 0.9946721901794617,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.984016570538385,
+            "margin_to_assumed_8_MPa": 2.680950259789146,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "left_arm",
+      "section": "front_toe",
+      "force_component_abs_envelope_N": [
+        0.22407124229029607,
+        0.30311492558452546,
+        1.8685058630098412
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.016909709310535644,
+        0.016635793416900153,
+        0.005239652865143501
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.3374539480328551,
+        "torsion_shear_estimate_MPa": 0.17553933647991762,
+        "transverse_shear_bound_MPa": 0.031935599832270095,
+        "von_mises_bound_MPa": 0.4929631980545809,
+        "stress_with_concentration_2_MPa": 0.9859263961091618,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.9577791883274855,
+        "margin_to_assumed_8_MPa": 2.704731993372265,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 11.022,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              0.021364831083291153,
+              0.026797975240157628,
+              1.0001965783792335
+            ],
+            "moment_about_section_local_Nm": [
+              -0.016909709310535644,
+              -0.009076417444730733,
+              0.0006043838842359808
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.17922407549133149,
+            "torsion_shear_estimate_MPa": 0.17553933647991762,
+            "transverse_shear_bound_MPa": 0.015102861082638105,
+            "von_mises_bound_MPa": 0.37570548533414316,
+            "stress_with_concentration_2_MPa": 0.7514109706682863,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.254232912004859,
+            "margin_to_assumed_8_MPa": 3.548879069858401,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 2.36,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.05227483414467475,
+              0.24118172271539057,
+              1.8685058630098412
+            ],
+            "moment_about_section_local_Nm": [
+              0.011615035714359167,
+              -0.016635793416900153,
+              0.0030539878982871844
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.3319882422433254,
+            "torsion_shear_estimate_MPa": 0.12057544130689546,
+            "transverse_shear_bound_MPa": 0.031024817437135765,
+            "von_mises_bound_MPa": 0.42327781461066977,
+            "stress_with_concentration_2_MPa": 0.8465556292213395,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.5396668876640187,
+            "margin_to_assumed_8_MPa": 3.150019413513867,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              0.0025508279885286533,
+              -0.30311492558452546,
+              0.8380898654810722
+            ],
+            "moment_about_section_local_Nm": [
+              -0.004018329531721902,
+              -0.0075522936640062596,
+              -0.005239652865143501
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.15717434097315358,
+            "torsion_shear_estimate_MPa": 0.0417141943011779,
+            "transverse_shear_bound_MPa": 0.016782423398023494,
+            "von_mises_bound_MPa": 0.18700089921464202,
+            "stress_with_concentration_2_MPa": 0.37400179842928405,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.1220053952878521,
+            "margin_to_assumed_8_MPa": 7.130090491184838,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "left_arm",
+      "section": "root",
+      "force_component_abs_envelope_N": [
+        0.28734863329011046,
+        0.2895047248989002,
+        3.683353638858648
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.14059196245111902,
+        0.06515095344874637,
+        0.02278182441936922
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.3544292641179086,
+        "torsion_shear_estimate_MPa": 0.14264997548201896,
+        "transverse_shear_bound_MPa": 0.028634872154918938,
+        "von_mises_bound_MPa": 0.462207313175797,
+        "stress_with_concentration_2_MPa": 0.924414626351594,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.7732438790547818,
+        "margin_to_assumed_8_MPa": 2.8847084313142624,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 2.36,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.09705324664220968,
+              0.28454149637197473,
+              3.0863355290870387
+            ],
+            "moment_about_section_base_Nm": [
+              0.14059196245111902,
+              -0.06489724192519628,
+              0.01591979358524316
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.34203395262115766,
+            "torsion_shear_estimate_MPa": 0.14209446645723703,
+            "transverse_shear_bound_MPa": 0.02295713059420131,
+            "von_mises_bound_MPa": 0.44577271542047464,
+            "stress_with_concentration_2_MPa": 0.8915454308409493,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.6746362925228477,
+            "margin_to_assumed_8_MPa": 2.991060886433276,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 2.2,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.0900484214254588,
+              0.236961524925909,
+              3.063618136864983
+            ],
+            "moment_about_section_base_Nm": [
+              0.12770687387710097,
+              -0.06515095344874637,
+              0.017048235161644176
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.31524847984454807,
+            "torsion_shear_estimate_MPa": 0.14264997548201896,
+            "transverse_shear_bound_MPa": 0.022742787679979146,
+            "von_mises_bound_MPa": 0.42596467267061106,
+            "stress_with_concentration_2_MPa": 0.8519293453412221,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.5557880360236664,
+            "margin_to_assumed_8_MPa": 3.130150030926086,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.0034576843405209065,
+              -0.058904701169652095,
+              2.401102599250395
+            ],
+            "moment_about_section_base_Nm": [
+              0.05109125197914356,
+              0.02861039390428176,
+              -0.02278182441936922
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.15472435911038898,
+            "torsion_shear_estimate_MPa": 0.06264331944408758,
+            "transverse_shear_bound_MPa": 0.01734057896820372,
+            "von_mises_bound_MPa": 0.20768220751379693,
+            "stress_with_concentration_2_MPa": 0.41536441502759386,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.2460932450827815,
+            "margin_to_assumed_8_MPa": 6.420065297335383,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "left_arm",
+      "section": "notch",
+      "force_component_abs_envelope_N": [
+        0.28734863329011046,
+        0.2895047248989002,
+        3.683353638858648
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.12207394927659675,
+        0.06821457158561132,
+        0.02281998301449575
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.36489736367275677,
+        "torsion_shear_estimate_MPa": 0.1916779910399602,
+        "transverse_shear_bound_MPa": 0.032725568177050204,
+        "von_mises_bound_MPa": 0.533123773792836,
+        "stress_with_concentration_2_MPa": 1.066247547585672,
+        "stress_with_concentration_2_and_reserve_3_MPa": 3.1987426427570163,
+        "margin_to_assumed_8_MPa": 2.500982696471245,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 2.36,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.09705324664220968,
+              0.28454149637197473,
+              3.0863355290870387
+            ],
+            "moment_about_section_base_Nm": [
+              0.12207394927659675,
+              -0.0679835774542833,
+              0.015622015601761874
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.34792040540125746,
+            "torsion_shear_estimate_MPa": 0.19102891431037305,
+            "transverse_shear_bound_MPa": 0.02623672067908721,
+            "von_mises_bound_MPa": 0.5125052945450373,
+            "stress_with_concentration_2_MPa": 1.0250105890900747,
+            "stress_with_concentration_2_and_reserve_3_MPa": 3.0750317672702243,
+            "margin_to_assumed_8_MPa": 2.6015991396088185,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 2.2,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.0900484214254588,
+              0.236961524925909,
+              3.063618136864983
+            ],
+            "moment_about_section_base_Nm": [
+              0.10932516505591104,
+              -0.06821457158561132,
+              0.016744906158017332
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.3179731778335465,
+            "torsion_shear_estimate_MPa": 0.1916779910399602,
+            "transverse_shear_bound_MPa": 0.025991757348547598,
+            "von_mises_bound_MPa": 0.4932010745244916,
+            "stress_with_concentration_2_MPa": 0.9864021490489832,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.9592064471469497,
+            "margin_to_assumed_8_MPa": 2.7034274704669605,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.0034576843405209065,
+              -0.058904701169652095,
+              2.401102599250395
+            ],
+            "moment_about_section_base_Nm": [
+              0.0366846363836412,
+              0.026209291305031364,
+              -0.02281998301449575
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.14708938494654653,
+            "torsion_shear_estimate_MPa": 0.07364620472071073,
+            "transverse_shear_bound_MPa": 0.019817804535089967,
+            "von_mises_bound_MPa": 0.21872779942764145,
+            "stress_with_concentration_2_MPa": 0.4374555988552829,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.3123667965658488,
+            "margin_to_assumed_8_MPa": 6.0958567535647,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "left_arm",
+      "section": "cup_interface",
+      "force_component_abs_envelope_N": [
+        0.28734863329011046,
+        0.2895047248989002,
+        3.683353638858648
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.07963683575164995,
+        0.05753502185407483,
+        0.022295311775339405
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.19134016104119975,
+        "torsion_shear_estimate_MPa": 0.20940290080452034,
+        "transverse_shear_bound_MPa": 0.031614257536532214,
+        "von_mises_bound_MPa": 0.45921549306579396,
+        "stress_with_concentration_2_MPa": 0.9184309861315879,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.755292958394764,
+        "margin_to_assumed_8_MPa": 2.9035025025653924,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 2.36,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.09705324664220968,
+              0.28454149637197473,
+              3.0863355290870387
+            ],
+            "moment_about_section_base_Nm": [
+              0.07963683575164995,
+              -0.04298425966867828,
+              0.011982747339818498
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.1320653609234684,
+            "torsion_shear_estimate_MPa": 0.20940290080452034,
+            "transverse_shear_bound_MPa": 0.026823955109753418,
+            "von_mises_bound_MPa": 0.42994260305449505,
+            "stress_with_concentration_2_MPa": 0.8598852061089901,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.5796556183269703,
+            "margin_to_assumed_8_MPa": 3.1011891444596706,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 10.84,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.20566921715685027,
+              -0.05021837426679732,
+              1.6079670476474641
+            ],
+            "moment_about_section_base_Nm": [
+              -0.0003274983163454045,
+              0.05753502185407483,
+              -0.0052741649768183255
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.15354221635079135,
+            "torsion_shear_estimate_MPa": 0.0008611479449684603,
+            "transverse_shear_bound_MPa": 0.013195109458203673,
+            "von_mises_bound_MPa": 0.15546043650545277,
+            "stress_with_concentration_2_MPa": 0.31092087301090554,
+            "stress_with_concentration_2_and_reserve_3_MPa": 0.9327626190327166,
+            "margin_to_assumed_8_MPa": 8.576673032090493,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.0034576843405209065,
+              -0.058904701169652095,
+              2.401102599250395
+            ],
+            "moment_about_section_base_Nm": [
+              0.003669475643948304,
+              0.04565822235895955,
+              -0.022295311775339405
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.16075400339703066,
+            "torsion_shear_estimate_MPa": 0.00964878673319702,
+            "transverse_shear_bound_MPa": 0.01957565491050435,
+            "von_mises_bound_MPa": 0.1685350218095066,
+            "stress_with_concentration_2_MPa": 0.3370700436190132,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.0112101308570396,
+            "margin_to_assumed_8_MPa": 7.911313144400256,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "right_arm",
+      "section": "rear_extension",
+      "force_component_abs_envelope_N": [
+        0.18667395376050294,
+        0.2462734773978194,
+        2.6375047733273016
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.014121207754560057,
+        0.08889982970092924,
+        0.010902671742907401
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.7825143188464808,
+        "torsion_shear_estimate_MPa": 0.23777425558516666,
+        "transverse_shear_bound_MPa": 0.08785452734437126,
+        "von_mises_bound_MPa": 0.9645884987995079,
+        "stress_with_concentration_2_MPa": 1.9291769975990158,
+        "stress_with_concentration_2_and_reserve_3_MPa": 5.7875309927970475,
+        "margin_to_assumed_8_MPa": 1.3822820145510255,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 13.26,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              -0.0014072612667906752,
+              0.0034274212563293618,
+              0.8297214268749348
+            ],
+            "moment_about_section_local_Nm": [
+              0.014121207754560057,
+              0.028217076187745348,
+              -9.260888717006597e-05
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.24456177123753267,
+            "torsion_shear_estimate_MPa": 0.23777425558516666,
+            "transverse_shear_bound_MPa": 0.026004399470496032,
+            "von_mises_bound_MPa": 0.5182161677714833,
+            "stress_with_concentration_2_MPa": 1.0364323355429665,
+            "stress_with_concentration_2_and_reserve_3_MPa": 3.1092970066289,
+            "margin_to_assumed_8_MPa": 2.5729288591422153,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 6.96,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.16621678636179282,
+              3.3098091659992246e-06,
+              2.637192863074196
+            ],
+            "moment_about_section_local_Nm": [
+              1.4868090765507436e-08,
+              0.08889982970092924,
+              -1.0926191169706445e-07
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.7716950061698975,
+            "torsion_shear_estimate_MPa": 2.503503436240862e-07,
+            "transverse_shear_bound_MPa": 0.08241234998156494,
+            "von_mises_bound_MPa": 0.7847857622484998,
+            "stress_with_concentration_2_MPa": 1.5695715244969997,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.708714573490999,
+            "margin_to_assumed_8_MPa": 1.6989774757294052,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.015672719635621946,
+              0.2462734773978194,
+              1.8032724955169197
+            ],
+            "moment_about_section_local_Nm": [
+              -0.002293319744472163,
+              0.061238344527918605,
+              -0.010902671742907401
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.5413705234580377,
+            "torsion_shear_estimate_MPa": 0.03861513862966472,
+            "transverse_shear_bound_MPa": 0.06178476866279682,
+            "von_mises_bound_MPa": 0.5686145160143508,
+            "stress_with_concentration_2_MPa": 1.1372290320287015,
+            "stress_with_concentration_2_and_reserve_3_MPa": 3.4116870960861045,
+            "margin_to_assumed_8_MPa": 2.344880926852178,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "right_arm",
+      "section": "front_toe",
+      "force_component_abs_envelope_N": [
+        0.40567493995358894,
+        0.3249006866611563,
+        2.177339875302664
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.012186421479981075,
+        0.019936130809248886,
+        0.005448371450846965
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.4043079791500658,
+        "torsion_shear_estimate_MPa": 0.12650698491473542,
+        "transverse_shear_bound_MPa": 0.036797655322997364,
+        "von_mises_bound_MPa": 0.49342695363542516,
+        "stress_with_concentration_2_MPa": 0.9868539072708503,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.960561721812551,
+        "margin_to_assumed_8_MPa": 2.7021899057392877,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 13.098,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.3859122728542722,
+              -0.02123864806317041,
+              1.6642718413700373
+            ],
+            "moment_about_section_local_Nm": [
+              -0.012186421479981075,
+              -0.013632310241045359,
+              0.000162129763088019
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.27136415578046647,
+            "torsion_shear_estimate_MPa": 0.12650698491473542,
+            "transverse_shear_bound_MPa": 0.024786918962253053,
+            "von_mises_bound_MPa": 0.37723738029715925,
+            "stress_with_concentration_2_MPa": 0.7544747605943185,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.2634242817829557,
+            "margin_to_assumed_8_MPa": 3.534467693214902,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 12.962,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              0.09781394317759273,
+              0.07620096339874069,
+              2.177339875302664
+            ],
+            "moment_about_section_local_Nm": [
+              -0.0026957465088680854,
+              -0.019936130809248886,
+              0.0013353956784553675
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.39417385904489466,
+            "torsion_shear_estimate_MPa": 0.027984487775311637,
+            "transverse_shear_bound_MPa": 0.03314030645149125,
+            "von_mises_bound_MPa": 0.40814427910011364,
+            "stress_with_concentration_2_MPa": 0.8162885582002273,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.4488656746006816,
+            "margin_to_assumed_8_MPa": 3.2668186266706933,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.24,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              0.022522305336466444,
+              -0.3249006866611563,
+              1.4085291378475913
+            ],
+            "moment_about_section_local_Nm": [
+              -0.0045253321056396845,
+              -0.012755475918685772,
+              -0.005448371450846965
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2597544260545427,
+            "torsion_shear_estimate_MPa": 0.04697737735091175,
+            "transverse_shear_bound_MPa": 0.02549161506630511,
+            "von_mises_bound_MPa": 0.28849198678789123,
+            "stress_with_concentration_2_MPa": 0.5769839735757825,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.7309519207273474,
+            "margin_to_assumed_8_MPa": 4.621734378756398,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "right_arm",
+      "section": "root",
+      "force_component_abs_envelope_N": [
+        0.4071101909276112,
+        0.10301871517793677,
+        3.6283054462895263
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.10870276520347517,
+        0.040658415353589765,
+        0.02255376597188262
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.2823614806328003,
+        "torsion_shear_estimate_MPa": 0.08902282539717654,
+        "transverse_shear_bound_MPa": 0.029101555076085125,
+        "von_mises_bound_MPa": 0.348694871673965,
+        "stress_with_concentration_2_MPa": 0.69738974334793,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.09216923004379,
+        "margin_to_assumed_8_MPa": 3.823782457517816,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 4.36,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.10166790028838697,
+              -0.09946220361482055,
+              3.372821203610034
+            ],
+            "moment_about_section_base_Nm": [
+              -0.10870276520347517,
+              -0.0062417423572631876,
+              -0.014181133504500997
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2672494917538041,
+            "torsion_shear_estimate_MPa": 0.013666482946088118,
+            "transverse_shear_bound_MPa": 0.025056411806959764,
+            "von_mises_bound_MPa": 0.2755370729626659,
+            "stress_with_concentration_2_MPa": 0.5510741459253318,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.6532224377759954,
+            "margin_to_assumed_8_MPa": 4.839034250443658,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 12.962,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.18964079190809752,
+              0.006285427955725949,
+              3.5891331361066925
+            ],
+            "moment_about_section_base_Nm": [
+              -0.10204494967070564,
+              -0.040658415353589765,
+              0.011143835574964817
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.24655236945843628,
+            "torsion_shear_estimate_MPa": 0.08902282539717654,
+            "transverse_shear_bound_MPa": 0.027250773519337426,
+            "von_mises_bound_MPa": 0.31834999654556984,
+            "stress_with_concentration_2_MPa": 0.6366999930911397,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.910099979273419,
+            "margin_to_assumed_8_MPa": 4.188262440086048,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.02942380396736686,
+              -0.07587174023690191,
+              3.2080035043496116
+            ],
+            "moment_about_section_base_Nm": [
+              -0.10296124820382528,
+              0.016898252238949148,
+              -0.02255376597188262
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2694909138161831,
+            "torsion_shear_estimate_MPa": 0.03699923239759512,
+            "transverse_shear_bound_MPa": 0.023346831550362823,
+            "von_mises_bound_MPa": 0.28905067882901525,
+            "stress_with_concentration_2_MPa": 0.5781013576580305,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.7343040729740915,
+            "margin_to_assumed_8_MPa": 4.612801252482275,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "right_arm",
+      "section": "notch",
+      "force_component_abs_envelope_N": [
+        0.4071101909276112,
+        0.10301871517793677,
+        3.6283054462895263
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.08846583798181495,
+        0.04424754848969646,
+        0.022806180535923724
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.278612543123925,
+        "torsion_shear_estimate_MPa": 0.12433239710820411,
+        "transverse_shear_bound_MPa": 0.03325892008695443,
+        "von_mises_bound_MPa": 0.3900384839370292,
+        "stress_with_concentration_2_MPa": 0.7800769678740584,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.3402309036221753,
+        "margin_to_assumed_8_MPa": 3.418466095639416,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 4.36,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.10166790028838697,
+              -0.09946220361482055,
+              3.372821203610034
+            ],
+            "moment_about_section_base_Nm": [
+              -0.08846583798181495,
+              -0.009614563560873226,
+              -0.013670588306385496
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2570806182655604,
+            "torsion_shear_estimate_MPa": 0.027016225202870198,
+            "transverse_shear_bound_MPa": 0.028635899207954018,
+            "von_mises_bound_MPa": 0.2745576827228048,
+            "stress_with_concentration_2_MPa": 0.5491153654456096,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.6473460963368287,
+            "margin_to_assumed_8_MPa": 4.856295843228963,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 12.962,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.18964079190809752,
+              0.006285427955725949,
+              3.5891331361066925
+            ],
+            "moment_about_section_base_Nm": [
+              -0.08051015085406543,
+              -0.04424754848969646,
+              0.010012276251471955
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.22777907762481134,
+            "torsion_shear_estimate_MPa": 0.12433239710820411,
+            "transverse_shear_bound_MPa": 0.031143741164957064,
+            "von_mises_bound_MPa": 0.35270638911226887,
+            "stress_with_concentration_2_MPa": 0.7054127782245377,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.1162383346736133,
+            "margin_to_assumed_8_MPa": 3.7802925449953335,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.02942380396736686,
+              -0.07587174023690191,
+              3.2080035043496116
+            ],
+            "moment_about_section_base_Nm": [
+              -0.08371322717772765,
+              0.013690248734599527,
+              -0.022806180535923724
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2664111164549659,
+            "torsion_shear_estimate_MPa": 0.038468604482724725,
+            "transverse_shear_bound_MPa": 0.026682093200414654,
+            "von_mises_bound_MPa": 0.2893245983261376,
+            "stress_with_concentration_2_MPa": 0.5786491966522752,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.7359475899568255,
+            "margin_to_assumed_8_MPa": 4.608434060039201,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_swing_release",
+      "arm": "right_arm",
+      "section": "cup_interface",
+      "force_component_abs_envelope_N": [
+        0.4071101909276112,
+        0.10301871517793677,
+        3.6283054462895263
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.04208954643217695,
+        0.05242834235846778,
+        0.022596196744556114
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.18013239809615006,
+        "torsion_shear_estimate_MPa": 0.11067332137517528,
+        "transverse_shear_bound_MPa": 0.02969223470663764,
+        "von_mises_bound_MPa": 0.30258081374459217,
+        "stress_with_concentration_2_MPa": 0.6051616274891843,
+        "stress_with_concentration_2_and_reserve_3_MPa": 1.815484882467553,
+        "margin_to_assumed_8_MPa": 4.406536279788042,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 4.36,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.10166790028838697,
+              -0.09946220361482055,
+              3.372821203610034
+            ],
+            "moment_about_section_base_Nm": [
+              -0.04208954643217695,
+              0.017705288188368088,
+              -0.011467010828140126
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.06906264917609535,
+            "torsion_shear_estimate_MPa": 0.11067332137517528,
+            "transverse_shear_bound_MPa": 0.027630902444760116,
+            "von_mises_bound_MPa": 0.2493066876169285,
+            "stress_with_concentration_2_MPa": 0.498613375233857,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.495840125701571,
+            "margin_to_assumed_8_MPa": 5.348165129778079,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 10.758000000000001,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.011198440316729265,
+              0.009031764725420421,
+              2.7745843881282113
+            ],
+            "moment_about_section_base_Nm": [
+              -0.01899273526498104,
+              0.05242834235846778,
+              0.0002980167878069433
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.1290833538724776,
+            "torsion_shear_estimate_MPa": 0.04994088252202989,
+            "transverse_shear_bound_MPa": 0.02215079166727028,
+            "von_mises_bound_MPa": 0.17959437827843025,
+            "stress_with_concentration_2_MPa": 0.3591887565568605,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.0775662696705814,
+            "margin_to_assumed_8_MPa": 7.42413735950147,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.28,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.02942380396736686,
+              -0.07587174023690191,
+              3.2080035043496116
+            ],
+            "moment_about_section_base_Nm": [
+              -0.039603178992920526,
+              0.03967507711983135,
+              -0.022596196744556114
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.14690264316356416,
+            "torsion_shear_estimate_MPa": 0.10413548559438315,
+            "transverse_shear_bound_MPa": 0.026131633246046528,
+            "von_mises_bound_MPa": 0.2692377264080971,
+            "stress_with_concentration_2_MPa": 0.5384754528161942,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.6154263584485826,
+            "margin_to_assumed_8_MPa": 4.952252981487198,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "left_arm",
+      "section": "rear_extension",
+      "force_component_abs_envelope_N": [
+        0.41725050201825087,
+        0.06788848693717925,
+        1.3584791476868157
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.006807780052674671,
+        0.04428204137437332,
+        0.003081577718118374
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.39028166662016484,
+        "torsion_shear_estimate_MPa": 0.11463005589515153,
+        "transverse_shear_bound_MPa": 0.043950013518239,
+        "von_mises_bound_MPa": 0.4772448999678056,
+        "stress_with_concentration_2_MPa": 0.9544897999356112,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.8634693998068337,
+        "margin_to_assumed_8_MPa": 2.7938136864810468,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 11.382,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.294685660792786,
+              -0.03835670184472117,
+              0.8027267597002329
+            ],
+            "moment_about_section_local_Nm": [
+              0.006807780052674671,
+              0.02593197288069432,
+              0.0008870454129827339
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2280908106523224,
+            "torsion_shear_estimate_MPa": 0.11463005589515153,
+            "transverse_shear_bound_MPa": 0.025931314957795243,
+            "von_mises_bound_MPa": 0.3336134212411313,
+            "stress_with_concentration_2_MPa": 0.6672268424822626,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.001680527446788,
+            "margin_to_assumed_8_MPa": 3.996641766907866,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 11.8,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.41160650641449054,
+              0.007136445239132157,
+              1.3584791476868157
+            ],
+            "moment_about_section_local_Nm": [
+              0.0005796472495810598,
+              0.04428204137437332,
+              0.00018561595974514455
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.3874060064769016,
+            "torsion_shear_estimate_MPa": 0.009760156189658703,
+            "transverse_shear_bound_MPa": 0.04260989495137031,
+            "von_mises_bound_MPa": 0.39788350132158423,
+            "stress_with_concentration_2_MPa": 0.7957670026431685,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.3873010079295054,
+            "margin_to_assumed_8_MPa": 3.351064643054108,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.4,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.41164180904667325,
+              -0.06788848693717925,
+              1.2730060691606935
+            ],
+            "moment_about_section_local_Nm": [
+              0.00399836598977138,
+              0.04138143408318814,
+              0.003081577718118374
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.36510134908988806,
+            "torsion_shear_estimate_MPa": 0.06732487144861476,
+            "transverse_shear_bound_MPa": 0.041278979814297685,
+            "von_mises_bound_MPa": 0.41071082848479507,
+            "stress_with_concentration_2_MPa": 0.8214216569695901,
+            "stress_with_concentration_2_and_reserve_3_MPa": 2.4642649709087703,
+            "margin_to_assumed_8_MPa": 3.246404138532945,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "left_arm",
+      "section": "front_toe",
+      "force_component_abs_envelope_N": [
+        0.3539050338168723,
+        0.14152563063972895,
+        1.738408593379512
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.01356147676505637,
+        0.014425542831491903,
+        0.005305790426583473
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.29550300641601035,
+        "torsion_shear_estimate_MPa": 0.14078140489041951,
+        "transverse_shear_bound_MPa": 0.027646091529694716,
+        "von_mises_bound_MPa": 0.4152414857067432,
+        "stress_with_concentration_2_MPa": 0.8304829714134864,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.491448914240459,
+        "margin_to_assumed_8_MPa": 3.210982956252536,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 11.32,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.3539050338168723,
+              -0.07895365074100397,
+              0.8139076213134989
+            ],
+            "moment_about_section_local_Nm": [
+              0.01356147676505637,
+              -0.0060928357756823,
+              0.005305790426583473
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.1321165935569985,
+            "torsion_shear_estimate_MPa": 0.14078140489041951,
+            "transverse_shear_bound_MPa": 0.013130312824330926,
+            "von_mises_bound_MPa": 0.29752520034918084,
+            "stress_with_concentration_2_MPa": 0.5950504006983617,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.785151202095085,
+            "margin_to_assumed_8_MPa": 4.481413109775272,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 1.48,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.35080877593654247,
+              7.121690677259307e-08,
+              1.738408593379512
+            ],
+            "moment_about_section_local_Nm": [
+              1.5123533624386565e-07,
+              -0.014425542831491903,
+              2.931095496525038e-10
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.28629308324162317,
+            "torsion_shear_estimate_MPa": 1.56997084272908e-06,
+            "transverse_shear_bound_MPa": 0.02556483330288851,
+            "von_mises_bound_MPa": 0.2896975188728066,
+            "stress_with_concentration_2_MPa": 0.5793950377456132,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.7381851132368396,
+            "margin_to_assumed_8_MPa": 4.602501735331538,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.32,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.3539050338168723,
+              -0.07895365074100397,
+              0.8139076213134989
+            ],
+            "moment_about_section_local_Nm": [
+              0.01356147676505637,
+              -0.0060928357756823,
+              0.005305790426583473
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.1321165935569985,
+            "torsion_shear_estimate_MPa": 0.14078140489041951,
+            "transverse_shear_bound_MPa": 0.013130312824330926,
+            "von_mises_bound_MPa": 0.29752520034918084,
+            "stress_with_concentration_2_MPa": 0.5950504006983617,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.785151202095085,
+            "margin_to_assumed_8_MPa": 4.481413109775272,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "left_arm",
+      "section": "root",
+      "force_component_abs_envelope_N": [
+        0.4220384246029818,
+        0.12993831556819607,
+        1.7387695361317501
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.04694693734352492,
+        0.05843390454808659,
+        0.01094079119067846
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.12452188580550796,
+        "torsion_shear_estimate_MPa": 0.12794279453885082,
+        "transverse_shear_bound_MPa": 0.01558274971683701,
+        "von_mises_bound_MPa": 0.2780367702413373,
+        "stress_with_concentration_2_MPa": 0.5560735404826747,
+        "stress_with_concentration_2_and_reserve_3_MPa": 1.668220621448024,
+        "margin_to_assumed_8_MPa": 4.795528779074772,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 1.48,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.34901537936028926,
+              7.121690677259307e-08,
+              1.7387695361317501
+            ],
+            "moment_about_section_base_Nm": [
+              0.04694693734352492,
+              -0.05209098776163776,
+              0.009423418655288654
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.12116153510780381,
+            "torsion_shear_estimate_MPa": 0.1140547871318184,
+            "transverse_shear_bound_MPa": 0.015056141217490668,
+            "von_mises_bound_MPa": 0.2543403488386002,
+            "stress_with_concentration_2_MPa": 0.5086806976772004,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.526042093031601,
+            "margin_to_assumed_8_MPa": 5.242319354446757,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 1.85,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.20428892897404555,
+              -1.2742665191253167e-07,
+              1.5992396202403287
+            ],
+            "moment_about_section_base_Nm": [
+              0.04317983387267117,
+              -0.05843390454808659,
+              -0.005515809511710444
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.10575760956440901,
+            "torsion_shear_estimate_MPa": 0.12794279453885082,
+            "transverse_shear_bound_MPa": 0.013006215499142122,
+            "von_mises_bound_MPa": 0.26605364547934446,
+            "stress_with_concentration_2_MPa": 0.5321072909586889,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.5963218728760666,
+            "margin_to_assumed_8_MPa": 5.011520631228671,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 11.76,
+            "section_point_base_m": [
+              -0.0005,
+              0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.42156131780581574,
+              0.006719737992499107,
+              1.3562718353500383
+            ],
+            "moment_about_section_base_Nm": [
+              0.03801653109272517,
+              -0.044594422591522465,
+              -0.01094079119067846
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.10411349859645376,
+            "torsion_shear_estimate_MPa": 0.09764083183095579,
+            "transverse_shear_bound_MPa": 0.012820912162181638,
+            "von_mises_bound_MPa": 0.21781875779649942,
+            "stress_with_concentration_2_MPa": 0.43563751559299885,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.3069125467789966,
+            "margin_to_assumed_8_MPa": 6.121297113350636,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "left_arm",
+      "section": "notch",
+      "force_component_abs_envelope_N": [
+        0.4220384246029818,
+        0.12993831556819607,
+        1.7387695361317501
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.03805418950458077,
+        0.06004245581646481,
+        0.00925160287628766
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.11900210470259129,
+        "torsion_shear_estimate_MPa": 0.16871493935224147,
+        "transverse_shear_bound_MPa": 0.017808856819242297,
+        "von_mises_bound_MPa": 0.3442889491957448,
+        "stress_with_concentration_2_MPa": 0.6885778983914896,
+        "stress_with_concentration_2_and_reserve_3_MPa": 2.065733695174469,
+        "margin_to_assumed_8_MPa": 3.8727160324140093,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 11.544,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.2140278190329976,
+              0.05241372834779156,
+              1.288605942379613
+            ],
+            "moment_about_section_base_Nm": [
+              0.03805418950458077,
+              -0.04715141781501157,
+              0.0017542309117319773
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.10092142338060552,
+            "torsion_shear_estimate_MPa": 0.1324920589748832,
+            "transverse_shear_bound_MPa": 0.012384344187466572,
+            "von_mises_bound_MPa": 0.27046746620794626,
+            "stress_with_concentration_2_MPa": 0.5409349324158925,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.6228047972476776,
+            "margin_to_assumed_8_MPa": 4.929736474508964,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 1.848,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.15952557941103615,
+              -9.428977264342878e-08,
+              1.609048570502415
+            ],
+            "moment_about_section_base_Nm": [
+              0.033790389355266175,
+              -0.06004245581646481,
+              -0.003350043270222165
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.09357855627582497,
+            "torsion_shear_estimate_MPa": 0.16871493935224147,
+            "transverse_shear_bound_MPa": 0.014576160576209762,
+            "von_mises_bound_MPa": 0.33097405960832066,
+            "stress_with_concentration_2_MPa": 0.6619481192166413,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.985844357649924,
+            "margin_to_assumed_8_MPa": 4.028513095289759,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 2.16,
+            "section_point_base_m": [
+              -0.0015,
+              0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.16649855497544674,
+              -0.046518669934468626,
+              0.2702374927282458
+            ],
+            "moment_about_section_base_Nm": [
+              0.004568136535569073,
+              -0.0373944877476747,
+              -0.00925160287628766
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.033625615603982396,
+            "torsion_shear_estimate_MPa": 0.10507579423037224,
+            "transverse_shear_bound_MPa": 0.0035994729206348286,
+            "von_mises_bound_MPa": 0.1912109387450808,
+            "stress_with_concentration_2_MPa": 0.3824218774901616,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.1472656324704849,
+            "margin_to_assumed_8_MPa": 6.973101759156733,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "left_arm",
+      "section": "cup_interface",
+      "force_component_abs_envelope_N": [
+        0.4220384246029818,
+        0.12993831556819607,
+        1.7387695361317501
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.02094933611044045,
+        0.047079303244380276,
+        0.00805813759984348
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.1352007924656203,
+        "torsion_shear_estimate_MPa": 0.05508571140540613,
+        "transverse_shear_bound_MPa": 0.014870354257559256,
+        "von_mises_bound_MPa": 0.18155111581164987,
+        "stress_with_concentration_2_MPa": 0.36310223162329974,
+        "stress_with_concentration_2_and_reserve_3_MPa": 1.0893066948698993,
+        "margin_to_assumed_8_MPa": 7.344120840968002,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 11.48,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.28134043367009665,
+              0.039448730331694486,
+              1.1995338636558972
+            ],
+            "moment_about_section_base_Nm": [
+              0.02094933611044045,
+              -0.03562100618159764,
+              0.0026627779815558855
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.09455514053028355,
+            "torsion_shear_estimate_MPa": 0.05508571140540613,
+            "transverse_shear_bound_MPa": 0.009859277936240782,
+            "von_mises_bound_MPa": 0.1469497516924121,
+            "stress_with_concentration_2_MPa": 0.2938995033848242,
+            "stress_with_concentration_2_and_reserve_3_MPa": 0.8816985101544725,
+            "margin_to_assumed_8_MPa": 9.073396300282292,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 1.85,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.20428892897404555,
+              -1.2742665191253167e-07,
+              1.5992396202403287
+            ],
+            "moment_about_section_base_Nm": [
+              0.011594851372924646,
+              -0.047079303244380276,
+              -0.0014811022597438135
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.11960778790064544,
+            "torsion_shear_estimate_MPa": 0.03048834737054946,
+            "transverse_shear_bound_MPa": 0.01272604573740303,
+            "von_mises_bound_MPa": 0.1410973927524947,
+            "stress_with_concentration_2_MPa": 0.2821947855049894,
+            "stress_with_concentration_2_and_reserve_3_MPa": 0.8465843565149682,
+            "margin_to_assumed_8_MPa": 9.449737570078232,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 2.132,
+            "section_point_base_m": [
+              0.0066,
+              0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.059721129352152194,
+              -0.11028228024525527,
+              0.9283777776048051
+            ],
+            "moment_about_section_base_Nm": [
+              0.002137745976630752,
+              -0.02935143963238717,
+              -0.00805813759984348
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.08987236703806697,
+            "torsion_shear_estimate_MPa": 0.00562114509528836,
+            "transverse_shear_bound_MPa": 0.00826519939933735,
+            "von_mises_bound_MPa": 0.09303512265427123,
+            "stress_with_concentration_2_MPa": 0.18607024530854246,
+            "stress_with_concentration_2_and_reserve_3_MPa": 0.5582107359256274,
+            "margin_to_assumed_8_MPa": 14.331505084248095,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "right_arm",
+      "section": "rear_extension",
+      "force_component_abs_envelope_N": [
+        0.39698074170185993,
+        0.3790501260941251,
+        1.5073010987578828
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.02452733568034493,
+        0.05073456334416149,
+        0.007919244047791504
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.4507365111025611,
+        "torsion_shear_estimate_MPa": 0.41299363937183337,
+        "transverse_shear_bound_MPa": 0.055464559176495426,
+        "von_mises_bound_MPa": 0.9281824463985222,
+        "stress_with_concentration_2_MPa": 1.8563648927970444,
+        "stress_with_concentration_2_and_reserve_3_MPa": 5.569094678391133,
+        "margin_to_assumed_8_MPa": 1.4364991909800204,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 2.2800000000000002,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.04190796469121001,
+              0.12996330937711556,
+              1.4076165339385107
+            ],
+            "moment_about_section_local_Nm": [
+              0.02452733568034493,
+              0.04766611530468909,
+              -0.00513118213211144
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.4183676615595058,
+            "torsion_shear_estimate_MPa": 0.41299363937183337,
+            "transverse_shear_bound_MPa": 0.04685485439242659,
+            "von_mises_bound_MPa": 0.8996740586960064,
+            "stress_with_concentration_2_MPa": 1.7993481173920127,
+            "stress_with_concentration_2_and_reserve_3_MPa": 5.398044352176038,
+            "margin_to_assumed_8_MPa": 1.4820182047550372,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 2.242,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              0.11145081023297536,
+              0.08591676230749654,
+              1.5073010987578828
+            ],
+            "moment_about_section_local_Nm": [
+              0.020021398909443176,
+              0.05073456334416149,
+              -0.004582948653940428
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.44501819246876256,
+            "torsion_shear_estimate_MPa": 0.33712224224795656,
+            "transverse_shear_bound_MPa": 0.04899838203414333,
+            "von_mises_bound_MPa": 0.8033110238980666,
+            "stress_with_concentration_2_MPa": 1.6066220477961333,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.8198661433884,
+            "margin_to_assumed_8_MPa": 1.6597971317053928,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 2.6,
+            "section_point_relative_palm_m": [
+              -0.011,
+              0.0,
+              -0.007344827586
+            ],
+            "force_local_N": [
+              -0.09171433979103638,
+              0.27877532350194706,
+              1.2047471472535123
+            ],
+            "moment_about_section_local_Nm": [
+              0.02176153260675496,
+              0.04138289977007322,
+              -0.007919244047791504
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.365497246193548,
+            "torsion_shear_estimate_MPa": 0.3664227809616768,
+            "transverse_shear_bound_MPa": 0.04379780401715638,
+            "von_mises_bound_MPa": 0.7990187870107907,
+            "stress_with_concentration_2_MPa": 1.5980375740215813,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.794112722064744,
+            "margin_to_assumed_8_MPa": 1.6687133707099264,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "right_arm",
+      "section": "front_toe",
+      "force_component_abs_envelope_N": [
+        0.35390616088565574,
+        0.6146293792752223,
+        3.4086077944862443
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.0512194108146956,
+        0.029840411905182447,
+        0.008770645440673047
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.603749911091856,
+        "torsion_shear_estimate_MPa": 0.5317076257308635,
+        "transverse_shear_bound_MPa": 0.059165252555315684,
+        "von_mises_bound_MPa": 1.18823660523736,
+        "stress_with_concentration_2_MPa": 2.37647321047472,
+        "stress_with_concentration_2_and_reserve_3_MPa": 7.1294196314241605,
+        "margin_to_assumed_8_MPa": 1.1221109730641474,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 2.96,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.24518388042799005,
+              0.5408193373718125,
+              3.400969076881159
+            ],
+            "moment_about_section_local_Nm": [
+              0.0512194108146956,
+              -0.029769367824837932,
+              0.007857490910160752
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.5997111330693471,
+            "torsion_shear_estimate_MPa": 0.5317076257308635,
+            "transverse_shear_bound_MPa": 0.057967476680190755,
+            "von_mises_bound_MPa": 1.1844001107471167,
+            "stress_with_concentration_2_MPa": 2.3688002214942334,
+            "stress_with_concentration_2_and_reserve_3_MPa": 7.106400664482701,
+            "margin_to_assumed_8_MPa": 1.1257457013342136,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 3.0,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.24463012165703352,
+              0.5708233587005882,
+              3.4086077944862443
+            ],
+            "moment_about_section_local_Nm": [
+              0.05116587252980298,
+              -0.029840411905182447,
+              0.008260678457953466
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.6017962815560745,
+            "torsion_shear_estimate_MPa": 0.5311518459221315,
+            "transverse_shear_bound_MPa": 0.0585210463703946,
+            "von_mises_bound_MPa": 1.1854539738887448,
+            "stress_with_concentration_2_MPa": 2.3709079477774897,
+            "stress_with_concentration_2_and_reserve_3_MPa": 7.1127238433324695,
+            "margin_to_assumed_8_MPa": 1.1247449185728293,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 3.12,
+            "section_point_relative_palm_m": [
+              0.011,
+              0.0,
+              -0.0085
+            ],
+            "force_local_N": [
+              -0.23632500530754957,
+              0.6146293792752223,
+              3.3738158715930266
+            ],
+            "moment_about_section_local_Nm": [
+              0.050230883055015246,
+              -0.029556323686762396,
+              0.008770645440673047
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.5970267974406972,
+            "torsion_shear_estimate_MPa": 0.5214457398616514,
+            "transverse_shear_bound_MPa": 0.058653606630415425,
+            "von_mises_bound_MPa": 1.1687543592491385,
+            "stress_with_concentration_2_MPa": 2.337508718498277,
+            "stress_with_concentration_2_and_reserve_3_MPa": 7.012526155494831,
+            "margin_to_assumed_8_MPa": 1.14081570929064,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "right_arm",
+      "section": "root",
+      "force_component_abs_envelope_N": [
+        0.47078557253911985,
+        0.8015661708931056,
+        4.479573907974216
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.07767625918607445,
+        0.15059226331246336,
+        0.032174405796824145
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.2342189880168546,
+        "torsion_shear_estimate_MPa": 0.3297262976543285,
+        "transverse_shear_bound_MPa": 0.035699707792163485,
+        "von_mises_bound_MPa": 0.6748829755723419,
+        "stress_with_concentration_2_MPa": 1.3497659511446838,
+        "stress_with_concentration_2_and_reserve_3_MPa": 4.049297853434052,
+        "margin_to_assumed_8_MPa": 1.9756511596734017,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 10.28,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              0.3026867455891066,
+              -0.5122236357701014,
+              1.4875209875701456
+            ],
+            "moment_about_section_base_Nm": [
+              -0.07767625918607445,
+              -0.05503146576955146,
+              -0.01312346913955372
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.19848127752839587,
+            "torsion_shear_estimate_MPa": 0.1204930523225848,
+            "transverse_shear_bound_MPa": 0.01291015192182153,
+            "von_mises_bound_MPa": 0.3046047639767449,
+            "stress_with_concentration_2_MPa": 0.6092095279534898,
+            "stress_with_concentration_2_and_reserve_3_MPa": 1.8276285838604696,
+            "margin_to_assumed_8_MPa": 4.3772569933775785,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 3.0,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.47078557253911985,
+              0.7841924347027068,
+              4.479573907974216
+            ],
+            "moment_about_section_base_Nm": [
+              0.04256837496106501,
+              -0.15059226331246336,
+              0.029017327314095915
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.1505415022462067,
+            "torsion_shear_estimate_MPa": 0.3297262976543285,
+            "transverse_shear_bound_MPa": 0.035699707792163485,
+            "von_mises_bound_MPa": 0.6505929912535819,
+            "stress_with_concentration_2_MPa": 1.3011859825071639,
+            "stress_with_concentration_2_and_reserve_3_MPa": 3.9035579475214917,
+            "margin_to_assumed_8_MPa": 2.0494123841762066,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 3.12,
+            "section_point_base_m": [
+              -0.0005,
+              -0.029,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.46189326625853155,
+              0.7985094341530196,
+              4.447786288565432
+            ],
+            "moment_about_section_base_Nm": [
+              0.04413637641411434,
+              -0.14956392790909898,
+              0.032174405796824145
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.159781475365456,
+            "torsion_shear_estimate_MPa": 0.32747472630637237,
+            "transverse_shear_bound_MPa": 0.03540634294344205,
+            "von_mises_bound_MPa": 0.6485199543033565,
+            "stress_with_concentration_2_MPa": 1.297039908606713,
+            "stress_with_concentration_2_and_reserve_3_MPa": 3.891119725820139,
+            "margin_to_assumed_8_MPa": 2.055963466483629,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "right_arm",
+      "section": "notch",
+      "force_component_abs_envelope_N": [
+        0.47078557253911985,
+        0.8015661708931056,
+        4.479573907974216
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.07122764905371311,
+        0.15507183722043763,
+        0.03574427482852835
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.2692024212124036,
+        "torsion_shear_estimate_MPa": 0.4357405981504242,
+        "transverse_shear_bound_MPa": 0.040799666048186835,
+        "von_mises_bound_MPa": 0.868183053159912,
+        "stress_with_concentration_2_MPa": 1.736366106319824,
+        "stress_with_concentration_2_and_reserve_3_MPa": 5.209098318959471,
+        "margin_to_assumed_8_MPa": 1.535774429690169,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 3.08,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.4676885503854936,
+              0.8015661708931056,
+              4.466105599430428
+            ],
+            "moment_about_section_base_Nm": [
+              0.07122764905371311,
+              -0.15460358055302245,
+              0.03521521084903642
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.26795658766571934,
+            "torsion_shear_estimate_MPa": 0.4344248309292146,
+            "transverse_shear_bound_MPa": 0.04066313859738397,
+            "von_mises_bound_MPa": 0.8654053785597678,
+            "stress_with_concentration_2_MPa": 1.7308107571195357,
+            "stress_with_concentration_2_and_reserve_3_MPa": 5.192432271358607,
+            "margin_to_assumed_8_MPa": 1.5407037746313808,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 3.0,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.47078557253911985,
+              0.7841924347027068,
+              4.479573907974216
+            ],
+            "moment_about_section_base_Nm": [
+              0.06944581840891029,
+              -0.15507183722043763,
+              0.03262623318403334
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2572460438901992,
+            "torsion_shear_estimate_MPa": 0.4357405981504242,
+            "transverse_shear_bound_MPa": 0.040799666048186835,
+            "von_mises_bound_MPa": 0.8645504018301099,
+            "stress_with_concentration_2_MPa": 1.7291008036602198,
+            "stress_with_concentration_2_and_reserve_3_MPa": 5.187302410980659,
+            "margin_to_assumed_8_MPa": 1.5422274172921413,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 3.12,
+            "section_point_base_m": [
+              -0.0015,
+              -0.035,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.46189326625853155,
+              0.7985094341530196,
+              4.447786288565432
+            ],
+            "moment_about_section_base_Nm": [
+              0.07082309414550687,
+              -0.15401171419766438,
+              0.03574427482852835
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.2681597048020661,
+            "torsion_shear_estimate_MPa": 0.4327617294639097,
+            "transverse_shear_bound_MPa": 0.04046439193536234,
+            "von_mises_bound_MPa": 0.8624027557952995,
+            "stress_with_concentration_2_MPa": 1.724805511590599,
+            "stress_with_concentration_2_and_reserve_3_MPa": 5.1744165347717965,
+            "margin_to_assumed_8_MPa": 1.5460680341909927,
+            "passed": true
+          }
+        }
+      ]
+    },
+    {
+      "run": "flat_palm_wave_release",
+      "arm": "right_arm",
+      "section": "cup_interface",
+      "force_component_abs_envelope_N": [
+        0.47078557253911985,
+        0.8015661708931056,
+        4.479573907974216
+      ],
+      "moment_component_abs_envelope_Nm": [
+        0.13263660104588135,
+        0.11878728856584647,
+        0.0356273808229437
+      ],
+      "envelope_stress": {
+        "normal_stress_bound_MPa": 0.371554654992067,
+        "torsion_shear_estimate_MPa": 0.34876434692200825,
+        "transverse_shear_bound_MPa": 0.042024987364991946,
+        "von_mises_bound_MPa": 0.7721410318223636,
+        "stress_with_concentration_2_MPa": 1.5442820636447272,
+        "stress_with_concentration_2_and_reserve_3_MPa": 4.632846190934181,
+        "margin_to_assumed_8_MPa": 1.7268002584793034,
+        "passed": true
+      },
+      "coherent_peak_events": [
+        {
+          "component": "x",
+          "event": {
+            "time_s": 3.08,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.4676885503854936,
+              0.8015661708931056,
+              4.466105599430428
+            ],
+            "moment_about_section_base_Nm": [
+              0.13263660104588135,
+              -0.11842812519763606,
+              0.03515324243260281
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.3696179975567272,
+            "torsion_shear_estimate_MPa": 0.34876434692200825,
+            "transverse_shear_bound_MPa": 0.04191781249594323,
+            "von_mises_bound_MPa": 0.7710480615242256,
+            "stress_with_concentration_2_MPa": 1.5420961230484511,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.626288369145353,
+            "margin_to_assumed_8_MPa": 1.729248019504218,
+            "passed": true
+          }
+        },
+        {
+          "component": "y",
+          "event": {
+            "time_s": 3.0,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.47078557253911985,
+              0.7841924347027068,
+              4.479573907974216
+            ],
+            "moment_about_section_base_Nm": [
+              0.13103995964355564,
+              -0.11878728856584647,
+              0.03274757608535431
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.36523293966213516,
+            "torsion_shear_estimate_MPa": 0.3445660216365304,
+            "transverse_shear_bound_MPa": 0.041886734822362784,
+            "von_mises_bound_MPa": 0.7625170812108242,
+            "stress_with_concentration_2_MPa": 1.5250341624216484,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.575102487264945,
+            "margin_to_assumed_8_MPa": 1.7485947084832416,
+            "passed": true
+          }
+        },
+        {
+          "component": "z",
+          "event": {
+            "time_s": 3.12,
+            "section_point_base_m": [
+              0.0066,
+              -0.04875,
+              -0.0215
+            ],
+            "force_base_N": [
+              -0.46189326625853155,
+              0.7985094341530196,
+              4.447786288565432
+            ],
+            "moment_about_section_base_Nm": [
+              0.13198015561328147,
+              -0.11798464526028446,
+              0.0356273808229437
+            ]
+          },
+          "stress": {
+            "normal_stress_bound_MPa": 0.369542224951251,
+            "torsion_shear_estimate_MPa": 0.3470382414519847,
+            "transverse_shear_bound_MPa": 0.04174771132136699,
+            "von_mises_bound_MPa": 0.7681308529434093,
+            "stress_with_concentration_2_MPa": 1.5362617058868187,
+            "stress_with_concentration_2_and_reserve_3_MPa": 4.608785117660456,
+            "margin_to_assumed_8_MPa": 1.7358153603961073,
+            "passed": true
+          }
+        }
+      ]
+    }
+  ],
+  "sections": {
+    "rear_extension": {
+      "name": "rear_extension",
+      "area_mm2": 116,
+      "section_center_uv_mm": [
+        0.0,
+        -7.344827586206897
+      ],
+      "inertia_uv_mm4": [
+        [
+          17414.666666666668,
+          0.0
+        ],
+        [
+          0.0,
+          616.8735632183908
+        ]
+      ],
+      "vertices_from_center_mm": [
+        [
+          -17.0,
+          -2.655172413793103
+        ],
+        [
+          -17.0,
+          -0.6551724137931032
+        ],
+        [
+          17.0,
+          -2.655172413793103
+        ],
+        [
+          17.0,
+          -0.6551724137931032
+        ],
+        [
+          -17.0,
+          -0.6551724137931032
+        ],
+        [
+          -17.0,
+          5.344827586206897
+        ],
+        [
+          -13.0,
+          -0.6551724137931032
+        ],
+        [
+          -13.0,
+          5.344827586206897
+        ],
+        [
+          13.0,
+          -0.6551724137931032
+        ],
+        [
+          13.0,
+          5.344827586206897
+        ],
+        [
+          17.0,
+          -0.6551724137931032
+        ],
+        [
+          17.0,
+          5.344827586206897
+        ]
+      ],
+      "beam_axis": 0,
+      "reference_mm": [
+        -11,
+        0,
+        -7.344827586206897
+      ],
+      "torsion_J_mm4": 237.5565465623268,
+      "torsion_stress_coefficient_per_mm3": 0.016838096267536604,
+      "shear_areas_mm2": [
+        68,
+        48
+      ]
+    },
+    "front_toe": {
+      "name": "front_toe",
+      "area_mm2": 102,
+      "section_center_uv_mm": [
+        0.0,
+        -8.5
+      ],
+      "inertia_uv_mm4": [
+        [
+          9826.0,
+          0.0
+        ],
+        [
+          0.0,
+          76.5
+        ]
+      ],
+      "vertices_from_center_mm": [
+        [
+          -17.0,
+          -1.5
+        ],
+        [
+          -17.0,
+          1.5
+        ],
+        [
+          17.0,
+          -1.5
+        ],
+        [
+          17.0,
+          1.5
+        ]
+      ],
+      "beam_axis": 0,
+      "reference_mm": [
+        11,
+        0,
+        -8.5
+      ],
+      "torsion_J_mm4": 288.99008591963394,
+      "torsion_stress_coefficient_per_mm3": 0.010380978954531604,
+      "shear_areas_mm2": [
+        102,
+        102
+      ]
+    },
+    "root": {
+      "name": "root",
+      "area_mm2": 208.0,
+      "section_center_uv_mm": [
+        -0.5,
+        -21.5
+      ],
+      "inertia_uv_mm4": [
+        [
+          4437.333333333333,
+          0.0
+        ],
+        [
+          0.0,
+          2929.3333333333335
+        ]
+      ],
+      "vertices_from_center_mm": [
+        [
+          -8.0,
+          -6.5
+        ],
+        [
+          -8.0,
+          6.5
+        ],
+        [
+          8.0,
+          -6.5
+        ],
+        [
+          8.0,
+          6.5
+        ]
+      ],
+      "beam_axis": 1,
+      "reference_mm": [
+        -0.5,
+        29,
+        -21.5
+      ],
+      "torsion_J_mm4": 5937.346935895283,
+      "torsion_stress_coefficient_per_mm3": 0.0021895301285842325,
+      "shear_areas_mm2": [
+        208,
+        208
+      ]
+    },
+    "notch": {
+      "name": "notch",
+      "area_mm2": 182.0,
+      "section_center_uv_mm": [
+        -1.5,
+        -21.5
+      ],
+      "inertia_uv_mm4": [
+        [
+          2972.6666666666665,
+          0.0
+        ],
+        [
+          0.0,
+          2563.1666666666665
+        ]
+      ],
+      "vertices_from_center_mm": [
+        [
+          -7.0,
+          -6.5
+        ],
+        [
+          -7.0,
+          6.5
+        ],
+        [
+          7.0,
+          -6.5
+        ],
+        [
+          7.0,
+          6.5
+        ]
+      ],
+      "beam_axis": 1,
+      "reference_mm": [
+        -1.5,
+        35,
+        -21.5
+      ],
+      "torsion_J_mm4": 4626.454116101797,
+      "torsion_stress_coefficient_per_mm3": 0.0028099273598661922,
+      "shear_areas_mm2": [
+        182,
+        182
+      ]
+    },
+    "cup_interface": {
+      "name": "cup_interface",
+      "area_mm2": 188.5,
+      "section_center_uv_mm": [
+        48.75,
+        -21.5
+      ],
+      "inertia_uv_mm4": [
+        [
+          3302.6770833333335,
+          0.0
+        ],
+        [
+          0.0,
+          2654.7083333333335
+        ]
+      ],
+      "vertices_from_center_mm": [
+        [
+          -7.25,
+          -6.5
+        ],
+        [
+          -7.25,
+          6.5
+        ],
+        [
+          7.25,
+          -6.5
+        ],
+        [
+          7.25,
+          6.5
+        ]
+      ],
+      "beam_axis": 0,
+      "reference_mm": [
+        6.6,
+        48.75,
+        -21.5
+      ],
+      "torsion_J_mm4": 4943.956653866473,
+      "torsion_stress_coefficient_per_mm3": 0.0026294728918857357,
+      "shear_areas_mm2": [
+        188.5,
+        188.5
+      ]
+    }
+  },
+  "exported_STEP_section_material_checks": [
+    {
+      "section": "root_1",
+      "prism_bounds_mm": [
+        -8.5,
+        7.5,
+        29,
+        29.02,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "notch_1",
+      "prism_bounds_mm": [
+        -8.5,
+        5.5,
+        35.01,
+        35.03,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "cup_interface_1",
+      "prism_bounds_mm": [
+        6.6,
+        6.62,
+        41.5,
+        56,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "root_-1",
+      "prism_bounds_mm": [
+        -8.5,
+        7.5,
+        -29.02,
+        -29,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "notch_-1",
+      "prism_bounds_mm": [
+        -8.5,
+        5.5,
+        -35.03,
+        -35.01,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "cup_interface_-1",
+      "prism_bounds_mm": [
+        6.6,
+        6.62,
+        -56,
+        -41.5,
+        -28,
+        -15
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "rear_extension",
+      "prism_bounds_mm": [
+        -11.03,
+        -11.01,
+        -17,
+        17,
+        -86,
+        -84
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "rear_extension",
+      "prism_bounds_mm": [
+        -11.03,
+        -11.01,
+        -17,
+        -13,
+        -84,
+        -78
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "rear_extension",
+      "prism_bounds_mm": [
+        -11.03,
+        -11.01,
+        13,
+        17,
+        -84,
+        -78
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    },
+    {
+      "section": "front_toe",
+      "prism_bounds_mm": [
+        11.01,
+        11.03,
+        -17,
+        17,
+        -86,
+        -83
+      ],
+      "missing_material_mm3": 0.0,
+      "passed": true
+    }
+  ],
+  "method": {
+    "loads": "Actual 2 ms contact loads, all_steps; no assumed equal sharing between hands.",
+    "envelope": "Per-component absolute maxima form a conservative envelope over all recorded samples; not a simultaneous measured wrench.",
+    "normal": "Axial plus biaxial bending from the full 2x2 section inertia matrix; evaluate section vertices.",
+    "torsion": "Saint-Venant rectangle J approximation; tau approximately T*short_side/J. Rear open U uses the sum of its three finite-width rectangle J values.",
+    "transverse_shear": "1.5*(abs(Vu)/Au + abs(Vv)/Av); rear U uses base area 68 and combined rib area 48 mm2.",
+    "combination": "von Mises upper estimate sqrt(sigma_bound^2 + 3*(tau_torsion + tau_transverse_bound)^2).",
+    "stress_concentration_assumption": 2,
+    "additional_reserve_multiplier": 3,
+    "reserve_meaning": "The simulation already contains modeled dynamics. Factor 3 is an extra conservative reserve, not a measured dynamic amplification.",
+    "assumed_allowable_MPa": 8,
+    "assumed_isotropic_PETG": true,
+    "full_infill_required": true
+  },
+  "limitations": [
+    "Ideal beam-section arithmetic only; not full 3D FEA or material certification.",
+    "Shoulder and cup cases contain the contact-wrench contribution only; full limb gravity/inertia internal stress is not reconstructed.",
+    "Does not certify creep, fatigue, print anisotropy, local warping, notch stresses, screw bearing, screw pullout or motor plastic.",
+    "Does not validate glue strength, TPU friction or hardware temperature and durability.",
+    "Other printed components and fasteners are outside this actual-load audit; see the separate simple strength_screen report."
+  ],
+  "hardware_validated": false,
+  "references": [
+    "https://ocw.mit.edu/courses/16-20-structural-mechanics-fall-2002/15610a00dfce40d899a2ea0cbe414e57_unit11.pdf",
+    "https://www.mdpi.com/2075-5309/15/21/3926"
+  ]
+}

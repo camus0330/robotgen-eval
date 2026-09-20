@@ -1,0 +1,22 @@
+{
+  "submission_id": null,
+  "model_slot": null,
+  "phase": null,
+  "attempt": null,
+  "status": "NOT_STARTED",
+  "model_provider": null,
+  "model_exact_version": null,
+  "invocation_mode": null,
+  "session_id": null,
+  "generation_seed": null,
+  "input_manifest_sha256": null,
+  "prompt_sha256": null,
+  "actual_elapsed_s": null,
+  "feedback_rounds": null,
+  "human_edit_minutes": null,
+  "human_edits": [],
+  "actual_cost": null,
+  "usage_tokens": null,
+  "unknown_fields_reason": null,
+  "logs": []
+}

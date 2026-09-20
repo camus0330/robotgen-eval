@@ -1,0 +1,46 @@
+{
+  "schema_version": "robot-model-api-config/0.1",
+  "submission_id": null,
+  "model_slot": null,
+  "phase": null,
+  "attempt": null,
+  "provider": "smart_agi_gateway",
+  "model": "",
+  "base_url": "https://big-model.smart-agi.com",
+  "api_path": "/v1/chat/completions",
+  "api_format": "openai_chat_completions",
+  "endpoint_verified": false,
+  "api_key": "",
+  "api_key_env": "SMART_AGI_API_KEY",
+  "request": {
+    "stream": false,
+    "timeout_s": 600,
+    "max_retries": 0,
+    "temperature": null,
+    "top_p": null,
+    "max_tokens": null,
+    "seed": null,
+    "extra_body": {}
+  },
+  "experiment": {
+    "wall_time_budget_s": 3600,
+    "max_feedback_rounds": 2,
+    "allow_human_design_edits": false
+  },
+  "paths": {
+    "prompt": "../../../../inputs/PROMPT.md",
+    "input_dir": "../../../../inputs",
+    "submission_metadata": "submission.json",
+    "design_manifest": "design_manifest.json",
+    "logs_dir": "logs",
+    "first_output_dir": "first"
+  },
+  "notes": [
+    "model必须填写中转站实际支持的精确模型ID，不能填写model_A等实验槽位名。",
+    "base_url保留用户提供的站点地址；api_path为OpenAI兼容Chat Completions协议的待核验候选，不代表中转站已确认支持。拼接时只保留一个/v1。",
+    "API密钥待用户本地填写；建议设置api_key_env指定的环境变量。不要把密钥写入protocol.json、submission.json或原始对话日志。",
+    "约定解析优先级：非空环境变量优先，否则使用api_key；两者都空或model为空时拒绝发请求。",
+    "所有相对路径以本配置文件所在目录为基准。request中的null表示不传该参数，而不是发送JSON null。",
+    "本文件是本项目配置规范，现有experiment.py只验收提交，尚不读取此配置或调用API。完整机器人生成还需要文件与工具执行循环。"
+  ]
+}
