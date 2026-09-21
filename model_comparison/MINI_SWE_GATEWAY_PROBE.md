@@ -303,3 +303,90 @@ FINAL: PASS (offline audit repair only)
 真实 gateway API call：**NO**。读取 API key：**NO**。读取/修改 api_config：**NO**。修改 model：**NO**。未运行 DefaultAgent、Environment、RobotGen generation 或 benchmark，未调用 `/v1/models`，未修复或重测模型 availability。
 
 本轮只修复 gateway probe 的 Windows CPython/asyncio loopback IPC audit 假阳性。不处理 glm-5.3 gateway availability、parser compatibility、DefaultAgent、RobotGen generation、benchmark 或 production Harness。上一轮真实请求的 ENVIRONMENT_BLOCKED 历史保留，未重新分类或再次请求。
+
+## GLM availability discovery — glm-5.2
+
+**本次结果：ENDPOINT_FAILED，exit code 4，恰好一次真实 logical query，无重试。** 2026-09-22，候选 `glm-5.2` 仍收到 account-group NotFoundError，未取得 model completion。没有尝试第三个模型，没有修改 probe 或正式 model_A 配置。
+
+### 1. 测试理由、基线与临时配置
+
+本轮用户提供的已知事实是：同一 key 的 `/v1/models` 返回了 `glm-5.3` 和 `glm-5.2`，而此前 `glm-5.3` completion 返回 account-group NotFoundError。因此仅将 `glm-5.2` 作为 availability candidate 做一次验证。**本轮没有再次请求 `/v1/models`，也没有因列表存在该 ID 就认定模型可调用。**
+
+| 项目 | 实际记录 |
+|---|---|
+| Repository / branch | `camus0330/robotgen-eval` / `spike/mini-swe-real-gateway` |
+| Baseline | `c510b4f81754e16a36ff4dba7d39d0ddf7d9b1f0`，开始时 HEAD 匹配且工作树干净 |
+| Commit message | `test: probe glm-5.2 gateway availability` |
+| 正式配置 | `model_comparison/submissions/pilot/model_A/01/api_config.json` |
+| 正式 slot / model | `model_A` / `glm-5.3`，本轮未修改 |
+| 临时 candidate 配置 | `C:\Users\hp\AppData\Local\Temp\robotgen-glm52-probe-72s8czks\api_config.json` |
+| candidate / routed model | `glm-5.2` / `openai/glm-5.2` |
+| key source | `env`；仅输出 `SMART_AGI_API_KEY present=True`，未输出值 |
+| provider / api_format | `smart_agi_gateway` / `openai_chat_completions` |
+| derived api_base | `https://big-model.smart-agi.com/v1` |
+| timeout / stream / max_retries | `600` / `false` / `0` |
+
+只读核对正式配置的 inline api_key 为空、api_key_env 为 `SMART_AGI_API_KEY`。副本位于系统 temp、Git 工作树之外，写入后重新解析并逐字段比较，**唯一差异为 model 从 glm-5.3 改成 glm-5.2**；副本 api_key 仍为空。正式配置在运行前保存内容 SHA-256，运行后再次比较确认未变。临时配置、摘要及 probe 日志只留在该 temp 目录，不进入 Git。
+
+### 2. 前置验证与唯一执行命令
+
+依次执行既有脚本，未修改 Python：
+
+1. `mini_swe_gateway_probe.py --audit-self-test`：exit `0`，`FINAL: PASS (offline audit repair only)`。真实 IPv4/IPv6 socketpair 与 Proactor self-pipe 创建和关闭成功，普通 loopback 被拒绝；没有 API call。
+2. `mini_swe_offline_import_preflight.py`：exit `0`，`FINAL: PASS`。本次 parent / prepare / offline PID 为 `30484` / `3932` / `4044`；prepared cache 和 fresh offline import 验证通过。
+
+| 环境项目 | 实际值 |
+|---|---|
+| mini-swe SHA / version | `04d809ceab9df28f9adaed044884180159172930` / `2.4.6` |
+| LiteLLM / tiktoken | `1.102.0` / `0.14.0` |
+| Python / platform | `3.13.13`，Anaconda / `Windows-11-10.0.26100-SP0` / AMD64 |
+| prepared cache path | `C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-thjmvpi4` |
+| cache SHA-256 | `223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7` |
+
+准备阶段使用 tiktoken 原生 loader 获取公开资源；gateway runtime 没有下载 tokenizer，依赖未升级/降级，也未成为 production lock。
+
+唯一一次真实 probe 命令：
+
+```powershell
+& 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe' -B -u model_comparison/spikes/mini_swe_gateway_probe.py --config 'C:\Users\hp\AppData\Local\Temp\robotgen-glm52-probe-72s8czks\api_config.json' --cache 'C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-thjmvpi4'
+```
+
+### 3. 真实结果与网络 evidence
+
+| 结果项 | 实际输出 |
+|---|---|
+| logical query count | `1` |
+| mini-swe attempts / provider retries | `1` / `0`；未自动或手动重试 |
+| non-null generation parameters | `{}`，null 参数均省略 |
+| classification / exit code | `ENDPOINT_FAILED` / `4` |
+| exception class | `NotFoundError` |
+| response type / returned_model / finish_reason | null / null / null，未取得 model completion |
+| assistant_content / parsed actions | null / null |
+| FormatError fields | 无，未进行成功 response 的 parser 验证 |
+| usage / cost availability | null / `not observed`，不可用；不是免费或 $0 |
+
+sanitized message：
+
+```text
+litellm.NotFoundError: NotFoundError: OpenAIException - Model "glm-5.2" is not supported by any configured account in this group
+```
+
+这与 `glm-5.3` 的账号组模型不可用错误属于相同类别；不能归为 FORMAT_MISMATCH，也不能据此说明模型已取得真实 completion。本轮在此停止，没有探测其他模型。
+
+实际网络记录：
+
+- gateway_network_targets：`socket.getaddrinfo(big-model.smart-agi.com, 443)` 两次；`socket.connect(198.18.0.68, 443)` 一次。两次 DNS 是预解析和 SDK 解析，不是两次逻辑 query。
+- local_runtime_ipc_targets：`socket.connect(127.0.0.1, 2803)`，reason=`cpython_socketpair`，stdlib_file=`C:\ProgramData\miniconda3\Lib\socket.py`，function=`_fallback_socketpair`，asyncio_self_pipe=`true`。
+- unrelated_network_attempts：`[]`。
+
+内部 self-pipe 被单独识别，没有再次造成 ENVIRONMENT_BLOCKED；本次输出未出现 `_ssock` cleanup AttributeError。没有放宽 unrelated network allowlist，没有 patch completion、query、parser、cost calculator 或 provider client。
+
+完整本次 probe 输出保存在 `C:\Users\hp\AppData\Local\Temp\robotgen-glm52-probe-72s8czks\probe.log`。self-test / tokenizer preflight 日志保存在既有 venv 父目录的 `glm52-audit-self-test.log` 和 `glm52-tokenizer-preflight.log`。提交前检查报告、temp config、probe 输出及 Git diff 不含实际密钥；只输出检查结果。
+
+### 4. 范围确认
+
+真实 LLM API 调用：**是，发起一次真实模型请求并收到 endpoint error**。exactly one logical query：**是**。retry：**否**。patch completion / 修改 parser：**否**。运行 DefaultAgent / Environment / shell action：**否**。修改正式 api_config / 正式 model_A 映射：**否**。提交任何 api_config：**否**。
+
+本轮 tracked 变化仅为本报告，历史 CONFIG_BLOCKED、glm-5.3 真实请求及 audit repair 全部保留。按指定 commit message 提交并推送原分支，不 merge。
+
+**本轮只测试 glm-5.2 的真实 gateway availability / mini-swe compatibility，本次未取得 completion。** 不代表 model_A 已正式改成 glm-5.2、text protocol 已冻结、Agent 已上线、RobotGen generation 或 benchmark 已开始、production Harness 已完成。
