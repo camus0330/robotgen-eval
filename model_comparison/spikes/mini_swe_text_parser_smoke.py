@@ -1,5 +1,7 @@
 """Check the pinned upstream text parser with local response shapes only."""
 
+import argparse
+import hashlib
 import importlib.metadata
 import inspect
 import json
@@ -16,6 +18,8 @@ UPSTREAM = "https://github.com/SWE-agent/mini-swe-agent.git"
 UPSTREAM_SHA = "04d809ceab9df28f9adaed044884180159172930"
 VERSION = "2.4.6"
 EXPECTED_REGEX = r"```mswea_bash_command\s*\n(.*?)\n```"
+CACHE_FILENAME = "9b5ad71b2ce5302211f9c61530b329a4922fc6a4"
+CACHE_SHA256 = "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
 
 
 def check(condition, description):
@@ -50,8 +54,11 @@ def expect_format_error(model, value, error_type, count):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cache", required=True, type=Path, help="Previously prepared tokenizer cache directory")
+    args = parser.parse_args()
     # Delete non-allowlisted variable names without reading their values.
-    allowed = {"PATH", "PATHEXT", "SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "TEMP", "TMP", "HOME"}
+    allowed = {"PATH", "PATHEXT", "SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "TEMP", "TMP"}
     for name in tuple(os.environ):
         if name.upper() not in allowed:
             del os.environ[name]
@@ -64,15 +71,25 @@ def main():
     os.environ["LITELLM_LOCAL_MODEL_COST_MAP"] = "True"
     print(f"Python={sys.version}")
     print(f"platform={platform.platform()}; machine={platform.machine()}")
-    print(f"executable={sys.executable}")
+    print(f"executable={sys.executable}; pid={os.getpid()}")
     print(f"temporary config root={work}")
 
     blocked = []
+    network_events = {
+        "socket.getaddrinfo", "socket.gethostbyname", "socket.gethostbyaddr",
+        "socket.connect", "socket.send", "socket.sendall", "socket.sendto", "socket.sendmsg",
+        "http.client.connect", "http.client.send",
+    }
+
+    def report_access():
+        print(f"forbidden accesses={json.dumps(blocked)}")
+        print(f"forbidden network attempt count={sum(event in network_events for event in blocked)}")
 
     def reject_external_access(event, args):
         # Fail closed, without replacing any provider/model/parser implementation.
-        forbidden = event in {"socket.connect", "socket.getaddrinfo", "socket.sendto",
-                              "http.client.connect", "subprocess.Popen", "os.system"}
+        forbidden = event in network_events or event in {
+            "subprocess.Popen", "os.system", "os.exec", "os.posix_spawn",
+        }
         if event == "open" and isinstance(args[0], (str, os.PathLike)):
             forbidden = Path(args[0]).name.lower() in {".env", "api_config.json"}
         if forbidden:
@@ -82,11 +99,24 @@ def main():
     sys.addaudithook(reject_external_access)
 
     try:
+        cache = args.cache.resolve()
+        if not cache.is_dir():
+            raise FileNotFoundError(f"Prepared cache directory missing: {cache}")
+        artifact = cache / CACHE_FILENAME
+        if not artifact.is_file():
+            raise FileNotFoundError(f"Prepared cl100k cache file missing: {artifact}")
+        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        check(digest == CACHE_SHA256, "prepared tokenizer cache SHA-256 mismatch")
+        print(f"prepared cache={cache}; sha256={digest}")
+        # LiteLLM itself maps CUSTOM_* to TIKTOKEN_CACHE_DIR; never set the latter here.
+        os.environ["CUSTOM_TIKTOKEN_CACHE_DIR"] = str(cache)
         dist = importlib.metadata.distribution("mini-swe-agent")
         origin = json.loads(dist.read_text("direct_url.json") or "{}")
         check(origin.get("url") == UPSTREAM, "requires the fixed upstream VCS installation")
         check(origin.get("vcs_info", {}).get("commit_id") == UPSTREAM_SHA, "upstream SHA mismatch")
         check(dist.version == VERSION, "distribution version mismatch")
+        for name, expected in (("litellm", "1.102.0"), ("tiktoken", "0.14.0")):
+            check(importlib.metadata.version(name) == expected, f"{name} differs from the reviewed environment")
 
         import minisweagent
         from minisweagent.exceptions import FormatError
@@ -110,15 +140,18 @@ def main():
         if blocked:
             raise PermissionError(f"Construction attempted forbidden access: {blocked}")
         check(model.config.action_regex == EXPECTED_REGEX, "upstream default action_regex changed")
+        check(os.environ.get("TIKTOKEN_CACHE_DIR") == str(cache), "LiteLLM did not select the prepared cache")
+        print(f"runtime TIKTOKEN_CACHE_DIR={os.environ['TIKTOKEN_CACHE_DIR']}")
         print(f"minisweagent.__version__={minisweagent.__version__}")
         print(f"direct_url={json.dumps(origin)}")
         print(f"default action_regex={model.config.action_regex!r}")
-        for name in ("litellm", "openai", "pydantic", "jinja2", "python-dotenv"):
+        for name in ("litellm", "tiktoken", "openai", "pydantic", "jinja2", "python-dotenv"):
             print(f"installed dependency: {name}=={importlib.metadata.version(name)}")
     except Exception as error:
         traceback.print_exc()
         status = "ENVIRONMENT_BLOCKED" if blocked or isinstance(error, (ImportError, OSError, importlib.metadata.PackageNotFoundError)) else "FAIL"
         print(f"Cases A-F not run: {status}; precondition failed")
+        report_access()
         print(f"FINAL: {status}")
         return 2 if status == "ENVIRONMENT_BLOCKED" else 1
 
@@ -151,16 +184,18 @@ def main():
             traceback.print_exc()
             if blocked or isinstance(error, PermissionError):
                 print(f"Case {label}: ENVIRONMENT_BLOCKED")
+                report_access()
                 print("FINAL: ENVIRONMENT_BLOCKED")
                 return 2
             print(f"Case {label}: FAIL")
             failed = True
         if blocked:
             print(f"Forbidden access attempted: {blocked}")
+            report_access()
             print("FINAL: ENVIRONMENT_BLOCKED")
             return 2
 
-    print("Forbidden network/process/config-file access attempts: 0")
+    report_access()
     print("No query, real API/key, Agent, shell command, native tools, or protocol freeze.")
     print(f"FINAL: {'FAIL' if failed else 'PASS'}")
     return 1 if failed else 0
