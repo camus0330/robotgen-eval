@@ -390,3 +390,97 @@ litellm.NotFoundError: NotFoundError: OpenAIException - Model "glm-5.2" is not s
 本轮 tracked 变化仅为本报告，历史 CONFIG_BLOCKED、glm-5.3 真实请求及 audit repair 全部保留。按指定 commit message 提交并推送原分支，不 merge。
 
 **本轮只测试 glm-5.2 的真实 gateway availability / mini-swe compatibility，本次未取得 completion。** 不代表 model_A 已正式改成 glm-5.2、text protocol 已冻结、Agent 已上线、RobotGen generation 或 benchmark 已开始、production Harness 已完成。
+
+## Gateway alias discovery — gpt-5.6-sol
+
+**本次结果：PASS，exit code 0，恰好一次真实 logical query，无重试。** 2026-09-22，gateway 返回 completion，mini-swe 原生 text parser 得到预期 marker action；该 action 未执行。返回的 `response.model` 为 `gpt-5.6-sol`，这里只记录 gateway 字段，不将其作为底层真实模型身份的证明。
+
+### 1. 测试理由、基线与临时配置
+
+根据本轮用户提供的 Smart AGI 帮助文档信息，OpenCode 示例明确列出 baseURL `https://big-model.smart-agi.com/v1` 和 route/model ID `gpt-5.6-sol`。用户此前提供的 `/v1/models` 结果虽包含 `glm-5.3` / `glm-5.2`，但已有真实 Chat Completions 探测对两者均得到 account-group NotFoundError。因此本轮只验证文档所列 alias 对当前 key/group 的可调用性，不继续猜测其他 ID；本轮没有重新请求 `/v1/models`，也没有独立验证文档或 backend identity。
+
+| 项目 | 实际记录 |
+|---|---|
+| Repository / branch | `camus0330/robotgen-eval` / `spike/mini-swe-real-gateway` |
+| Baseline | `90861de032593c880295de60c074a934acd19bcc`，开始时 HEAD 匹配且工作树干净 |
+| Commit message | `test: probe gpt-5.6-sol gateway alias` |
+| 正式配置 | `model_comparison/submissions/pilot/model_A/01/api_config.json` |
+| 正式 slot / model | `model_A` / `glm-5.3`，本轮未修改 |
+| 临时 config path | `C:\Users\hp\AppData\Local\Temp\robotgen-gpt56sol-probe-_3flk4g_\api_config.json` |
+| configured candidate / routed LiteLLM model | `gpt-5.6-sol` / `openai/gpt-5.6-sol` |
+| API key source | `env`；`SMART_AGI_API_KEY present=True`，未输出值 |
+| provider / api_format | `smart_agi_gateway` / `openai_chat_completions` |
+| base_url / api_path | `https://big-model.smart-agi.com` / `/v1/chat/completions` |
+| derived api_base | `https://big-model.smart-agi.com/v1` |
+| timeout / stream / max_retries | `600` / `false` / `0` |
+
+只读核对正式配置 `api_key == ""`、`api_key_env == "SMART_AGI_API_KEY"`。在 Git 工作树外创建副本，写入后重新解析、逐字段比较，唯一差异为 `model: glm-5.3 → gpt-5.6-sol`；其他字段保持相同，副本 inline api_key 仍为空。运行前后的正式配置内容 SHA-256 相同。临时配置、摘要和日志仅留在系统 temp，不提交 Git。
+
+### 2. 前置验证与唯一执行命令
+
+依次执行现有脚本，没有修改 Python 或安装/调整依赖：
+
+1. `mini_swe_gateway_probe.py --audit-self-test`：exit `0`，`FINAL: PASS (offline audit repair only)`。真实 IPv4/IPv6 socketpair 和 asyncio self-pipe 创建/关闭成功，cleanup errors 与 Case A unrelated attempts 均为 `[]`；普通 IPv4/IPv6 loopback 被拒绝。API calls、key reads、config reads 均为 `0`。
+2. `mini_swe_offline_import_preflight.py`：exit `0`，`FINAL: PASS (resource preparation + fresh offline import/constructor only)`。parent / prepare / offline PID 为 `34316` / `35912` / `36196`；fresh offline import 和 constructor 通过，offline network events 为 `[]`。
+
+| 环境项目 | 实际值 |
+|---|---|
+| mini-swe upstream SHA / package version | `04d809ceab9df28f9adaed044884180159172930` / `2.4.6` |
+| LiteLLM / tiktoken | `1.102.0` / `0.14.0` |
+| Python / platform | `3.13.13`，Anaconda / `Windows-11-10.0.26100-SP0` / AMD64 |
+| prepared tokenizer cache path | `C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-r8hdbe_g` |
+| cache filename / bytes | `9b5ad71b2ce5302211f9c61530b329a4922fc6a4` / `1681126` |
+| cache SHA-256 | `223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7` |
+
+准备阶段通过 tiktoken 原生 loader 获取公开 tokenizer 资源；gateway runtime 使用已验证 cache。当前依赖版本仅为本次环境记录，不是 production lock。
+
+本轮唯一真实 probe 命令（PowerShell）：
+
+```powershell
+& 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe' -B -u model_comparison/spikes/mini_swe_gateway_probe.py --config 'C:\Users\hp\AppData\Local\Temp\robotgen-gpt56sol-probe-_3flk4g_\api_config.json' --cache 'C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-r8hdbe_g'
+```
+
+### 3. 真实 completion 与网络 evidence
+
+| 结果项 | 实际输出 |
+|---|---|
+| logical query count / retry count | `1` / `0` |
+| mini-swe attempts / provider retries | `1` / `0`；`MSWEA_MODEL_RETRY_STOP_AFTER_ATTEMPT=1`，provider/LiteLLM/request retries 均为 `0` |
+| non-null generation parameters | `{}`，null 参数均省略 |
+| classification / process exit code | `PASS` / `0`；`FINAL: PASS` |
+| response type | `litellm.types.utils.ModelResponse` |
+| returned_model | `gpt-5.6-sol`（gateway 返回字段原值） |
+| finish_reason | `stop` |
+| parsed actions | `[{"command":"echo robotgen_gateway_probe"}]`，仅解析，未执行 |
+| FormatError evidence | 无；interrupt_type / n_actions / model_response 不适用 |
+| endpoint error evidence | 无；exception class / sanitized message 不适用 |
+| usage | `{"completion_tokens":19,"prompt_tokens":4442,"total_tokens":4461,"completion_tokens_details":null,"prompt_tokens_details":null}` |
+| cost availability | mini-swe/LiteLLM 返回数值 `0.018147999999999997`；可用，仅记录库计算结果，不视为 gateway 实际账单证明 |
+
+assistant_content 原文：
+
+````text
+```mswea_bash_command
+echo robotgen_gateway_probe
+```
+````
+
+实际网络记录：
+
+- gateway_network_targets：`socket.getaddrinfo(big-model.smart-agi.com, 443)` 两次；`socket.connect(198.18.0.68, 443)` 一次。DNS 预解析与 SDK 解析不代表两次 logical query。
+- local_runtime_ipc_targets：`socket.connect(127.0.0.1, 3823)`，reason=`cpython_socketpair`，stdlib_file=`C:\ProgramData\miniconda3\Lib\socket.py`，function=`_fallback_socketpair`，asyncio_self_pipe=`true`。
+- unrelated_network_attempts：`[]`。
+
+内部 CPython/asyncio self-pipe 被正确记入 IPC，没有导致 ENVIRONMENT_BLOCKED；本次输出未出现 cleanup 异常。未放宽 audit，未重试，未探测其他 route。真实调用 `LitellmTextbasedModel.query()`，没有 patch completion、query、_query、parser、cost calculator 或 provider client，也没有 fake response。
+
+本次输出保存在 `C:\Users\hp\AppData\Local\Temp\robotgen-gpt56sol-probe-_3flk4g_\probe.log`。self-test / preflight 日志保存在既有 venv 父目录的 `gpt56sol-audit-self-test.log` 和 `gpt56sol-tokenizer-preflight.log`。提交前使用实际环境密钥在内存中匹配 Git diff（含 staged diff）、Markdown、临时 config、probe log 和全部 tracked files，确认没有密钥匹配；只输出检查结果，不输出密钥值或 Authorization header。
+
+### 4. 范围确认与结论
+
+真实调用 API：**是**。exactly one query：**是**。retry：**否**。patch completion / parser：**否**。修改 probe：**否**。运行 DefaultAgent / Environment / 执行 shell action：**否**。修改正式 api_config：**否**。提交任何 api_config：**否**。未修改 protocol、Prompt、submission schema、experiment.py、requirements、benchmark、其他 spike 或正式 model_A 映射。
+
+本轮 tracked 变化仅为本报告，全部历史 CONFIG_BLOCKED、glm-5.3 real run、audit false-positive repair 和 glm-5.2 availability discovery 保留。只提交报告并推送原分支，不 merge。
+
+本次请求表明，`gpt-5.6-sol` 是当前 Smart AGI key/group 可调用的 gateway route/model ID，且本次 Smart AGI → LiteLLM → mini-swe text parser 路径可工作。**本轮仅验证 route/alias；即使 returned_model 同名，也不能据此证明底层真实模型身份，不能据此排除 GLM、DeepSeek、Kimi 或其他 backend。**
+
+本轮不代表 model_A 已正式选择 gpt-5.6-sol、text protocol 已冻结、DefaultAgent 已上线、RobotGen generation 或 benchmark 已开始、production Harness 已完成。
