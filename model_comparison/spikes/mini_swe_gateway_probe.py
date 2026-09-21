@@ -14,6 +14,7 @@ import platform
 import re
 import socket
 import sys
+import sysconfig
 import tempfile
 from urllib.parse import urlsplit
 
@@ -38,16 +39,163 @@ def require(condition, message):
         raise ConfigBlocked(message)
 
 
+_SOCKETPAIR_CODE = getattr(socket.socketpair, "__code__", None)
+_STDLIB_SOCKET = os.path.normcase(os.path.join(sysconfig.get_path("stdlib"), "socket.py"))
+_STDLIB_PROACTOR = os.path.normcase(os.path.join(sysconfig.get_path("stdlib"), "asyncio", "proactor_events.py"))
+
+
+def internal_socketpair_evidence(connecting_socket, target):
+    """Recognize the actual CPython fallback, never loopback by address alone."""
+    if (sys.implementation.name != "cpython" or not isinstance(target, tuple)
+            or len(target) < 2 or target[0] not in {"127.0.0.1", "::1"}
+            or _SOCKETPAIR_CODE is None
+            or _SOCKETPAIR_CODE.co_name not in {"socketpair", "_fallback_socketpair"}
+            or os.path.normcase(_SOCKETPAIR_CODE.co_filename) != _STDLIB_SOCKET):
+        return None
+    frame = sys._getframe(1)
+    try:
+        while frame is not None:
+            if frame.f_code is _SOCKETPAIR_CODE:
+                local = frame.f_locals
+                listener = local.get("lsock")
+                # CPython owns both endpoints; this exact csock connects to its own listener.
+                if (local.get("csock") is not connecting_socket
+                        or type(connecting_socket) is not socket.socket
+                        or type(listener) is not socket.socket
+                        or socket.socket.getsockname(listener)[:2] != target[:2]):
+                    return None
+                evidence = {"reason": "cpython_socketpair", "stdlib_file": frame.f_code.co_filename,
+                            "function": frame.f_code.co_name, "asyncio_self_pipe": False}
+                frame = frame.f_back
+                while frame is not None:
+                    if (frame.f_code.co_name == "_make_self_pipe"
+                            and os.path.normcase(frame.f_code.co_filename) == _STDLIB_PROACTOR):
+                        evidence["asyncio_self_pipe"] = True
+                        break
+                    frame = frame.f_back
+                return evidence
+            frame = frame.f_back
+        return None
+    finally:
+        del frame  # Do not retain caller frames or their locals.
+
+
+def make_audit_policy(result, host, port, addresses, network_enabled):
+    """Shared by the real probe and the credential-free local repair checks."""
+    def audit(event, values):
+        target = None
+        permitted = False
+        if event == "socket.getaddrinfo":
+            target = [values[0], values[1]]
+            permitted = network_enabled() and values[0] == host and values[1] == port
+        elif event == "socket.connect":
+            target = values[1]
+            ipc = internal_socketpair_evidence(values[0], target)
+            if ipc is not None:
+                result["local_runtime_ipc_targets"].append({"event": event, "target": target, **ipc})
+                return
+            # Ordinary loopback stays forbidden, even if gateway DNS were to return it.
+            loopback = isinstance(target, tuple) and target[0] in {"127.0.0.1", "::1"}
+            permitted = (not loopback and network_enabled() and isinstance(target, tuple)
+                         and target[0] in addresses and target[1] == port)
+        elif event == "http.client.connect":
+            target = [values[1], values[2]]
+            permitted = network_enabled() and target == [host, port]
+        elif event == "http.client.send":
+            target = "HTTP send (headers omitted)"
+            permitted = network_enabled() and getattr(values[0], "host", None) == host
+        elif event in {"socket.gethostbyname", "socket.gethostbyaddr", "socket.sendto", "socket.sendmsg"}:
+            target = event
+        elif event in {"subprocess.Popen", "os.system", "os.exec", "os.posix_spawn"}:
+            target = "forbidden process execution"
+        elif event == "open" and isinstance(values[0], (str, os.PathLike)) and Path(values[0]).name.lower() == ".env":
+            target = "forbidden dotenv access"
+        else:
+            return
+        record = {"event": event, "target": target}
+        result["gateway_network_targets" if permitted else "unrelated_network_attempts"].append(record)
+        if not permitted:
+            raise PermissionError(f"gateway boundary rejected {event}")
+    return audit
+
+
+def audit_self_test():
+    """Local policy checks only: no config, credentials, third-party model or gateway."""
+    import asyncio
+    import gc
+
+    result = {"gateway_network_targets": [], "unrelated_network_attempts": [], "local_runtime_ipc_targets": []}
+    sys.addaudithook(make_audit_policy(result, "gateway.invalid", 443, set(), lambda: False))
+    cleanup_errors = []
+    old_unraisable = sys.unraisablehook
+    sys.unraisablehook = lambda event: cleanup_errors.append(type(event.exc_value).__name__)
+    try:
+        for family in (socket.AF_INET, socket.AF_INET6):
+            left, right = socket.socketpair(family=family)
+            try:
+                assert left.fileno() >= 0 and right.fileno() >= 0
+            finally:
+                left.close()
+                right.close()
+            assert left.fileno() == right.fileno() == -1
+        assert result["local_runtime_ipc_targets"], "socketpair did not exercise audited Python fallback"
+        loop = asyncio.ProactorEventLoop()
+        try:
+            assert loop._ssock.fileno() >= 0 and loop._csock.fileno() >= 0
+        finally:
+            loop.close()
+        assert loop.is_closed()
+        del loop
+        gc.collect()
+        assert not cleanup_errors, "event-loop cleanup exception"
+        assert any(e["asyncio_self_pipe"] for e in result["local_runtime_ipc_targets"])
+        assert not result["unrelated_network_attempts"] and not result["gateway_network_targets"]
+        print("Case A: PASS; real socketpair and asyncio self-pipe created/closed; cleanup errors=[]")
+        print("Case A local_runtime_ipc_targets=" + json.dumps(result["local_runtime_ipc_targets"]))
+        print("Case A unrelated_network_attempts=[]")
+        # Port 9 is immaterial: PermissionError occurs in audit before any OS connect.
+        # No listener/server is started for Case B.
+        for family, address in ((socket.AF_INET, ("127.0.0.1", 9)), (socket.AF_INET6, ("::1", 9))):
+            before = len(result["unrelated_network_attempts"])
+            with socket.socket(family, socket.SOCK_STREAM) as ordinary:
+                try:
+                    ordinary.connect(address)
+                except PermissionError:
+                    pass
+                else:
+                    raise AssertionError("ordinary loopback was allowed")
+            assert len(result["unrelated_network_attempts"]) == before + 1
+        assert not result["gateway_network_targets"]
+        print("Case B: PASS; ordinary IPv4/IPv6 loopback rejected with PermissionError before connection")
+        print("Case B unrelated_network_attempts=" + json.dumps(result["unrelated_network_attempts"]))
+        print("gateway API calls=0; API key reads=0; config reads=0")
+        print("FINAL: PASS (offline audit repair only)")
+        return 0
+    except Exception as error:
+        print(f"Audit self-test FAIL: {type(error).__name__}: {error}")
+        print(json.dumps(result))
+        return 1
+    finally:
+        sys.unraisablehook = old_unraisable
+
+
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
-    cli.add_argument("--config", required=True, type=Path)
-    cli.add_argument("--cache", required=True, type=Path)
+    cli.add_argument("--audit-self-test", action="store_true", help="Local policy checks; never read API config or keys")
+    cli.add_argument("--config", type=Path)
+    cli.add_argument("--cache", type=Path)
     args = cli.parse_args()
+    if args.audit_self_test:
+        if args.config or args.cache:
+            cli.error("--audit-self-test does not accept config/cache")
+        return audit_self_test()
+    if not args.config or not args.cache:
+        cli.error("--config and --cache are required for the gateway probe")
     secrets = []
     result = {
         "config_path": str(args.config.resolve()), "query_count": 0, "key_source": "none",
         "mini_swe_retry_attempts": 1, "provider_retries": 0,
-        "gateway_network_targets": [], "unrelated_network_attempts": [],
+        "gateway_network_targets": [], "unrelated_network_attempts": [], "local_runtime_ipc_targets": [],
         "response_type": None, "returned_model": None, "finish_reason": None,
         "assistant_content": None, "actions": None, "usage": None, "cost": "not observed",
     }
@@ -148,35 +296,7 @@ def main():
         network_enabled = False
         host, port = url.hostname, url.port or 443
 
-        def audit(event, values):
-            target = None
-            permitted = False
-            if event == "socket.getaddrinfo":
-                target = [values[0], values[1]]
-                permitted = network_enabled and values[0] == host and values[1] == port
-            elif event == "socket.connect":
-                target = values[1]
-                permitted = network_enabled and isinstance(target, tuple) and target[0] in addresses and target[1] == port
-            elif event == "http.client.connect":
-                target = [values[1], values[2]]
-                permitted = network_enabled and target == [host, port]
-            elif event == "http.client.send":
-                target = "HTTP send (headers omitted)"
-                permitted = network_enabled and getattr(values[0], "host", None) == host
-            elif event in {"socket.gethostbyname", "socket.gethostbyaddr", "socket.sendto", "socket.sendmsg"}:
-                target = event
-            elif event in {"subprocess.Popen", "os.system", "os.exec", "os.posix_spawn"}:
-                target = "forbidden process execution"
-            elif event == "open" and isinstance(values[0], (str, os.PathLike)) and Path(values[0]).name.lower() == ".env":
-                target = "forbidden dotenv access"
-            else:
-                return
-            record = {"event": event, "target": target}
-            result["gateway_network_targets" if permitted else "unrelated_network_attempts"].append(record)
-            if not permitted:
-                raise PermissionError(f"gateway boundary rejected {event}")
-
-        sys.addaudithook(audit)
+        sys.addaudithook(make_audit_policy(result, host, port, addresses, lambda: network_enabled))
         with redirect_stdout(capture), redirect_stderr(capture):
             import litellm
             from minisweagent.exceptions import FormatError

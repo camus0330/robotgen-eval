@@ -1,6 +1,8 @@
 # mini-swe-agent real gateway compatibility probe
 
-**当前结果：ENVIRONMENT_BLOCKED，exit code 5，恰好一次 logical query。** 2026-09-22 使用实际 model_A 配置对 `glm-5.3` 发出真实请求。gateway 返回 `NotFoundError`，指出当前账号组没有支持该模型的配置账号；同时 runtime 审计记录一次被拒绝的 loopback 连接。既有脚本以审计阻断优先，最终分类为 ENVIRONMENT_BLOCKED。没有模型 completion、parser action 或成功兼容性结论；没有重试或修改 probe。
+**本轮 offline audit implementation repair：PASS，exit code 0。** 仅本地验证 CPython socketpair / asyncio self-pipe 的窄放行与普通 loopback 的拒绝；没有再次调用真实 API。详见末尾 Audit false-positive repair。
+
+**最近一次真实请求结果（历史保留）：ENVIRONMENT_BLOCKED，exit code 5，恰好一次 logical query。** 2026-09-22 使用实际 model_A 配置对 `glm-5.3` 发出真实请求。gateway 返回 `NotFoundError`，指出当前账号组没有支持该模型的配置账号；同时 runtime 审计记录一次被拒绝的 loopback 连接。当时脚本以审计阻断优先，最终分类为 ENVIRONMENT_BLOCKED。没有模型 completion、parser action 或成功兼容性结论；当轮没有重试或修改 probe。
 
 ## Initial config-blocked run
 
@@ -220,3 +222,84 @@ commit 前对报告、probe 文件、工作树 diff、暂存 diff 与本次 prob
 本轮仅更新现有报告，使用 `test: record glm real gateway probe` 提交并推送原分支，不 merge。现有 model_A 目录修正 commit 保持不变，没有新增 spike 或 Harness 功能。
 
 **本轮只验证真实 glm-5.3 gateway + mini-swe text parser compatibility；本次没有验证通过。** 不代表 production Harness 已完成、text protocol 已冻结、RobotGen generation 已完成或 formal benchmark 已开始。
+
+## Audit false-positive repair
+
+### 1. 范围与原问题
+
+2026-09-22，从 `007d3b3f33c7396b76cfe2d1deacde082a3e570a` 继续，在原分支 `spike/mini-swe-real-gateway` 做完全本地的 implementation REPAIR。只修改本报告和 `spikes/mini_swe_gateway_probe.py`；commit message 为 `fix: distinguish asyncio loopback IPC in gateway probe`。
+
+旧策略将所有非 gateway 的 socket.connect 都计为 unrelated network。因此 CPython 在 Windows 上以 loopback TCP 实现 socketpair 时，会被错误阻止；asyncio ProactorEventLoop 的 self-pipe 也使用该机制。本轮通过真实标准库路径及调用栈证据验证这一机制，**不追溯断言上一轮端口 14091 的唯一调用来源**，也不把上次实际 ENVIRONMENT_BLOCKED 改写成 ENDPOINT_FAILED。
+
+本机 Python 为既有 Anaconda CPython `3.13.13` / Windows 11 AMD64。标准库实际路径为 `C:\ProgramData\miniconda3\Lib\socket.py`；公开 `socket.socketpair` 在该版本是 `_fallback_socketpair` 的别名，其 code object 的 co_name 为 `_fallback_socketpair`。不能只匹配字面函数名 `socketpair` 而漏掉真实 alias。
+
+### 2. 新判定规则
+
+**允许所有 localhost：NO。** 仅在 socket.connect 审计事件中满足以下条件，才归类为内部 IPC：
+
+- target 精确为 IPv4 `127.0.0.1` 或 IPv6 `::1`，但地址本身不足以放行。
+- 当前解释器为 CPython；已捕获的 `socket.socketpair.__code__` 来自 `sysconfig` 定位的标准库 `socket.py`，函数名为 `socketpair` 或本机实际的 `_fallback_socketpair`。
+- 使用 `sys._getframe()` 沿调用栈查找**同一个真实 code object**，而非只信任文件名/函数名字符串；不使用 `inspect.stack()`，不读取源码文件来判定。
+- 该 frame 的局部 `csock` 必须就是本次正在 connect 的 socket，`lsock` 必须是真实 socket；target 的地址与端口必须等于此 socketpair 自己的 listener 地址与端口。IPv6 的 flowinfo/scopeid 不混同 host/port 比较。
+
+只记录必要的标准库文件、函数名和上层 `_make_self_pipe` evidence，不保存 frame 或完整 locals。若上层来自标准库 `asyncio/proactor_events.py:_make_self_pipe`，记录 `asyncio_self_pipe=true`；直接调用真实 socketpair 同样允许，因为它只连接自己刚创建的 IPC listener。
+
+内部 IPC 单独进入 `local_runtime_ipc_targets`，reason=`cpython_socketpair`；不进入 gateway_network_targets 或 unrelated_network_attempts。端口来自运行时 listener，**没有 hard-code 14091 或其他放行端口**。
+
+普通 IPv4/IPv6 loopback connect 即使地址曾进入 gateway 地址集合，也不会通过上述例外。其余 gateway DNS、解析后的 IP:port、HTTP target/send 规则保留，非 gateway 网络、子进程和 `.env` 仍拒绝。没有放行 private address、localhost proxy、telemetry、tokenizer download 或任意用户 connect。
+
+最小重构将既有 audit 提取为 `make_audit_policy`，主 probe 和本地测试调用同一个函数；新的 helper 仅负责内部 IPC 判断，没有建立新网络 framework。真实 query 的配置、credential 解析、retry、模型 ID、provider routing 和 parser 未改动。
+
+### 3. 完全本地验证
+
+新增同一脚本的 `--audit-self-test` 入口，在配置/凭据读取之前分流。该模式不能同时传入 config/cache，不导入 LiteLLM 或 mini-swe、不准备 tokenizer、不读取或使用任何 API key，也不发 gateway 请求。
+
+实际命令：
+
+```powershell
+& 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe' -B -u model_comparison/spikes/mini_swe_gateway_probe.py --audit-self-test
+```
+
+共享策略在本地测试中关闭 gateway 网络，只运行以下两个 case。最初 IPv4/self-pipe 检查通过后，补充 IPv6 覆盖并复验；下列为最终代码的运行结果，没有任何真实模型请求。
+
+**Case A：PASS。** 真实创建并关闭 `socket.socketpair(AF_INET)`、`socket.socketpair(AF_INET6)`、`asyncio.ProactorEventLoop()`。确认 socket 文件描述符已关闭、event loop 正常关闭；垃圾回收期间记录的 unraisable cleanup exceptions 为空，未出现 `_ssock` AttributeError。
+
+实际 local_runtime_ipc_targets：
+
+| target | reason | 标准库 function | asyncio_self_pipe |
+|---|---|---|---|
+| `127.0.0.1:9900` | `cpython_socketpair` | `_fallback_socketpair` | false |
+| `[::1]:9902` | `cpython_socketpair` | `_fallback_socketpair` | false |
+| `127.0.0.1:9904` | `cpython_socketpair` | `_fallback_socketpair` | true |
+
+三个事件都是 `socket.connect`，stdlib_file 均为 `C:\ProgramData\miniconda3\Lib\socket.py`。此时 gateway_network_targets=`[]`，unrelated_network_attempts=`[]`。
+
+**Case B：PASS。** 普通代码分别尝试 `connect(("127.0.0.1", 9))` 和 `connect(("::1", 9))`。两次均在 audit hook、即 OS connect 之前抛出并捕获 PermissionError；没有启动 server，未建立连接。测试端口 9 不是 policy 例外，其是否有 listener 不影响拒绝结果。
+
+Case B 的 unrelated_network_attempts 精确新增两个事件：
+
+```json
+[{"event": "socket.connect", "target": ["127.0.0.1", 9]}, {"event": "socket.connect", "target": ["::1", 9]}]
+```
+
+最终 gateway_network_targets 仍为空。以上两个拒绝是本地测试预期结果，**不是本轮访问了外部 gateway**。
+
+最终 summary：
+
+```text
+Case A: PASS; real socketpair and asyncio self-pipe created/closed; cleanup errors=[]
+Case A unrelated_network_attempts=[]
+Case B: PASS; ordinary IPv4/IPv6 loopback rejected with PermissionError before connection
+gateway API calls=0; API key reads=0; config reads=0
+FINAL: PASS (offline audit repair only)
+```
+
+退出码 `0`。最终输出保存在工作树外 `<venv 的父目录>\gateway-audit-repair.log`。
+
+### 4. 结论与禁止范围
+
+未来相同 CPython fallback / asyncio self-pipe 路径不会仅因内部 loopback 被误记为 unrelated network；未识别的标准库实现继续 fail closed。本次验证范围是当前 Windows CPython 实现，没有声称支持任意解释器、任意 localhost IPC 或对抗进程内代码篡改的 OS sandbox。
+
+真实 gateway API call：**NO**。读取 API key：**NO**。读取/修改 api_config：**NO**。修改 model：**NO**。未运行 DefaultAgent、Environment、RobotGen generation 或 benchmark，未调用 `/v1/models`，未修复或重测模型 availability。
+
+本轮只修复 gateway probe 的 Windows CPython/asyncio loopback IPC audit 假阳性。不处理 glm-5.3 gateway availability、parser compatibility、DefaultAgent、RobotGen generation、benchmark 或 production Harness。上一轮真实请求的 ENVIRONMENT_BLOCKED 历史保留，未重新分类或再次请求。
