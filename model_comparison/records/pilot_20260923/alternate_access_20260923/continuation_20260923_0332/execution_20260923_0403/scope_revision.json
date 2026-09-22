@@ -1,0 +1,14 @@
+{
+  "recorded_at": "2026-09-22T20:17:38.593438+00:00",
+  "instruction": "User cancelled astra; continue only gpt-5.6-sol and gpt-5.6-terra",
+  "model_A_reporting_status": "USER_CANCELLED_EXCLUDED",
+  "remaining_order": [
+    "model_B",
+    "model_C"
+  ],
+  "frozen_plan_modified": false,
+  "public_experimental_conditions_modified": false,
+  "client_process_group_terminated": 492,
+  "signal": "SIGTERM",
+  "command_exit_code": 0
+}

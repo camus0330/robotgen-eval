@@ -1,0 +1,37 @@
+{
+  "execution_baseline": "8880a50c13c9d7af192c69b7a2cb2d91eac88d4b",
+  "branch": "deadline/alternate-access-20260923",
+  "startup_time_utc": "2026-09-22T20:00:20+00:00",
+  "startup_local_remote_head_match": true,
+  "startup_worktree_clean": true,
+  "git_fetch_exit_code": 0,
+  "official_linux_login_status_exit_code": 0,
+  "official_login_status": "Logged in using ChatGPT",
+  "frozen_plan": "model_comparison\\records\\pilot_20260923\\alternate_access_20260923\\continuation_20260923_0332\\plan.json",
+  "frozen_plan_sha256": "856e0a726fad36d2a5cca0409dade3ba6d5db3cbe8309d0827ba1c1b98f27346",
+  "code_hash_checks": {
+    "model_comparison/tools/pilot_alt_access.py": true,
+    "model_comparison/tools/pilot_alt_continue.py": true,
+    "model_comparison/tools/pilot_alt_guard.py": true,
+    "model_comparison/tools/pilot_alt_linux_check.py": true,
+    "model_comparison/tools/pilot_alt_mcp.py": true,
+    "model_comparison/tools/pilot_alt_worker.py": true,
+    "model_comparison/tools/pilot_sandbox.py": true,
+    "model_comparison/tools/pilot_snapshot.py": true,
+    "model_comparison/tools/pilot_cad.py": true,
+    "model_comparison/tools/pilot_evaluate.py": true
+  },
+  "public_conditions_changed": false,
+  "new_image_admission_requests": 0,
+  "smart_agi_requests": 0,
+  "historical_fixtures_repeated": false,
+  "deadline": "2026-09-23T12:00:00+08:00",
+  "serial_order": [
+    "model_A",
+    "model_B",
+    "model_C"
+  ],
+  "per_model_seconds": 1800,
+  "attempts_per_model": 1,
+  "credential_material_read_or_copied": false
+}

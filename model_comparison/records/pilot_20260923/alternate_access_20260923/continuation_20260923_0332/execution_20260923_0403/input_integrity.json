@@ -1,0 +1,62 @@
+[
+  {
+    "slot": "model_A",
+    "checks": {
+      "PROMPT.md": true,
+      "SUBMISSION_SPEC.md": true,
+      "TASK_SPEC.md": true,
+      "assets/reference.png": true,
+      "assets/xl330_m288_t.step": true,
+      "environment.lock.txt": true,
+      "legacy_digital_profile.json": true,
+      "legacy_metrics_reference.csv": true,
+      "motion_profile.json": true,
+      "protocol.json": true,
+      "robustness_cases_public.jsonl": true,
+      "templates/design_manifest.json": true,
+      "templates/submission.json": true,
+      "PROMPT_ADDENDUM.md": true
+    },
+    "passed": true
+  },
+  {
+    "slot": "model_B",
+    "checks": {
+      "PROMPT.md": true,
+      "SUBMISSION_SPEC.md": true,
+      "TASK_SPEC.md": true,
+      "assets/reference.png": true,
+      "assets/xl330_m288_t.step": true,
+      "environment.lock.txt": true,
+      "legacy_digital_profile.json": true,
+      "legacy_metrics_reference.csv": true,
+      "motion_profile.json": true,
+      "protocol.json": true,
+      "robustness_cases_public.jsonl": true,
+      "templates/design_manifest.json": true,
+      "templates/submission.json": true,
+      "PROMPT_ADDENDUM.md": true
+    },
+    "passed": true
+  },
+  {
+    "slot": "model_C",
+    "checks": {
+      "PROMPT.md": true,
+      "SUBMISSION_SPEC.md": true,
+      "TASK_SPEC.md": true,
+      "assets/reference.png": true,
+      "assets/xl330_m288_t.step": true,
+      "environment.lock.txt": true,
+      "legacy_digital_profile.json": true,
+      "legacy_metrics_reference.csv": true,
+      "motion_profile.json": true,
+      "protocol.json": true,
+      "robustness_cases_public.jsonl": true,
+      "templates/design_manifest.json": true,
+      "templates/submission.json": true,
+      "PROMPT_ADDENDUM.md": true
+    },
+    "passed": true
+  }
+]

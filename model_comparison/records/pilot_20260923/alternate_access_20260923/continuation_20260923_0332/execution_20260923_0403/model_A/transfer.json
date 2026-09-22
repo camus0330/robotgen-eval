@@ -1,0 +1,41 @@
+{
+  "snapshots": {
+    "model_final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 925,
+          "sha256": "53c0142cbb9a1a3b9577e53714d6134de8afede8866977341146c92ca59af742"
+        }
+      ],
+      "total_bytes": 925,
+      "sha256": "029d2f7f56d491d50752e88711072b3a2185f9d4da7b48dd65f95e098f09bedb"
+    },
+    "final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 925,
+          "sha256": "53c0142cbb9a1a3b9577e53714d6134de8afede8866977341146c92ca59af742"
+        },
+        {
+          "path": "runner_log.json",
+          "size": 5447,
+          "sha256": "7b9686d27e2f6c23110a5c0308150c15058938bb158ac0e4442a3ded8eea2384"
+        },
+        {
+          "path": "submission.json",
+          "size": 945,
+          "sha256": "d2e14c2fc028fb6955b6646ef16ffb808493a2fca4d98f7f4398a1fc38326ae4"
+        }
+      ],
+      "total_bytes": 7317,
+      "sha256": "0a294b4191f1b87eac5b9961b1fc322f117c83b6ae1de7b44b8f12e4412650e4"
+    }
+  },
+  "worker_observed_exit_code": 1,
+  "reporting_status": "USER_CANCELLED_EXCLUDED",
+  "evaluation": "NOT_REQUESTED_CANCELLED_NO_DESIGN"
+}
