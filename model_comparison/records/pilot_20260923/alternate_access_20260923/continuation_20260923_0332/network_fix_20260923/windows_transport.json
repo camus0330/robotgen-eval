@@ -1,0 +1,70 @@
+[
+  {
+    "argv": [
+      "C:\\WINDOWS\\System32\\curl.exe",
+      "--disable",
+      "--silent",
+      "--show-error",
+      "--proxy",
+      "http://127.0.0.1:7897",
+      "--noproxy",
+      "localhost,127.0.0.1,::1",
+      "--connect-timeout",
+      "5",
+      "--max-time",
+      "20",
+      "--retry",
+      "0",
+      "--output",
+      "NUL",
+      "--write-out",
+      "%{http_connect}|%{http_code}|%{ssl_verify_result}|%{time_appconnect}|%{time_total}",
+      "https://auth.openai.com/"
+    ],
+    "os_exit_code": 35,
+    "target": "https://auth.openai.com/",
+    "body_saved": false,
+    "authorization_sent": false,
+    "curl_measurements": [
+      "200",
+      "000",
+      "0",
+      "0.000000",
+      "0.526317"
+    ]
+  },
+  {
+    "argv": [
+      "C:\\WINDOWS\\System32\\curl.exe",
+      "--disable",
+      "--silent",
+      "--show-error",
+      "--proxy",
+      "http://127.0.0.1:7897",
+      "--noproxy",
+      "localhost,127.0.0.1,::1",
+      "--connect-timeout",
+      "5",
+      "--max-time",
+      "20",
+      "--retry",
+      "0",
+      "--output",
+      "NUL",
+      "--write-out",
+      "%{http_connect}|%{http_code}|%{ssl_verify_result}|%{time_appconnect}|%{time_total}",
+      "https://chatgpt.com/"
+    ],
+    "os_exit_code": 0,
+    "target": "https://chatgpt.com/",
+    "body_saved": false,
+    "authorization_sent": false,
+    "curl_measurements": [
+      "200",
+      "403",
+      "0",
+      "0.283265",
+      "0.472004"
+    ]
+  }
+]

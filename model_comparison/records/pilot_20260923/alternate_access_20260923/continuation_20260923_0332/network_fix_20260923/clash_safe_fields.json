@@ -1,0 +1,18 @@
+{
+  "verge.yaml": {
+    "enable_system_proxy": true,
+    "enable_tun_mode": true,
+    "enable_auto_launch": true
+  },
+  "clash-verge.yaml": {
+    "mixed-port": 7897,
+    "allow-lan": false,
+    "bind-address": "*",
+    "tun": {
+      "enable": true,
+      "stack": "gvisor",
+      "auto-route": true,
+      "strict-route": false
+    }
+  }
+}

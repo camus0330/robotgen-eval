@@ -1,0 +1,29 @@
+{
+  "client_exit_code": 0,
+  "client": {
+    "proxy_received": true,
+    "no_proxy_exact": true,
+    "all_proxy_absent": true
+  },
+  "cad_exit_code": 0,
+  "cad": {
+    "proxy_and_synthetic_secret_absent": true,
+    "home_is_tmp": true,
+    "blocked": {
+      "198.51.100.1": true,
+      "127.0.0.1": true
+    }
+  },
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "-u",
+    "camus",
+    "--",
+    "/usr/bin/python3",
+    "-B",
+    "-"
+  ],
+  "outer_exit_code": 0
+}

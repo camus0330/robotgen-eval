@@ -1,0 +1,90 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "-u",
+    "camus",
+    "--",
+    "/usr/bin/python3",
+    "-B",
+    "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_network.py",
+    "check"
+  ],
+  "outer_exit_code": 0,
+  "result": {
+    "proxy": {
+      "scheme": "http",
+      "host": "127.0.0.1",
+      "port": 7897
+    },
+    "port": {
+      "reachable": true,
+      "elapsed_s": 0.0019192480000000955
+    },
+    "targets": [
+      {
+        "target": "https://auth.openai.com/",
+        "argv": [
+          "/usr/bin/curl",
+          "--disable",
+          "--silent",
+          "--show-error",
+          "--connect-timeout",
+          "5",
+          "--max-time",
+          "20",
+          "--retry",
+          "0",
+          "--output",
+          "/dev/null",
+          "--write-out",
+          "%{http_connect}|%{http_code}|%{ssl_verify_result}|%{time_appconnect}|%{time_total}",
+          "https://auth.openai.com/"
+        ],
+        "os_exit_code": 0,
+        "response_body_saved": false,
+        "authorization_sent": false,
+        "connect_http_status": 200,
+        "http_status": 403,
+        "tls_verify_result": 0,
+        "tls_elapsed_s": 0.182177,
+        "elapsed_s": 0.362481,
+        "transport_pass": true,
+        "failure_stage": null
+      },
+      {
+        "target": "https://chatgpt.com/",
+        "argv": [
+          "/usr/bin/curl",
+          "--disable",
+          "--silent",
+          "--show-error",
+          "--connect-timeout",
+          "5",
+          "--max-time",
+          "20",
+          "--retry",
+          "0",
+          "--output",
+          "/dev/null",
+          "--write-out",
+          "%{http_connect}|%{http_code}|%{ssl_verify_result}|%{time_appconnect}|%{time_total}",
+          "https://chatgpt.com/"
+        ],
+        "os_exit_code": 0,
+        "response_body_saved": false,
+        "authorization_sent": false,
+        "connect_http_status": 200,
+        "http_status": 403,
+        "tls_verify_result": 0,
+        "tls_elapsed_s": 0.180981,
+        "elapsed_s": 0.36329,
+        "transport_pass": true,
+        "failure_stage": null
+      }
+    ],
+    "model_requests": 0,
+    "transport_pass": true
+  }
+}

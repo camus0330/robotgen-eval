@@ -1,0 +1,11 @@
+{
+  "sol_additional_attempt_explicitly_authorized": true,
+  "user_answer": "Authorize one new sol attempt",
+  "per_model_seconds": 1800,
+  "remaining_order": [
+    "model_B_network1",
+    "model_C"
+  ],
+  "astra_excluded": true,
+  "diagnostic_model_calls": 0
+}

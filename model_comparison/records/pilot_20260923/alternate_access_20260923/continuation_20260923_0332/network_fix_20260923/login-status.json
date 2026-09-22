@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "-u",
+    "camus",
+    "--",
+    "/usr/bin/python3",
+    "-B",
+    "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_network.py",
+    "login-status"
+  ],
+  "outer_exit_code": 0,
+  "result": {
+    "official_login_status_exit_code": 0,
+    "authenticated": true,
+    "network_verified_by_status": false
+  }
+}

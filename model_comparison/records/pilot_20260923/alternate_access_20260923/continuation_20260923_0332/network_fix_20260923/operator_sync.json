@@ -1,0 +1,15 @@
+{
+  "hashes": {
+    "pilot_alt_network.py": {
+      "repository_sha256": "13254c1c4cae5d810dd4b64f15023c9256c7c067283318b82c003c7094c500ba",
+      "linux_sha256": "13254c1c4cae5d810dd4b64f15023c9256c7c067283318b82c003c7094c500ba"
+    },
+    "pilot_alt_worker.py": {
+      "repository_sha256": "2c2f204e58b3d5e04ffc2e3dccc1c838623fd2baab4fe9f385d53bd50323fb16",
+      "linux_sha256": "2c2f204e58b3d5e04ffc2e3dccc1c838623fd2baab4fe9f385d53bd50323fb16"
+    }
+  },
+  "private_config": "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/client_network.json",
+  "mode": "0600",
+  "proxy_source": "Windows system proxy and verge-mihomo listener; WSL mirrored TCP reachable"
+}

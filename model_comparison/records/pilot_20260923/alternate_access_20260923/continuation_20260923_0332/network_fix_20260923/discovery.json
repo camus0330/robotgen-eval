@@ -1,0 +1,68 @@
+{
+  "execution_baseline": "8880a50c13c9d7af192c69b7a2cb2d91eac88d4b",
+  "branch": "deadline/alternate-access-20260923",
+  "started_at": "2026-09-23T04:29:15+08:00",
+  "observed_at": "2026-09-22T20:34:49.860788+00:00",
+  "local_remote_match": true,
+  "owned_prior_untracked_directory": "execution_20260923_0403",
+  "unknown_worktree_changes": false,
+  "windows_os": "Windows 11 Home 10.0.26100; 26100.6584",
+  "wsl_version": "2.6.3.0",
+  "wsl_config": {
+    "networkingMode": "mirrored",
+    "autoProxy": true,
+    "dnsTunneling": true
+  },
+  "wsl_actual_mode": "mirrored",
+  "wsl_default_route": {
+    "gateway": "192.168.1.1",
+    "dev": "eth5"
+  },
+  "proxy_host_selection": "127.0.0.1 because mirrored mode; not DNS or default gateway",
+  "windows_processes": [
+    {
+      "name": "clash-verge-service.exe",
+      "pid": 6640
+    },
+    {
+      "name": "clash-verge.exe",
+      "pid": 11780
+    },
+    {
+      "name": "verge-mihomo.exe",
+      "pid": 15776
+    }
+  ],
+  "system_proxy_enabled": true,
+  "system_proxy": {
+    "host": "127.0.0.1",
+    "port": 7897
+  },
+  "listener": {
+    "host": "127.0.0.1",
+    "port": 7897,
+    "owner_pid": 15776
+  },
+  "pac_configured": false,
+  "tun_config_enabled": true,
+  "tun_route_effectiveness": "NOT_VERIFIED",
+  "wsl_inherited_http_proxy": {
+    "scheme": "http",
+    "host": "127.0.0.1",
+    "port": 7897,
+    "authentication_present": false
+  },
+  "wsl_inherited_no_proxy_entries": 21,
+  "wsl_inherited_all_proxy_present": false,
+  "wsl_proxy_tcp_reachable": true,
+  "wsl_user": "camus",
+  "home": "/home/camus",
+  "client_version": "0.154.0-alpha.6.1",
+  "commands_exit_code": 0,
+  "diagnostic_model_requests": 0,
+  "host_proxy_or_wsl_config_changed": false,
+  "existing_sessions_restarted": false,
+  "astra_scope": "USER_CANCELLED_EXCLUDED",
+  "sol_scope": "INTERRUPTED_FOR_NETWORK_REPAIR; no automatic attempt reset",
+  "terra_attempt_used": false
+}

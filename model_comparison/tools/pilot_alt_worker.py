@@ -12,6 +12,7 @@ import time
 import threading
 
 from pilot_snapshot import safe_snapshot
+from pilot_alt_network import client_environment
 
 
 def save(path, value):
@@ -29,7 +30,7 @@ def run(plan_path, slot):
     evidence = output / 'run.json'
     if evidence.exists():
         raise ValueError('one attempt only; existing journal')
-    env = {'PATH':'/usr/bin:/bin','HOME':'/home/camus','LANG':'C.UTF-8'}
+    env = client_environment()
     auth = subprocess.run([plan['client_binary'],'login','status'], env=env, capture_output=True)
     if auth.returncode:
         print(json.dumps({'status':'WAITING_OFFICIAL_LOGIN','attempt_used':False}))

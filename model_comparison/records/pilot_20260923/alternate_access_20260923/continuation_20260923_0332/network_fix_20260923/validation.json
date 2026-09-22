@@ -1,0 +1,9 @@
+{
+  "targeted_test_command": "& $py -B -m unittest discover -s model_comparison/tests -p test_pilot_alt_network.py -v",
+  "python": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+  "os_exit_code": 0,
+  "tests_passed": 3,
+  "historical_tests_rerun": false,
+  "diagnostic_model_requests": 0,
+  "finished_at": "2026-09-22T20:36:43.443409+00:00"
+}

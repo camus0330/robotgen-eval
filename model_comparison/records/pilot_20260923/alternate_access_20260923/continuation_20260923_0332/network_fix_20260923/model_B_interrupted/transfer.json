@@ -1,0 +1,42 @@
+{
+  "snapshots": {
+    "model_final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 925,
+          "sha256": "b96aa23940c8736e07b0440c68aeb8805afa76a619c87c6c0788991f01407ffc"
+        }
+      ],
+      "total_bytes": 925,
+      "sha256": "9d53f30344ed20cedb56342d30187f8430044401723163bfeaed3c4d317a3b96"
+    },
+    "final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 925,
+          "sha256": "b96aa23940c8736e07b0440c68aeb8805afa76a619c87c6c0788991f01407ffc"
+        },
+        {
+          "path": "runner_log.json",
+          "size": 5306,
+          "sha256": "5f54b34109ad698a219e26fb3bbb5739fa6b5ce3ae66f20a07ed80364593faf5"
+        },
+        {
+          "path": "submission.json",
+          "size": 949,
+          "sha256": "dc77e6a916bdd5d5f16e0396c4bbf6a026d2deb6965bc8545de69f94411362e3"
+        }
+      ],
+      "total_bytes": 7180,
+      "sha256": "c3de79debc587de00479f8566cc601383a02086a183b9d197fdecd1ac55d26ee"
+    }
+  },
+  "worker_observed_exit_code": 1,
+  "reporting_status": "INTERRUPTED_FOR_NETWORK_REPAIR",
+  "tool_calls": 0,
+  "additional_attempt_authorized": false
+}

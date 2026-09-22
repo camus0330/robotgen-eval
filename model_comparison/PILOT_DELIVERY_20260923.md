@@ -394,3 +394,49 @@ wsl -d Ubuntu-24.04 -- /home/camus/robotgen-alt-client-20260923/codex-x86_64-unk
 ```
 
 Do not send a device code, token or key to chat. No Windows auth.json/token, browser credential database or `.sandbox-secrets` was read, copied or exported; no subscription token was repurposed as an API key. No model/CAD generation worker or background login process was left running by this task. The remaining external blocker is **official Linux login**. After it is completed, continue the frozen three real attempts and independent measurement without repeating image admission or old gateway requests. This pauses under the user's explicit authentication exception, not at a claimed completed pilot.
+
+
+## 2026-09-23: verified host proxy for the native Linux client
+
+Execution baseline: `8880a50c13c9d7af192c69b7a2cb2d91eac88d4b`; branch `deadline/alternate-access-20260923`. Local and remote matched. The only pre-existing worktree addition was our `execution_20260923_0403` evidence from the resumed attempts. Original frozen inputs and `continuation_20260923_0332/plan.json` are unchanged.
+
+Diagnosis began at **04:29:15 +08:00**. Windows 11 build 26100.6584 / WSL 2.6.3.0 / Ubuntu-24.04, user `camus`, HOME `/home/camus`. `.wslconfig` reports mirrored networking, autoProxy=true and dnsTunneling=true; actual `wslinfo --networking-mode` is mirrored. The default route is via 192.168.1.1 on eth5; neither this nor a DNS address was used as the proxy host.
+
+| Check | Actual result |
+|---|---|
+| WINDOWS_PROXY_DISCOVERED | PASS: enabled Windows system proxy 127.0.0.1:7897; TCP listener owned by verge-mihomo.exe PID 15776; Clash Verge and service running |
+| WSL_PROXY_REACHABLE | PASS: mirrored-loopback TCP connection to the observed listener |
+| OFFICIAL_HTTPS_TRANSPORT | PASS in WSL: auth.openai.com and chatgpt.com CONNECT 200, verified TLS, HTTP 403, curl exit 0 |
+| CODEX_CLIENT_ENV_CONFIGURED | PASS: one allowlisted environment builder used by check/login/status and worker; actual child inheritance test passes |
+| CAD_NETWORK_STILL_BLOCKED | PASS: actual bubblewrap CAD child has no proxy/synthetic-secret variables; TEST-NET external and host-proxy connections fail |
+| OFFICIAL_LOGIN_STATUS | authenticated=true, official login status exit 0 through the same wrapper; no new device login needed |
+
+The active Clash configuration reports mixed-port=7897, allow-lan=false and TUN enabled (gvisor). The observed listener is loopback despite the configuration's bind-address field. PAC is not configured. TUN's actual routing effectiveness is NOT_VERIFIED. Only these selected non-sensitive fields were retained; no full YAML, subscriptions, nodes, controller secrets or authentication files were exported.
+
+Windows comparison: auth.openai.com CONNECT 200 followed by TLS handshake failure (curl 35, no HTTP response); chatgpt.com CONNECT 200, TLS verified, HTTP 403, exit 0. WSL reached both HTTPS targets with HTTP 403 in approximately 0.36 seconds each. HTTP policy rejection is separate from successful transport and does not prove model generation availability. No repeated failed configuration, TLS bypass, body, cookie or full-header capture was used.
+
+### Minimal process-only change and validation
+
+`pilot_alt_network.py` reads the private Linux operator `client_network.json`, containing the verified credential-free HTTP proxy origin. `HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy` all use `http://127.0.0.1:7897`; both NO_PROXY forms contain only `localhost,127.0.0.1,::1`. ALL_PROXY forms and all unrelated inherited variables are absent. The fixed PATH/HOME/LANG remain unchanged. Worker changes are limited to importing and using this environment builder for its existing authentication check and Codex subprocess. No process lifecycle, prompt, tool permissions or CAD code changed.
+
+The new helper and worker were copied into the existing Linux operator directory and both hashes verified against repository files (`operator_sync.json`). The private config is mode 0600, outside model sessions and CAD mounts. No `.bashrc`, global Codex config, Windows proxy, firewall, WSL setting or service was changed/restarted. The CAD namespace remains network-disabled with its original read-only kit/CAD mounts and clear environment.
+
+Actual commands (all user-specific paths filled):
+
+```powershell
+$py = 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe'
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_alt_network.py' -v
+# exit 0; 3 targeted tests, including actual Linux child and CAD namespace
+wsl -d Ubuntu-24.04 -u camus -- /usr/bin/python3 -B /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_network.py check
+# exit 0; two public HTTPS requests, no model request
+wsl -d Ubuntu-24.04 -u camus -- /usr/bin/python3 -B /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_network.py login-status
+# exit 0; authenticated
+```
+
+The same helper provides interactive `login` if later needed, but no device-auth flow was started here. Detailed safe argv, individual curl exits/timing/CONNECT/HTTP fields and isolation evidence are in `network_fix_20260923/{discovery,windows_transport,check,login-status,isolation_test,validation,operator_sync}.json`. No image admission, old fixture, cube, Smart AGI or model request was made by network diagnostics. Existing unaffected tests are reused.
+
+### Interrupted attempts and explicit continuation authorization
+
+Astra was cancelled by the user and excluded. Its prior client was stopped with SIGTERM after 866.95 seconds, client exit -15, outer observed exit 1, tool calls 0, no design. Sol's old environment also produced only connection timeout events; it was stopped for this network repair after 735.15 seconds, client exit -15, outer observed exit 1, tool calls 0. Both workers completed safe final snapshots containing operator metadata, not robot designs. Raw worker GENERATION_FAILED classifications are preserved; neither is interpreted as a robot design quality failure. Astra's evidence is under `execution_20260923_0403/model_A`; sol's is under `network_fix_20260923/model_B_interrupted`. Original API request/retry counts remain null/not_observed; CLI reconnect events are not server request counts.
+
+The user then explicitly authorized **one new complete 1800-second sol attempt**. `network_execution_plan.json` records that authorization, the new independent `model_B_network1` paths, the network code hashes and the original plan hash; terra retains its unused original attempt. Astra stays excluded. The public task, image, CAD environment, tools, reasoning defaults and evaluator remain unchanged. Continue serially sol then terra, with immediate independent intake/rebuild/measurement after each; generation outcomes will be appended below. The 12:00 +08:00 closure deadline remains in force.
