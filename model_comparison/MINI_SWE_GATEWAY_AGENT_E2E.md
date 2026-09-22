@@ -212,3 +212,65 @@ queries `6`, real shell launches `3`, gateway queries `0`, and real LLM API
 calls `0`. No additional Agent, fixture, shell, or network process was started
 for the pure-data regressions. Formal configuration, real keys, live gateway
 execution, and `--live` remain unexecuted by design.
+
+## Current live execution: reviewed tiny E2E
+
+IMPLEMENTATION: PASS (existing implementation unchanged)
+OFFLINE_SELF_TEST: PASS (reused reviewed result; not rerun)
+REAL GATEWAY E2E: ENVIRONMENT_BLOCKED (single live attempt, exit code 2)
+
+Baseline: `c192403d0e6e30c25b03dbf970ff649a9650a387`
+Interpreter: `C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe`
+Cache: `C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-569bm_v2`
+Cache SHA-256:
+`223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`
+Temporary config: `C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\gateway_agent_live.json`
+Key source: environment variable `SMART_AGI_API_KEY`; presence was checked without
+printing its value. The temporary config contained an empty `api_key`.
+
+The only live command was:
+
+```powershell
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py `
+  --live --config $cfg --cache $cache
+# exit 2
+```
+
+Execution window: `2026-09-22T21:43:33.6367185+08:00` to
+`2026-09-22T21:43:40.4740751+08:00`; timezone: `China Standard Time` (`+08:00`).
+The redacted stdout was saved outside the repository at
+`C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\live-stdout.txt`;
+stderr was saved separately at the corresponding `live-stderr.txt`. No SDK
+raw dump was saved.
+
+The live path started with route `gpt-5.6-sol` and routed model
+`openai/gpt-5.6-sol`, passed the existing provenance and cache checks, and
+stopped at the existing audit boundary. It did not reach a shell action or
+the submit sentinel, so `Submitted` was not obtained. The actual summary was:
+
+| Field | Value |
+|---|---|
+| classification | `ENVIRONMENT_BLOCKED` |
+| exit code | `2` |
+| stage | `agent_run` |
+| safe exception | `BoundaryAbort` |
+| agent calls | `1` |
+| model query calls | `1` |
+| gateway queries | `1` client attempt (not a server completion count) |
+| real shell launches | `0` |
+| fixture calls / cost fixture calls | `0 / 0` |
+| real LLM API calls | `null`, source `not_observed` |
+| exit status / submission | not observed |
+
+`gateway_network_targets` retained the attempted DNS target
+`big-model.smart-agi.com:443`. `unrelated_network_attempts` retained the
+local proxy DNS target `127.0.0.1:7897`, which caused the fail-closed boundary
+stop. `local_runtime_ipc_targets` retained the CPython cleanup socketpair
+target `127.0.0.1:11437`. No retry, fallback route, `/v1/models` probe,
+fixture patch, parser patch, or provider retry was used. The backend identity
+behind the `gpt-5.6-sol` gateway route was not confirmed.
+
+The formal `model_A` configuration was not read or modified. No Prompt or
+frozen input, dependency, upstream file, Python implementation, benchmark, or
+RobotGen generation was changed. This single live attempt is an execution
+record, not a robot-generation metric or formal model comparison.
