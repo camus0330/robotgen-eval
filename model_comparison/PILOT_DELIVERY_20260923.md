@@ -76,10 +76,10 @@ The evaluator now executes the manifest's declared rebuild command in the isolat
 
 ## Real integration-only robot attempt (execution baseline `6204f7e07c71a2e3c3297ddde30a9106b6e38d37`)
 
-The executable live path was invoked once with the reviewed temporary Smart AGI configuration and the pinned interpreter. The recorded interval was `2026-09-23 00:15:12` to `00:16:45` Asia/Shanghai (`2026-09-22T16:15:12Z` to `2026-09-22T16:16:45Z`). The route was `gpt-5.6-sol`; backend identity was not confirmed. The task included the frozen text inputs and the reference PNG data URI. No formal `model_A` configuration or real key file was read. The child environment retained no credential mount and used the existing network-deny isolated action executor.
+The executable live path was invoked once with the reviewed temporary Smart AGI configuration `C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\gateway_agent_live.json` and the pinned interpreter. The recorded interval was `2026-09-23 00:15:12` to `00:16:45` Asia/Shanghai (`2026-09-22T16:15:12Z` to `2026-09-22T16:16:45Z`). The route was `gpt-5.6-sol`; backend identity was not confirmed. The task included the frozen text inputs and the reference PNG data URI. No formal `model_A` configuration or real key file was read. The child environment retained no credential mount and used the existing network-deny isolated action executor.
 
 ```text
-python -B -u -c "import sys;sys.path.insert(0, 'model_comparison/tools');from pilot_run import run_real_integration;raise SystemExit(run_real_integration(<temporary-config>, run_id='integration_only_20260923_v2'))"
+C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe -B -u -c "import sys;sys.path.insert(0, 'model_comparison/tools');from pilot_run import run_real_integration;raise SystemExit(run_real_integration(r'C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\\gateway_agent_live.json', run_id='integration_only_20260923_v2'))"
 OS exit: 1
 provider retries: 0
 model_query_calls: 1
