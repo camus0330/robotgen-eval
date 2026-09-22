@@ -21,7 +21,7 @@ def linux_path(path):
     return "/mnt/" + path.drive[0].lower() + path.as_posix()[2:]
 
 
-def execute_python(source, *, kit, submission=None, seconds=10):
+def execute_python(source, *, kit, submission=None, writable_output=None, seconds=10):
     executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
     inner = ["/usr/bin/timeout", "--kill-after=2", str(seconds),
                "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--new-session",
@@ -32,6 +32,8 @@ def execute_python(source, *, kit, submission=None, seconds=10):
                "--ro-bind", linux_path(kit), "/kit"]
     if submission is not None:
         inner += ["--ro-bind", linux_path(submission), "/submission"]
+    if writable_output is not None:
+        inner += ["--bind", linux_path(writable_output), "/work"]
     inner += ["--chdir", "/tmp", "/usr/bin/python3", "-B", "-c", source]
     command = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
     # Linux timeout owns the namespace/process group; the outer timeout bounds a

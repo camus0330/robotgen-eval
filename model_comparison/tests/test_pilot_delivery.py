@@ -10,7 +10,7 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from pilot_run import KIT, ROOT, checked_copy
 from pilot_sandbox import child_environment, execute_python
-from pilot_evaluate import intake
+from pilot_evaluate import intake, _structure_metrics
 
 
 class PilotChecks(unittest.TestCase):
@@ -70,6 +70,7 @@ print('ISOLATION_PASS')
         with tempfile.TemporaryDirectory(dir=fixtures) as name:
             folder = Path(name)
             self.assertEqual(intake(folder)["intake_status"], "INVALID")
+
             meta = json.loads((KIT / "inputs/templates/submission.json").read_text())
             meta.update(submission_id="synthetic-contract", model_slot="model_A", phase="pilot", attempt=1,
                         status="COMPLETED", model_provider="fixture", model_exact_version="fixture", invocation_mode="fixture",
@@ -104,6 +105,27 @@ print('ISOLATION_PASS')
             design["parts"][0]["step"] = "../escape.step"
             (folder / "design_manifest.json").write_text(json.dumps(design))
             self.assertEqual(intake(folder)["intake_status"], "INVALID")
+    def test_offline_integration_success_and_independent_measurement(self):
+        run = Path("results/pilot_20260923/offline_integration_20260922_v4/run.json")
+        metrics = Path("results/pilot_20260923/offline_integration_20260922_v4/metrics.json")
+        self.assertTrue(run.is_file())
+        evidence = json.loads(run.read_text())
+        self.assertEqual(evidence["classification"], "PASS")
+        self.assertEqual((evidence["agent_calls"], evidence["model_query_calls"], evidence["real_shell_launches"]), (2, 2, 2))
+        self.assertEqual(evidence["exit_status"], "Submitted")
+        self.assertTrue(metrics.is_file())
+        rows = {row["metric_id"]: row for row in json.loads(metrics.read_text())["metrics"]}
+        self.assertEqual(rows["clean_rebuild"]["status"], "PASS")
+        self.assertEqual(rows["solid_validity_volume_count"]["status"], "PASS")
+        self.assertEqual(rows["all_printed_parts_envelope"]["status"], "PASS")
+        self.assertEqual(rows["step_kernel_readback"]["status"], "NA")
+        final = Path("outputs/pilot_20260923/offline_integration_20260922_v4/final")
+        bad = Path(tempfile.mkdtemp(dir=final.parent))
+        import shutil
+        shutil.copytree(final, bad, dirs_exist_ok=True)
+        (bad / "part.stl").write_text("solid invalid\nendsolid invalid\n")
+        measured = {row[0]: row for row in _structure_metrics(bad)}
+        self.assertEqual(measured["solid_validity_volume_count"][3], "FAIL")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@
       "kind": "frozen_plan",
       "status": "tracked",
       "size": 5339,
-      "sha256": "2dca9ae7443994595491250fb83e3bed97dacceaa5cd86c7a07e23c6e19aa29a"
+      "sha256": "49a2de334122bc707ae987dcb660e76b263acf59ad0052bd51b9a567759a8b3c"
     },
     {
       "path": "model_comparison/records/pilot_20260923/results.csv",
@@ -35,10 +35,42 @@
       "kind": "preflight_log",
       "status": "ignored",
       "contains_credentials": false,
-      "size": 6614,
-      "sha256": "047d17512c68d2eb489be3631a8d1f359259570a504fca0e7c282cd77265b485"
+      "size": 6643,
+      "sha256": "fec7059449393b19acab5bbb395aec45256e5080ccbe40e6a66ab5cf61365136"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/continuation_20260922.json",
+      "kind": "offline_integration_plan",
+      "status": "tracked",
+      "contains_credentials": false,
+      "size": 1179,
+      "sha256": "e3b1879180889063644c7f54ff62940b353fd9f47f8655fec005bfd81263b308"
+    },
+    {
+      "path": "outputs/pilot_20260923/offline_integration_20260922_v4/first",
+      "kind": "synthetic_first_snapshot",
+      "status": "ignored",
+      "contains_credentials": false,
+      "file_count": 19,
+      "sha256": "8e79bfe3397c2c6f269662d4ae48f47eb7c410f20f78b7c07739e97a949b1349"
+    },
+    {
+      "path": "outputs/pilot_20260923/offline_integration_20260922_v4/final",
+      "kind": "synthetic_final_snapshot",
+      "status": "ignored",
+      "contains_credentials": false,
+      "file_count": 20,
+      "sha256": "1ddb8c0179ee68ce3a29581c7512ffbf295bb3c3d332e90605f4936ee1398e4f"
+    },
+    {
+      "path": "results/pilot_20260923/offline_integration_20260922_v4/metrics.json",
+      "kind": "independent_evaluation",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 9198,
+      "sha256": "931a292eb730b04ac573b776855a848896dfdd397beea43a6e0bf1e18d829849"
     }
   ],
   "robot_artifacts": [],
-  "note": "No generated design was produced; no artifact is represented as a result."
+  "note": "No real model design was produced; the offline integration fixture is validation-only and is not represented as a model result."
 }

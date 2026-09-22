@@ -1,0 +1,16 @@
+{
+  "run_id": "offline_integration_20260922_v4",
+  "created_at": "2026-09-22T15:15:00+00:00",
+  "supersedes_nothing": true,
+  "purpose": "Executable local integration evidence, separate from the frozen three-model plan",
+  "mode": "OFFLINE_INTEGRATION",
+  "fixture_is_robot_result": false,
+  "agent": {"implementation":"pinned DefaultAgent + LitellmTextbasedModel", "queries":2, "shell_launches":2, "exit_status":"Submitted", "real_llm_api_calls":0},
+  "isolation": {"backend":"WSL Ubuntu-24.04 bubblewrap", "credential_mount":false, "external_network":false, "input_mount":"read-only canonical kit", "output_mount":"writable run directory", "timeout_s":30},
+  "artifact": "outputs/pilot_20260923/offline_integration_20260922_v4/final",
+  "evaluation": "results/pilot_20260923/offline_integration_20260922_v4/metrics.json",
+  "cad_kernel": {"status":"NOT_AVAILABLE", "metric_status":"NA", "failure_type":"ADAPTER_UNSUPPORTED", "checked_modules":["OCP","cadquery"]},
+  "motion_metrics": {"status":"NA", "failure_type":"ADAPTER_UNSUPPORTED"},
+  "negative_checks": ["missing submission rejected", "path traversal rejected", "empty STL measured FAIL"],
+  "not_a_model_pilot": true
+}

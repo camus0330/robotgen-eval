@@ -40,3 +40,25 @@ The isolation checks used WSL Ubuntu-24.04 and bubblewrap with a temporary read-
 Tracked evidence is in `records/pilot_20260923/`; safe full logs and the canonical kit are under ignored `results/pilot_20260923/` and `outputs/pilot_20260923/`. The artifact manifest contains no generated design. No formal model_A configuration, frozen prompt/input source, benchmark, dependency, system proxy, or credential store was modified. The existing gateway E2E received only the visible-message evidence addition and common protocol wording; its parser, Agent, Environment, audit, and shell policy were not replaced.
 
 There is no backend identity confirmation, no `returned_model`, usage, billing, hidden reasoning, or server completion fact. Those fields are `not_observed`. This report is not a RobotGen generation metric or formal model comparison, and external review has not been performed.
+
+## Continuation: executable offline integration path
+
+At `2026-09-22T15:15:00Z`, a separate run ID `offline_integration_20260922_v4` exercised the newly implemented path. It used the real pinned `DefaultAgent`, `LitellmTextbasedModel`, upstream parser, and the same literal text action protocol. The only model boundary replacement was an explicit `OFFLINE_INTEGRATION` completion/cost fixture; no model query or gateway request occurred.
+
+The fixture produced a clearly synthetic, non-robot submission. The first action wrote the files through the WSL/bubblewrap output mount; the second action ran its declared rebuild entrypoint and returned the native `Submitted` sentinel. Observed counts were exactly `agent_calls=2`, `model_query_calls=2`, `real_shell_launches=2`, `fixture_calls=2`, `real_llm_api_calls=0`, and OS exit `0`. First and final snapshots are under `outputs/pilot_20260923/offline_integration_20260922_v4/first` and `final`.
+
+Independent evaluation used the unchanged `experiment.py` file contract, then ran the rebuild in a fresh no-credential, no-external-network sandbox. `clean_rebuild` passed with OS exit `0`; the synthetic STL had an observed 10×10×10 mm envelope and positive measured proxy volume, and the 220×220×250 mm envelope check passed. URDF and MJCF XML parsing and the declared joint tree passed. The current interpreter has neither OCP nor cadquery, so `step_kernel_readback` is `NA/ADAPTER_UNSUPPORTED`; dynamics and motion replay remain `NA` for the same reason. No total score was produced. Detailed values and hashes are in `results/pilot_20260923/offline_integration_20260922_v4/metrics.json`.
+
+This fixture is validation evidence only and is not inserted into the three-model result table. The invalid STL negative check returned `FAIL`, while missing submissions and path traversal remained rejected. The continuation plan and boundaries are recorded in `records/pilot_20260923/continuation_20260922.json`.
+
+Continuation command record:
+
+```text
+python model_comparison/tools/experiment.py verify-inputs                         exit 2 (known Windows CRLF checkout mismatch)
+python -m unittest discover -s model_comparison/tests -p "test_pilot_*.py" -v   exit 0 (6 tests)
+python model_comparison/tools/pilot_run.py preflight                              exit 2 (ACCESS_BLOCKED; generation_ready=false from admission evidence)
+python model_comparison/tools/pilot_run.py run --offline-integration              exit 0 (PASS; 2 queries, 2 shell launches, Submitted)
+python model_comparison/tools/pilot_evaluate.py --integration --submission ...   exit 0 (FILE_CONTRACT_ACCEPTED; rebuild exit 0)
+```
+
+The offline run used only a completion/cost fixture and produced no real LLM API call. The three model admission attempts remain the earlier single attempts with HTTP 404; no new model request was made during this continuation.
