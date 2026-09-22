@@ -2,27 +2,27 @@
 import argparse
 import hashlib
 import json
-import importlib.util
-import re
-import shlex
-import shutil
+import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from pilot_run import KIT, RECORDS, RESULTS, ROOT, write_json
-from pilot_sandbox import execute_command, execute_python
+from pilot_sandbox import execute_python
+from pilot_snapshot import safe_snapshot, relative_name, SnapshotRejected
+from pilot_cad import VERSION, source_rebuild, step_readback, stl_measure, RebuildContractError
 
-VERSION = "pilot-intake-20260923.1"
 ENGINEERING = ("clean_rebuild", "step_kernel_readback", "solid_validity_volume_count",
-               "all_printed_parts_envelope", "mesh_reference_closure", "urdf_mjcf_load",
+               "all_printed_parts_envelope", "mesh_reference_closure", "urdf_mjcf_parse", "joint_counts",
                "joint_tree_actuator_contract", "dynamics_load", "swing_replay", "wave_replay", "robustness")
 INTEGRATION_RUN = "offline_integration_eval_20260922_v3"
 
 
 def intake(submission):
     source = "import sys,json; from pathlib import Path; sys.path.insert(0,'/kit/tools'); import experiment; print(json.dumps(experiment.validate(Path('/submission'),Path('/kit'))))"
-    child = execute_python(source, kit=KIT, submission=submission)
+    parent = Path(tempfile.mkdtemp(prefix="intake-v2-", dir=RESULTS))
+    safe_snapshot(submission, parent / "received")
+    child = execute_python(source, kit=KIT, submission=parent / "received")
     if child.returncode:
         return {"intake_status": "EVALUATOR_ERROR", "child_exit_code": child.returncode}
     result = json.loads(child.stdout)
@@ -39,23 +39,7 @@ def _metric(metric_id, value, unit, status, failure, evidence_path, evidence_has
             "evaluator_hash": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
 
 
-def _stl_measure(path):
-    vertices = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        fields = line.strip().split()
-        if len(fields) == 4 and fields[0].lower() == "vertex":
-            vertices.append(tuple(float(x) for x in fields[1:]))
-    if not vertices:
-        return None
-    mins = [min(p[i] for p in vertices) for i in range(3)]
-    maxs = [max(p[i] for p in vertices) for i in range(3)]
-    volume = 0.0
-    for i in range(0, len(vertices) - 2, 3):
-        a, b, c = vertices[i:i+3]
-        volume += (a[0]*(b[1]*c[2]-b[2]*c[1]) - a[1]*(b[0]*c[2]-b[2]*c[0]) + a[2]*(b[0]*c[1]-b[1]*c[0])) / 6
-    return {"vertex_count": len(vertices), "triangle_count": len(vertices)//3,
-            "bbox_mm": {"min": mins, "max": maxs, "size": [maxs[i]-mins[i] for i in range(3)]},
-            "signed_volume_mm3": volume, "absolute_volume_mm3": abs(volume)}
+_stl_measure = stl_measure
 
 
 def _xml_measure(path, root_name):
@@ -66,102 +50,85 @@ def _xml_measure(path, root_name):
             "parse_pass": root.tag == root_name}
 
 
-def _run_rebuild(submission):
-    workspace = Path(tempfile.mkdtemp(prefix="robotgen-eval-rebuild-"))
-    shutil.copytree(submission, workspace, dirs_exist_ok=True)
-    manifest = json.loads((workspace / "design_manifest.json").read_text(encoding="utf-8"))
-    command = manifest.get("rebuild_command")
-    if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
-        raise ValueError("manifest rebuild_command is missing or malformed")
-    if command == ["pilot_rebuild"]:
-        command = ["python3", "rebuild.py"]
-    (workspace / "rebuild.marker").unlink(missing_ok=True)
-    before = {p.relative_to(workspace).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-              for p in workspace.rglob("*") if p.is_file() and not p.is_symlink()}
-    child = execute_command(" ".join(shlex.quote(item) for item in command),
-                            kit=KIT, writable_output=workspace, seconds=30)
-    after = {p.relative_to(workspace).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-             for p in workspace.rglob("*") if p.is_file() and not p.is_symlink()}
-    delta = sorted(path for path, value in after.items() if before.get(path) != value or path not in before)
-    return workspace, child, delta
-
-
 def _structure_metrics(submission):
-    rows = []
-    probe = execute_python("import json;\ntry:\n import cadquery as cq\n s=cq.importers.importStep('/submission/assembly.step'); solids=s.solids().vals(); print(json.dumps({'kernel':'cadquery','solids':len(solids),'valid':all(x.isValid() for x in solids),'volume':sum(x.Volume() for x in solids)}))\nexcept ModuleNotFoundError:\n print(json.dumps({'kernel':None,'status':'not_installed'}))\nexcept Exception as e:\n print(json.dumps({'kernel':'cadquery','status':'readback_error','error_class':type(e).__name__}))", kit=KIT, submission=submission, seconds=30)
-    step_result = {"exit_code":probe.returncode, "stdout_sha256":hashlib.sha256(probe.stdout.encode()).hexdigest(), "readback_pass":False, "result":"not_observed"}
-    if probe.returncode == 0:
-        try:
-            decoded = json.loads(probe.stdout.strip().splitlines()[-1])
-            step_result.update(decoded)
-            step_result["readback_pass"] = bool(decoded.get("kernel") and decoded.get("valid") and decoded.get("solids", 0) > 0 and decoded.get("volume", 0) > 0)
-        except (ValueError, IndexError):
-            step_result["result"] = "malformed_probe_output"
-    rows.append(("step_kernel_readback", step_result, "bool", "PASS" if step_result and step_result.get("readback_pass") else "NA", None if step_result and step_result.get("readback_pass") else "ADAPTER_UNSUPPORTED"))
+    # Caller supplies the immutable safe snapshot of NEW rebuilt outputs.
+    safe_snapshot(submission)
     manifest = json.loads((submission / "design_manifest.json").read_text(encoding="utf-8"))
-    parts = []
-    for part in manifest.get("parts", []):
-        measured = _stl_measure(submission / part["stl"])
-        parts.append({"id":part.get("id"), "stl":part.get("stl"), "measurement":measured})
-    valid_parts = [p for p in parts if p["measurement"] and p["measurement"]["absolute_volume_mm3"] > 0]
-    solid_status = "NA" if parts and len(valid_parts) == len(parts) else "FAIL"
-    solid_failure = "ADAPTER_UNSUPPORTED" if solid_status == "NA" else "THRESHOLD"
-    rows.append(("solid_validity_volume_count", {"parts":parts,"valid_part_count":len(valid_parts),"measurement_kind":"proxy_mesh_measurement","solid_validity_checked":False}, "mm3", solid_status, solid_failure))
-    sizes = [p["measurement"]["bbox_mm"]["size"] for p in valid_parts]
-    envelope_status = "PASS" if sizes and all(all(x <= y for x, y in zip(size, (220, 220, 250))) for size in sizes) else "FAIL"
-    rows.append(("all_printed_parts_envelope", {"part_count":len(parts), "sizes_mm":sizes, "limits_mm":[220,220,250]}, "mm", envelope_status, None if envelope_status == "PASS" else "THRESHOLD"))
-    refs = [node.get("filename") for node in ET.parse(submission / "robot.urdf").findall(".//mesh") if node.get("filename")]
-    closure = {"references": refs, "missing": [r for r in refs if not (submission / r).is_file()]}
-    rows.append(("mesh_reference_closure", closure, "count", "PASS" if not closure["missing"] else "FAIL", None if not closure["missing"] else "MISSING_EVIDENCE"))
-    urdf = _xml_measure(submission / "robot.urdf", "robot")
-    mjcf = _xml_measure(submission / "robot.mjcf", "mujoco")
-    parsed = urdf["parse_pass"] and mjcf["parse_pass"]
-    rows.append(("urdf_mjcf_parse", {"urdf":urdf,"mjcf":mjcf}, "bool", "PASS" if parsed else "FAIL", None if parsed else "EVALUATOR_ERROR"))
-    rows.append(("dynamics_load", None, "bool", "NA", "ADAPTER_UNSUPPORTED"))
-    expected_roles = {"left_shoulder_pitch","left_elbow_pitch","right_shoulder_pitch","right_elbow_pitch","left_hip_pitch","left_knee_pitch","right_hip_pitch","right_knee_pitch"}
-    declared_roles = {j.get("role") for j in manifest.get("joints", [])}
-    contract = {"declared_role_count":len(declared_roles),"expected_role_count":len(expected_roles),"urdf_joint_count":urdf["joint_count"],"mjcf_joint_count":mjcf["joint_count"]}
-    contract_pass = declared_roles == expected_roles and urdf["joint_count"] == 8 and mjcf["joint_count"] >= 8
-    rows.append(("joint_tree_actuator_contract", contract, "count", "PASS" if contract_pass else "FAIL", None if contract_pass else "THRESHOLD"))
-    for metric in ("swing_replay", "wave_replay", "robustness"):
-        rows.append((metric, None, None, "NA", "ADAPTER_UNSUPPORTED"))
+    paths = sorted({relative_name(manifest["files"]["assembly_step"])} |
+                   {relative_name(p["step"]) for p in manifest["parts"]})
+    step = step_readback(submission, paths, kit=KIT)
+    available = step.get("environment") == "PASS" and step["os_exit_code"] == 0
+    step_pass = available and bool(step.get("parts")) and all(p["status"] == "PASS" for p in step["parts"])
+    rows = [("step_kernel_readback", step, "mm3", "PASS" if step_pass else "FAIL" if available else "NA",
+             None if step_pass else "STEP_READBACK_FAILED" if available else "CAD_ENVIRONMENT_UNAVAILABLE")]
+    parts = [{"id": p.get("id"), "stl": relative_name(p["stl"]),
+              "measurement": stl_measure(submission / relative_name(p["stl"]))} for p in manifest["parts"]]
+    complete = bool(parts) and all(p["measurement"] is not None for p in parts)
+    sizes = [p["measurement"]["bbox_mm"]["size"] if p["measurement"] else None for p in parts]
+    envelope = complete and all(all(0 < x <= y for x,y in zip(size,(220,220,250))) for size in sizes)
+    rows.append(("stl_triangle_proxy", {"parts":parts}, "mm3", "PASS" if complete else "FAIL", None if complete else "MISSING_OR_INVALID_STL"))
+    rows.append(("solid_validity_volume_count", None, None, "NA", "MESH_SOLID_VALIDITY_NOT_IMPLEMENTED"))
+    rows.append(("all_printed_parts_envelope", {"part_count":len(parts), "sizes_mm":sizes,"limits_mm":[220,220,250]}, "mm", "PASS" if envelope else "FAIL", None if envelope else "MISSING_INVALID_OR_OVERSIZE_PART"))
+    xml = {}
+    for key, root in (("urdf","robot"),("mjcf","mujoco")):
+        try:
+            name = relative_name(manifest["files"][key])
+            xml[key] = _xml_measure(submission / name, root)
+        except (KeyError, ValueError, OSError, ET.ParseError):
+            xml[key] = {"parse_pass":False, "joint_count":None}
+    parsed = all(x["parse_pass"] for x in xml.values())
+    rows.append(("urdf_mjcf_parse", xml, "bool", "PASS" if parsed else "NA", None if parsed else "XML_MISSING_OR_INVALID"))
+    rows.append(("joint_counts", {k:v["joint_count"] for k,v in xml.items()}, "count", "OBSERVED" if parsed else "NA", None if parsed else "XML_MISSING_OR_INVALID"))
+    try:
+        refs = [relative_name(n.get("filename")) for n in ET.parse(submission / relative_name(manifest["files"]["urdf"])).findall(".//mesh") if n.get("filename")]
+        missing = [r for r in refs if not (submission / r).is_file()]
+        rows.append(("mesh_reference_closure", {"references":refs,"missing":missing}, "count", "FAIL" if missing else "PASS", "MISSING_MESH" if missing else None))
+    except (KeyError, ValueError, OSError, ET.ParseError):
+        rows.append(("mesh_reference_closure", None, None, "NA", "XML_MISSING_OR_INVALID"))
+    for metric in ("joint_tree_actuator_contract", "dynamics_load", "swing_replay", "wave_replay", "robustness"):
+        rows.append((metric, None, None, "NA", "NOT_IMPLEMENTED"))
     return rows
 
 
 def evaluate_integration(submission, run_id=INTEGRATION_RUN, mode="OFFLINE_INTEGRATION"):
-    submission = Path(submission).resolve()
+    relative_name(run_id)
     record_dir = RESULTS / run_id
-    record_dir.mkdir(parents=True, exist_ok=True)
-    intake_result = intake(submission)
+    record_dir.mkdir(parents=True, exist_ok=False)
     evidence_file = record_dir / "evaluation.json"
-    evaluator_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    evidence = {"run_id": run_id, "mode": mode, "submission": str(submission),
-                "intake": intake_result, "rebuild_attempted": False, "rebuild_os_exit_code": None,
-                "engineering_evaluation": "NOT_RUN", "evaluator_hash": evaluator_hash}
+    evidence = {"run_id":run_id,"mode":mode,"rule_version":VERSION,"submission":str(submission),
+                "rebuild_attempted":False,"rebuild_os_exit_code":None,"engineering_evaluation":"NOT_RUN",
+                "evaluator_hash":hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     metrics = []
-    if intake_result.get("intake_status") == "FILE_CONTRACT_ACCEPTED":
-        workspace, child, output_delta = _run_rebuild(submission)
-        evidence.update({"rebuild_attempted": True, "rebuild_os_exit_code": child.returncode,
-                         "rebuild_stdout_sha256": hashlib.sha256(child.stdout.encode()).hexdigest(),
-                         "rebuild_stderr_sha256": hashlib.sha256(child.stderr.encode()).hexdigest(),
-                         "rebuild_output_delta": output_delta})
-        passed = child.returncode == 0
-        metrics.append(_metric("clean_rebuild", child.returncode, "exit_code", "PASS" if passed else "FAIL", None if passed else "EVALUATOR_ERROR", "evaluation.json", "pending"))
-        metrics.extend(_metric(*row, "evaluation.json", "pending") for row in _structure_metrics(submission))
-        evidence["engineering_evaluation"] = "PARTIAL_STRUCTURE_ONLY"
-        evidence["rebuild_workspace"] = str(workspace)
-    else:
-        for metric in ("clean_rebuild", *ENGINEERING):
-            metrics.append(_metric(metric, None, None, "NOT_RUN", "FILE_CONTRACT", "evaluation.json", "pending"))
-    evidence_file.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    evidence_hash = hashlib.sha256(evidence_file.read_bytes()).hexdigest()
+    try:
+        evidence["received_snapshot"] = safe_snapshot(submission, record_dir / "received")
+        evidence["intake"] = intake(record_dir / "received")
+        if evidence["intake"].get("intake_status") != "FILE_CONTRACT_ACCEPTED":
+            raise RebuildContractError("FILE_CONTRACT")
+        rebuilt, rebuild = source_rebuild(record_dir / "received", record_dir, kit=KIT)
+        evidence.update(rebuild=rebuild, rebuild_attempted=True, rebuild_os_exit_code=rebuild["os_exit_code"],
+                        measured_directory=str(rebuilt))
+        rows = _structure_metrics(rebuilt)
+        cad_ok = all(next(r for r in rows if r[0] == key)[3] == "PASS"
+                     for key in ("step_kernel_readback", "stl_triangle_proxy"))
+        passed = rebuild["outputs_created"] and cad_ok
+        metrics.append(_metric("clean_rebuild", rebuild, None, "PASS" if passed else "FAIL",
+                               None if passed else "MISSING_INVALID_OR_NOT_REBUILT", "evaluation.json", "pending"))
+        metrics.extend(_metric(*row, "evaluation.json", "pending") for row in rows)
+        evidence["engineering_evaluation"] = "PARTIAL_CAD_MEASURED" if passed else "REBUILD_FAILED"
+    except (RebuildContractError, SnapshotRejected) as error:
+        evidence["failure_type"] = "UNSAFE_SNAPSHOT" if isinstance(error, SnapshotRejected) else "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT"
+        evidence["safe_exception_class"] = type(error).__name__
+        metrics = [_metric(m, None, None, "NOT_RUN", evidence["failure_type"], "evaluation.json", "pending") for m in dict.fromkeys(ENGINEERING)]
+    except (OSError, subprocess.TimeoutExpired) as error:
+        evidence.update(failure_type="SNAPSHOT_IO_OR_SANDBOX_FAILURE", safe_exception_class=type(error).__name__)
+        metrics = [_metric(m, None, None, "NOT_RUN", evidence["failure_type"], "evaluation.json", "pending") for m in dict.fromkeys(ENGINEERING)]
+    write_json(evidence_file, evidence)
     for row in metrics:
         row["evidence_path"] = evidence_file.relative_to(ROOT).as_posix()
-        row["evidence_hash"] = evidence_hash
-    result = {"run_id": run_id, "mode": mode, "metrics": metrics, "evidence": evidence}
-    write_json(record_dir / "metrics.json", result)
-    print(json.dumps({"run_id": run_id, "intake_status": intake_result.get("intake_status"), "rebuild_exit_code": evidence["rebuild_os_exit_code"], "engineering_evaluation": evidence["engineering_evaluation"]}))
-    return 0 if evidence["engineering_evaluation"] == "PARTIAL_STRUCTURE_ONLY" else 2
+        row["evidence_hash"] = hashlib.sha256(evidence_file.read_bytes()).hexdigest()
+    write_json(record_dir / "metrics.json", {"run_id":run_id,"mode":mode,"metrics":metrics,"evidence":evidence})
+    print(json.dumps({"run_id":run_id,"engineering_evaluation":evidence["engineering_evaluation"]}))
+    return 0 if evidence["engineering_evaluation"] == "PARTIAL_CAD_MEASURED" else 2
 
 
 def evaluate(slot, submission=None):

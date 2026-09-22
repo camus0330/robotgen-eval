@@ -1,12 +1,20 @@
-"""Fixed WSL/bubblewrap preflight/evaluator sandbox; not a generation environment.
+"""Pilot WSL/bubblewrap actions and independent CAD checks.
 
-Only immutable operator checks run here. Whole-attempt resource containment and
-CAD/simulation dependencies are not yet validated for untrusted robot code.
+No inherited credentials, host home or external network; optional dedicated CAD
+venv is read-only. Each tool namespace has its own bounded lifetime.
 """
 import os
 from pathlib import Path
 import shlex
 import subprocess
+
+CAD_VENV = "/home/camus/robotgen-pilot-runtime-20260922"
+
+
+def cad_mount():
+    # Reuse the dedicated, existing CAD venv read-only; never mount user home.
+    return ["--ro-bind", CAD_VENV, "/cad", "--setenv", "PATH", "/cad/bin:/usr/bin",
+            "--setenv", "HOME", "/tmp", "--setenv", "XDG_CONFIG_HOME", "/tmp/config"]
 
 
 def child_environment():
@@ -21,7 +29,7 @@ def linux_path(path):
     return "/mnt/" + path.drive[0].lower() + path.as_posix()[2:]
 
 
-def execute_python(source, *, kit, submission=None, writable_output=None, seconds=10):
+def execute_python(source, *, kit, submission=None, writable_output=None, seconds=10, cad=False):
     executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
     inner = ["/usr/bin/timeout", "--kill-after=2", str(seconds),
                "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--new-session",
@@ -34,15 +42,17 @@ def execute_python(source, *, kit, submission=None, writable_output=None, second
         inner += ["--ro-bind", linux_path(submission), "/submission"]
     if writable_output is not None:
         inner += ["--bind", linux_path(writable_output), "/work"]
-    inner += ["--chdir", "/tmp", "/usr/bin/python3", "-B", "-c", source]
+    if cad:
+        inner += cad_mount()
+    inner += ["--chdir", "/tmp", "/cad/bin/python" if cad else "/usr/bin/python3", "-I", "-B", "-c", source]
     command = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
     # Linux timeout owns the namespace/process group; the outer timeout bounds a
-    # stuck WSL launch for these fixed checks. No generated commands are accepted.
+    # stuck WSL launch for these checks. execute_command handles design actions.
     return subprocess.run(command, env=child_environment(), capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=seconds + 20)
 
 
-def execute_command(command_text, *, kit, writable_output, seconds=30):
+def execute_command(command_text, *, kit, writable_output, seconds=30, cad=False):
     """Execute one model action inside the no-network, no-credential namespace."""
     if not isinstance(command_text, str) or not command_text.strip():
         raise ValueError("empty action")
@@ -54,8 +64,10 @@ def execute_command(command_text, *, kit, writable_output, seconds=30):
              "--symlink", "usr/lib", "/lib", "--symlink", "usr/lib64", "/lib64",
              "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp", "--clearenv",
              "--setenv", "PATH", "/usr/bin", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
-             "--ro-bind", linux_path(kit), "/kit", "--bind", linux_path(writable_output), "/work",
-             "--chdir", "/work", "/bin/sh", "-lc", limits + "exec /bin/sh -lc " + shlex.quote(command_text)]
+             "--ro-bind", linux_path(kit), "/kit", "--bind", linux_path(writable_output), "/work"]
+    if cad:
+        inner += cad_mount()
+    inner += ["--chdir", "/work", "/bin/sh", "-c", limits + "exec /bin/sh -c " + shlex.quote(command_text)]
     cmd = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
     return subprocess.run(cmd, env=child_environment(), capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=seconds + 20)

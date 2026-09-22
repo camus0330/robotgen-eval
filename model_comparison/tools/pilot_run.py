@@ -13,9 +13,9 @@ from pathlib import Path
 import subprocess
 import sys
 import base64
-import shutil
 import tempfile
 from types import SimpleNamespace
+from pilot_snapshot import safe_snapshot, SnapshotRejected
 
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE = "f1d77516e35d7191a942d842b83f7ae23bb0710b"
@@ -49,20 +49,23 @@ def write_json(path, value):
 
 
 def snapshot_digest(path):
-    path = Path(path)
-    if not path.is_dir():
-        return None
-    digestor = hashlib.sha256()
-    files = []
-    for item in sorted(path.rglob("*")):
-        if item.is_symlink():
-            raise ValueError("snapshot contains symlink")
-        if item.is_file():
-            rel = item.relative_to(path).as_posix()
-            data = item.read_bytes()
-            digestor.update(rel.encode() + b"\0" + data)
-            files.append({"path":rel,"size":len(data),"sha256":hashlib.sha256(data).hexdigest()})
-    return {"sha256":digestor.hexdigest(),"files":files}
+    return safe_snapshot(path) if path is not None else None
+
+
+def finalize_snapshot(state, out_root, *, tool_stopped):
+    """Same bounded copy on success, exceptions and timeouts, after tools stop."""
+    work, final = out_root / "work", out_root / "final"
+    state["final_snapshot"] = None
+    if not work.exists():
+        state["snapshot_status"] = "NO_WORK_DIRECTORY"
+        return
+    try:
+        evidence = safe_snapshot(work, final, tool_stopped=tool_stopped)
+        state.update(final_snapshot=str(final), final_snapshot_digest=evidence, snapshot_status="COMPLETE")
+    except (SnapshotRejected, OSError) as error:
+        state.update(snapshot_status="REJECTED", snapshot_exception_class=type(error).__name__)
+        if state.get("exit_code") == 0:
+            state.update(classification="SNAPSHOT_REJECTED", exit_code=2)
 
 
 def git_blob(relative):
@@ -163,11 +166,14 @@ def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1
         worker.terminate(); worker.join(30)
         result = json.loads(evidence_path.read_text(encoding="utf-8"))
         result.update({"classification":"TIMEOUT","exit_code":124,"stage":"host_attempt_timeout","ended_at":stamp(),"worker_exit_code":worker.exitcode})
+        finalize_snapshot(result, ROOT / "outputs/pilot_20260923" / run_id, tool_stopped=not worker.is_alive() and result.get("tool_stopped") is True)
         write_json(evidence_path, result); print(json.dumps({k:result.get(k) for k in ("run_id","classification","exit_code","model_query_calls","real_shell_launches")})); return 124
     result = json.loads(evidence_path.read_text(encoding="utf-8"))
     if result.get("classification") == "RUNNING":
         result.update({"classification":"INFRASTRUCTURE_FAILED","exit_code":worker.exitcode or 1,"stage":"worker_exit","ended_at":stamp()})
         write_json(evidence_path, result)
+    finalize_snapshot(result, ROOT / "outputs/pilot_20260923" / run_id, tool_stopped=result.get("tool_stopped") is True)
+    write_json(evidence_path, result)
     print(json.dumps({k:result.get(k) for k in ("run_id","classification","exit_code","model_query_calls","real_shell_launches","exit_status")}))
     return int(result.get("exit_code", worker.exitcode or 1))
 
@@ -206,12 +212,12 @@ def _run_real_attempt(config_path: str, run_id: str) -> None:
     DefaultAgent, _, LitellmTextbasedModel = import_upstream(CACHE)
     import litellm
     from minisweagent.exceptions import Submitted
-    work = Path(tempfile.mkdtemp(prefix="robotgen-integration-only-"))
     out_root = ROOT / "outputs" / "pilot_20260923" / run_id
     out_root.mkdir(parents=True, exist_ok=True)
     first = out_root / "first"
     final = out_root / "final"
-    final.mkdir(exist_ok=True)
+    work = out_root / "work"
+    work.mkdir(exist_ok=False)
     image = KIT / "inputs" / "assets" / "reference.png"
     image_uri = "data:image/png;base64," + base64.b64encode(image.read_bytes()).decode("ascii")
     task_text = ((KIT / "inputs" / "PROMPT.md").read_text(encoding="utf-8") + "\n\n" +
@@ -228,11 +234,17 @@ def _run_real_attempt(config_path: str, run_id: str) -> None:
         def execute(self, action, cwd="", timeout=None):
             command = action.get("command", "")
             self.launches.append(command)
+            state["tool_stopped"] = False
+            state["real_shell_launches"] = len(self.launches)
+            write_json(evidence_path, state)
             child = execute_command(command, kit=KIT, writable_output=work, seconds=min(timeout or 30, 30))
+            state["tool_stopped"] = True
+            write_json(evidence_path, state)
             output = {"output": child.stdout, "returncode": child.returncode, "exception_info": "" if child.returncode == 0 else "isolated command failed"}
-            if not first.exists() and any((work / name).is_file() for name in ("submission.json", "design_manifest.json", "README.md", "readme.md")):
-                first.mkdir(exist_ok=True)
-                shutil.copytree(work, first, dirs_exist_ok=True)
+            if not first.exists() and safe_snapshot(work)["files"]:
+                state["first_snapshot_digest"] = safe_snapshot(work, first)
+                state["first_snapshot"] = str(first)
+                write_json(evidence_path, state)
             lines = output["output"].lstrip().splitlines(keepends=True)
             if output["returncode"] == 0 and lines and lines[0].strip() == "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT":
                 raise Submitted({"role":"exit","content":"".join(lines[1:]),"extra":{"exit_status":"Submitted","submission":"".join(lines[1:])}})
@@ -244,14 +256,15 @@ def _run_real_attempt(config_path: str, run_id: str) -> None:
     def observe(frame, event, arg):
         if event == "call" and frame.f_code is LitellmTextbasedModel._query.__code__: profile_calls["n"] += 1
     state = {"run_id":run_id,"mode":"INTEGRATION_ONLY","route_model":raw["model"],"backend_identity":"not_confirmed","started_at":stamp(),"classification":"RUNNING","stage":"agent_run","generation_attempt_started":True,"model_query_calls":0,"real_shell_launches":0,"fixture_calls":0,"real_llm_api_calls":None,"real_llm_api_calls_source":"not_observed","first_snapshot":None,"final_snapshot":str(final),"image_bound":True,"provider_retries":0}
+    state["tool_stopped"] = True
+    write_json(evidence_path, state)
     _sys.setprofile(observe)
     try:
         result = agent.run(task_text)
-        shutil.copytree(work, final, dirs_exist_ok=True)
         first_snapshot = first if first.exists() else None
-        state.update({"classification":"PASS" if result.get("exit_status") == "Submitted" else "FAILED","exit_code":0 if result.get("exit_status") == "Submitted" else 1,"stage":"complete","ended_at":stamp(),"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"first_snapshot":str(first_snapshot) if first_snapshot else None,"first_snapshot_digest":snapshot_digest(first_snapshot) if first_snapshot else None,"final_snapshot_digest":snapshot_digest(final),"assistant_action_observations":sanitize([{"role":m.get("role"),"content":m.get("content"),"actions":m.get("extra",{}).get("actions"),"returncode":m.get("extra",{}).get("returncode")} for m in agent.messages], [key]),"final_snapshot_files":sorted(p.name for p in final.iterdir())})
+        state.update({"classification":"PASS" if result.get("exit_status") == "Submitted" else "FAILED","exit_code":0 if result.get("exit_status") == "Submitted" else 1,"stage":"complete","ended_at":stamp(),"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"first_snapshot":str(first_snapshot) if first_snapshot else None,"first_snapshot_digest":snapshot_digest(first_snapshot) if first_snapshot else None,"assistant_action_observations":sanitize([{"role":m.get("role"),"content":m.get("content"),"actions":m.get("extra",{}).get("actions"),"returncode":m.get("extra",{}).get("returncode")} for m in agent.messages], [key])})
     except Exception as error:
-        state.update({"classification":"TIMEOUT" if type(error).__name__ == "TimeoutExpired" else "FAILED","exit_code":124 if type(error).__name__ == "TimeoutExpired" else 1,"stage":"agent_run","ended_at":stamp(),"safe_exception_class":type(error).__name__,"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"first_snapshot":str(first) if first.exists() else None,"first_snapshot_digest":snapshot_digest(first) if first.exists() else None,"final_snapshot_digest":snapshot_digest(final)})
+        state.update({"classification":"TIMEOUT" if type(error).__name__ == "TimeoutExpired" else "FAILED","exit_code":124 if type(error).__name__ == "TimeoutExpired" else 1,"stage":"agent_run","ended_at":stamp(),"safe_exception_class":type(error).__name__,"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"first_snapshot":str(first) if first.exists() else None,"first_snapshot_digest":snapshot_digest(first) if first.exists() else None})
     finally:
         _sys.setprofile(previous_profile)
     write_json(evidence_path, state)
@@ -345,8 +358,9 @@ def run_offline_integration(cache: Path) -> int:
     from minisweagent.exceptions import Submitted
     from unittest.mock import patch
     import re
-    work = Path(tempfile.mkdtemp(prefix="robotgen-pilot-offline-"))
     output.mkdir(parents=True, exist_ok=True)
+    work = output / "work"
+    work.mkdir(exist_ok=False)
     (work / "submission.json").write_text("{}", encoding="utf-8")
     files, design = _fixture_files(work)
     import hashlib as _hashlib
@@ -369,14 +383,17 @@ def run_offline_integration(cache: Path) -> int:
             if command.startswith("pilot_write "):
                 blob = command.split(" ", 1)[1]
                 source = "import base64,json; from pathlib import Path; d=json.loads(base64.b64decode(" + repr(blob) + ")); [((Path('/work')/n).parent.mkdir(parents=True,exist_ok=True),(Path('/work')/n).write_text(v,encoding='utf-8')) for n,v in d.items()]"
+                state["tool_stopped"] = False
                 child = execute_python(source, kit=KIT, writable_output=work, seconds=30)
+                state["tool_stopped"] = True
                 out = {"output": child.stdout, "returncode": child.returncode, "exception_info": ""}
                 if child.returncode != 0: out["exception_info"] = "isolated fixture write failed"
-                (output / "first").mkdir(exist_ok=True)
-                shutil.copytree(work, output / "first", dirs_exist_ok=True)
+                safe_snapshot(work, output / "first")
                 return out
             if command == "pilot_rebuild":
+                state["tool_stopped"] = False
                 child = execute_python("import runpy; runpy.run_path('/work/rebuild.py')", kit=KIT, writable_output=work, seconds=30)
+                state["tool_stopped"] = True
                 if child.returncode == 0 and child.stdout.startswith("COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"):
                     raise Submitted({"role":"exit","content":"offline_fixture_submission\n","extra":{"exit_status":"Submitted","submission":"offline_fixture_submission\n"}})
                 return {"output":child.stdout,"returncode":child.returncode,"exception_info":"isolated rebuild failed"}
@@ -392,14 +409,14 @@ def run_offline_integration(cache: Path) -> int:
     def completion_fixture(**kwargs):
         calls.append(True)
         return responses[len(calls)-1]
-    state={"run_id":run_id,"started_at":stamp(),"mode":"OFFLINE_INTEGRATION","classification":"RUNNING","work_directory":str(work),"first_snapshot":str(output/'first'),"final_snapshot":None}
+    state={"run_id":run_id,"started_at":stamp(),"mode":"OFFLINE_INTEGRATION","classification":"RUNNING","tool_stopped":True,"work_directory":str(work),"first_snapshot":str(output/'first'),"final_snapshot":None}
     try:
         with patch("litellm.completion", side_effect=completion_fixture), patch("litellm.cost_calculator.completion_cost", return_value=0.0):
             result = agent.run("Use the provided task inputs and create the synthetic fixture submission.")
-        shutil.copytree(work, output / "final", dirs_exist_ok=True)
-        state.update({"classification":"PASS","exit_code":0,"stage":"complete","agent_calls":agent.n_calls,"model_query_calls":len(calls),"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"final_snapshot":str(output/'final'),"fixture_calls":len(calls),"cost_fixture_calls":2,"real_llm_api_calls":0,"real_llm_api_calls_source":"offline_fixture","first_snapshot_sha256":_hashlib.sha256(json.dumps(sorted(p.name for p in (output/'first').iterdir())).encode()).hexdigest(),"final_snapshot_sha256":_hashlib.sha256(json.dumps(sorted(p.name for p in (output/'final').iterdir())).encode()).hexdigest()})
+        state.update({"classification":"PASS","exit_code":0,"stage":"complete","agent_calls":agent.n_calls,"model_query_calls":len(calls),"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"final_snapshot":str(output/'final'),"fixture_calls":len(calls),"cost_fixture_calls":2,"real_llm_api_calls":0,"real_llm_api_calls_source":"offline_fixture","first_snapshot_sha256":_hashlib.sha256(json.dumps(sorted(p.name for p in (output/'first').iterdir())).encode()).hexdigest()})
     except Exception as error:
         state.update({"classification":"FAILED","exit_code":1,"stage":"agent_run","safe_exception_class":type(error).__name__,"agent_calls":agent.n_calls,"model_query_calls":len(calls),"real_shell_launches":len(env.launches),"fixture_calls":len(calls),"cost_fixture_calls":2,"real_llm_api_calls":0,"real_llm_api_calls_source":"offline_fixture"})
+    finalize_snapshot(state, output, tool_stopped=state["tool_stopped"])
     write_json(evidence_path, state)
     print(json.dumps({k:state.get(k) for k in ("run_id","classification","exit_code","agent_calls","model_query_calls","real_shell_launches","exit_status")}))
     return state["exit_code"]

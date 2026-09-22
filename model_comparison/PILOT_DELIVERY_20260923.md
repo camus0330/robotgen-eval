@@ -100,3 +100,70 @@ The safe evidence is `results/pilot_20260923/integration_only_20260923_v2/run.js
 The empty final directory was then evaluated independently, without rerunning generation, as `integration_only_eval_20260923_v1` (OS exit `2`). Intake was `INVALID` because `submission.json` was missing or empty; `rebuild_attempted=false`, `rebuild_os_exit_code=null`, and all engineering metrics were `NOT_RUN` with `FILE_CONTRACT`. Consequently there is no design artifact, no independent geometry/dynamics score, and no three-model result row.
 
 This outcome is an external model/gateway timeout, not a fixture endpoint failure. The offline fixture remains separate validation evidence only. The three-model delivery therefore remains `PARTIAL`; no additional live work is performed in this run.
+
+
+## Safe snapshots and independent CAD rebuild ? 2026-09-23
+
+```text
+CAD_ENVIRONMENT: PASS
+SAFE_SNAPSHOT: PASS (Windows host / stopped tool output)
+SOURCE_ONLY_REBUILD: PASS (CAD environment cube, not a robot result)
+REAL_MODEL_CALLS: 0
+THREE_MODEL_RESULTS: INCOMPLETE
+```
+
+Execution baseline: `aeea2f217cdb168efb678981a63b7eebce119ce1`; local and fetched remote matched on branch `deadline/three-model-pilot-20260923`, with a clean starting worktree. Clock at start: `2026-09-22 17:34:49 UTC` / `2026-09-23 01:34:49 +08:00`, before the 12:00 +08:00 closure deadline. The original frozen input SHA and every historical run remain unchanged. The prior gpt-5.6-sol generation authorization remains consumed; no model request, admission request, or old fixture execution occurred here.
+
+### Runtime actually used
+
+Reused `/home/camus/robotgen-pilot-runtime-20260922` read-only in WSL Ubuntu-24.04, mounted at `/cad`. The actual bubblewrap interpreter was `/cad/bin/python`, Python 3.12.3, CadQuery **2.6.1**, cadquery-ocp **7.8.1.1.post1**. This existing environment differs from the frozen input lock's CadQuery 2.7.0; the lock was not changed and this test makes no same-environment model-comparison claim. No package installation or global environment change was made; the pinned Windows model-client venv was untouched.
+
+The first actual sandbox CAD import exited **1**: ezdxf could not determine a home directory in the cleared environment. This was a runtime configuration failure, not a missing CAD package. The safe traceback is retained in `results/pilot_20260923/cad_acceptance_20260923_v1/environment_probe.json`. Assigning HOME=`/tmp` and XDG_CONFIG_HOME=`/tmp/config` inside the sandbox resolved it; the second import/solid-volume check exited **0**. No host home is mounted. Separate checks from this same CAD interpreter confirmed the credential was absent, external networking unavailable and `/cad` read-only (exit **0**). Actual dependency versions and logs are bound in `environment_versions.json` and the tracked acceptance record.
+
+### Snapshot and rebuild rules
+
+`pilot_snapshot.safe_snapshot` inventories all entries before reading content. On this Windows host, ancestor/directory/file handles reject reparse points and prevent replacement/write while the inventory is read. It rejects symbolic links, directory junctions/reparse points, hard links, special files and device names; permits at most 2,048 files / 256 MiB (also bounds directory entries); and binds relative path, byte size and content SHA-256. Copying goes into a private incomplete directory and is published only on success. Failed copies do not leave a complete destination. First/final snapshots and evaluator intake/rebuild copies use this entrypoint. Exit 0, ordinary exception exit 1, and tool timeout exit 124 all preserved their partial files through it. An unconfirmed tool stop is rejected rather than publishing possibly changing output; that hard-stop condition is not advertised as a captured snapshot.
+
+The new rules are `pilot-cad-20260923.2`; previous result definitions are retained in history. A manifest must explicitly declare `rebuild_inputs`, `rebuild_outputs`, optional `rebuild_excluded`, and `rebuild_command`. Unclassified files or unsupported entrypoints are contract failures, not guessed inputs or deletion candidates. This implementation supports a declared Python source entrypoint, invoked with `/cad/bin/python -B <entrypoint>` in the existing no-credential/no-network sandbox. The fresh `/work` contains only declared source/data and checked manifest; STEP/STL intended for acceptance are excluded. Rebuilt outputs are frozen after process exit and measured from that new snapshot. Source changes, missing/empty outputs, unreadable STEP/STL or nonzero exits cannot pass clean rebuild.
+
+STEP readback reports kernel solid count, validity, volume and bounding box. Bad data is `FAIL/STEP_READBACK_FAILED`; import/mount/runtime failure is a distinct unavailable-environment result. STL is read per declared part (ASCII or binary); a missing part stays in the result and fails the all-parts envelope check. STL triangle-volume values are explicitly proxies and solid validity remains NA. XML parsing and joint counts are separate from the full topology/actuator contract, which remains NA. Dynamics, motion and robustness are not implemented here; no total or normalized subset score is computed.
+
+### Commands, results and evidence
+
+Host command (actual pinned interpreter):
+
+```powershell
+$py = 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe'
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_*.py' -v
+```
+
+Final run: **OS exit 0, 14 tests passed**, `2026-09-23 01:50:04?01:50:24 +08:00`. Log: `results/pilot_20260923/cad_acceptance_20260923_v1/unittest_03.log`; exact argv/timestamps/exit code: `validation_03.json`. Earlier development passes also exited 0 and are retained as logs 01/02. The historical four-triangle fixture test now only reads old JSON evidence; it does not copy, rebuild or remeasure old geometry.
+
+New test run: `cad_source_acceptance_3c1514c9614c`, mode **CAD_ENVIRONMENT_TEST_NOT_ROBOT**. Its positive source snapshot contains only `build.py` and `design_manifest.json`; there is no old STEP/STL. Actual build command inside `/work`:
+
+```text
+/cad/bin/python -B build.py
+OS exit: 0
+```
+
+A separate sandbox interpreter then imports the new STEP with `cadquery.importers.importStep('/submission/assembly.step')`; OS exit **0**. Measured: **1 solid**, valid **true**, **999.9999999999998 mm?**, bounding box **10 ? 10 ? 10 mm**. Binary STL: **12 triangles**, bounding box **10 ? 10 ? 10 mm**, absolute volume proxy **1000.0000000000001 mm?** (mesh solid validity not claimed).
+
+| Acceptance case | Actual result |
+|---|---|
+| Source-only closed cube | New STEP/STL produced; independent CAD readback PASS |
+| Same Python entrypoint exits 0 but writes nothing | Rebuild process exit 0; both expected outputs missing, acceptance FAIL; even preexisting synthetic STEP/STL were excluded |
+| Corrupt STEP after export | Build exit 0; CAD readback FAIL/STEP_READBACK_FAILED, environment still PASS |
+| Missing second printed STL | Build exit 0; missing output and all-parts envelope FAIL, missing part retained as null |
+| Escape junction and file symlink | Both rejected before any file content read; read count 0; no published or incomplete snapshot |
+| Snapshot quota / uncertain contract / tool not stopped | Rejected, no complete snapshot |
+| Stopped normal / exception / timeout tools | Actual OS exits 0 / 1 / 124; each partial snapshot COMPLETE |
+
+Source and generated files are under `outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/`; final measurement input is `cube/rebuilt/`. The original source snapshot was hash-checked unchanged. Full safe measurements are in `results/pilot_20260923/cad_source_acceptance_3c1514c9614c/acceptance.json`. Tracked, per-case evidence plus dependency versions and artifact hashes are in `model_comparison/records/pilot_20260923/cad_acceptance_20260923_v1.json`.
+
+SHA-256:
+
+- `build.py`: `ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3`
+- `assembly.step`: `80765833d2a156c7982fe91effb13abbaaf0a6bd3c242510d803c70b30f60916`
+- `cube.stl`: `d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06`
+
+Remaining: no actual robot design was supplied by the earlier timed-out model attempt, so no real-model robot CAD acceptance or three-model result can be claimed. Full joint/actuator, dynamics, motion and robustness checks remain NA. This newly generated cube is only CAD-environment acceptance evidence, never a three-model result. No formal configuration, input source, upstream code, benchmark threshold, system proxy or credential store was modified.

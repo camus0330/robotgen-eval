@@ -1,0 +1,1331 @@
+{
+  "execution_baseline": "aeea2f217cdb168efb678981a63b7eebce119ce1",
+  "branch": "deadline/three-model-pilot-20260923",
+  "recorded_at": "2026-09-22T17:51:33.194052+00:00",
+  "rule_version": "pilot-cad-20260923.2",
+  "CAD_ENVIRONMENT": "PASS",
+  "SAFE_SNAPSHOT": "PASS",
+  "SOURCE_ONLY_REBUILD": "PASS",
+  "REAL_MODEL_CALLS": 0,
+  "THREE_MODEL_RESULTS": "INCOMPLETE",
+  "mode": "CAD_ENVIRONMENT_TEST_NOT_ROBOT",
+  "environment": {
+    "python": "3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0]",
+    "interpreter": "/cad/bin/python",
+    "packages": [
+      [
+        "PyOpenGL",
+        "3.1.10"
+      ],
+      [
+        "PyYAML",
+        "6.0.3"
+      ],
+      [
+        "absl-py",
+        "2.5.0"
+      ],
+      [
+        "aiohappyeyeballs",
+        "2.7.1"
+      ],
+      [
+        "aiohttp",
+        "3.14.3"
+      ],
+      [
+        "aiosignal",
+        "1.4.0"
+      ],
+      [
+        "attrs",
+        "26.1.0"
+      ],
+      [
+        "cadquery",
+        "2.6.1"
+      ],
+      [
+        "cadquery-ocp",
+        "7.8.1.1.post1"
+      ],
+      [
+        "casadi",
+        "3.8.1"
+      ],
+      [
+        "contourpy",
+        "1.4.0"
+      ],
+      [
+        "cycler",
+        "0.12.1"
+      ],
+      [
+        "etils",
+        "1.14.0"
+      ],
+      [
+        "ezdxf",
+        "1.4.4"
+      ],
+      [
+        "fonttools",
+        "4.65.0"
+      ],
+      [
+        "frozenlist",
+        "1.8.0"
+      ],
+      [
+        "fsspec",
+        "2026.9.0"
+      ],
+      [
+        "glfw",
+        "2.10.2"
+      ],
+      [
+        "idna",
+        "3.20"
+      ],
+      [
+        "kiwisolver",
+        "1.5.1"
+      ],
+      [
+        "matplotlib",
+        "3.11.2"
+      ],
+      [
+        "more-itertools",
+        "11.1.0"
+      ],
+      [
+        "msgpack",
+        "1.2.2"
+      ],
+      [
+        "mujoco",
+        "3.3.7"
+      ],
+      [
+        "multidict",
+        "6.9.1"
+      ],
+      [
+        "multimethod",
+        "1.12"
+      ],
+      [
+        "nlopt",
+        "2.11.0"
+      ],
+      [
+        "numpy",
+        "2.5.3"
+      ],
+      [
+        "packaging",
+        "26.3"
+      ],
+      [
+        "path",
+        "17.1.1"
+      ],
+      [
+        "pillow",
+        "12.3.0"
+      ],
+      [
+        "propcache",
+        "0.5.4"
+      ],
+      [
+        "pyparsing",
+        "3.3.3"
+      ],
+      [
+        "python-dateutil",
+        "2.9.0.post0"
+      ],
+      [
+        "six",
+        "1.17.0"
+      ],
+      [
+        "trame",
+        "4.0.0"
+      ],
+      [
+        "trame-client",
+        "4.1.0"
+      ],
+      [
+        "trame-common",
+        "1.2.7"
+      ],
+      [
+        "trame-server",
+        "4.0.0"
+      ],
+      [
+        "trame-vtk",
+        "2.11.17"
+      ],
+      [
+        "typing_extensions",
+        "4.16.0"
+      ],
+      [
+        "typish",
+        "1.9.3"
+      ],
+      [
+        "vtk",
+        "9.3.1"
+      ],
+      [
+        "wslink",
+        "2.5.7"
+      ],
+      [
+        "yarl",
+        "1.25.1"
+      ],
+      [
+        "zipp",
+        "4.1.0"
+      ]
+    ],
+    "no_credential": true,
+    "no_network": true,
+    "cad_readonly": true
+  },
+  "venv_source": "/home/camus/robotgen-pilot-runtime-20260922",
+  "environment_change": "reuse read-only existing dedicated venv; no installation; temporary sandbox HOME=/tmp",
+  "frozen_lock_unchanged": true,
+  "version_difference": "Actual CadQuery 2.6.1 reused, frozen input lock says 2.7.0; this is environment acceptance, not same-environment model comparison.",
+  "preparation": [
+    {
+      "command": "execute_python(CAD import + box, cad=True)",
+      "exit_code": 1,
+      "failure": "ezdxf RuntimeError: could not determine home directory",
+      "evidence": "results\\pilot_20260923\\cad_acceptance_20260923_v1\\environment_probe.json"
+    },
+    {
+      "command": "same actual sandbox CAD import with HOME=/tmp and XDG_CONFIG_HOME=/tmp/config",
+      "exit_code": 0,
+      "evidence": "results\\pilot_20260923\\cad_acceptance_20260923_v1\\environment_probe_v2.json"
+    },
+    {
+      "command": "actual sandbox metadata, no credentials/network, CAD venv read-only checks",
+      "exit_code": 0,
+      "evidence": "results\\pilot_20260923\\cad_acceptance_20260923_v1\\environment_versions.json"
+    }
+  ],
+  "validation": {
+    "argv": [
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "model_comparison/tests",
+      "-p",
+      "test_pilot_*.py",
+      "-v"
+    ],
+    "started_at": "2026-09-22T17:50:04.434147+00:00",
+    "ended_at": "2026-09-22T17:50:24.455787+00:00",
+    "os_exit_code": 0,
+    "log": "results\\pilot_20260923\\cad_acceptance_20260923_v1\\unittest_03.log"
+  },
+  "test_count": 14,
+  "snapshot_policy": {
+    "max_files": 2048,
+    "max_bytes": 268435456,
+    "reject": [
+      "symlink",
+      "junction/reparse",
+      "hardlink",
+      "nonregular file",
+      "reserved device path"
+    ],
+    "file_reads_before_link_rejection": 0,
+    "manifest_binding": [
+      "relative path",
+      "size",
+      "sha256"
+    ],
+    "unconfirmed_tool_stop": "reject, no complete snapshot"
+  },
+  "contract": {
+    "inputs": "rebuild_inputs",
+    "outputs": "rebuild_outputs",
+    "excluded_metadata_data": "rebuild_excluded",
+    "entrypoint": "rebuild_command=[python3,declared_source.py]",
+    "unknown_contract": "reject without guessing or deleting",
+    "measurement_target": "fresh rebuilt safe snapshot, never original submission"
+  },
+  "cube": {
+    "source_snapshot": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "build.py",
+          "size": 146,
+          "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+        },
+        {
+          "path": "design_manifest.json",
+          "size": 268,
+          "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+        }
+      ],
+      "total_bytes": 414,
+      "sha256": "557d1265896f42b439dc9894eaccc659a111979e97542054d8588cfe4ca3851f"
+    },
+    "rebuild": {
+      "rule_version": "pilot-cad-20260923.2",
+      "command": [
+        "/cad/bin/python",
+        "-B",
+        "build.py"
+      ],
+      "os_exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "3985ac1788e105276fe6ca9b32e6b056930b492afd02c8a93fe4e8c94f61ad91",
+      "source_snapshot": {
+        "status": "COMPLETE",
+        "files": [
+          {
+            "path": "build.py",
+            "size": 146,
+            "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+          },
+          {
+            "path": "design_manifest.json",
+            "size": 268,
+            "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+          }
+        ],
+        "total_bytes": 414,
+        "sha256": "557d1265896f42b439dc9894eaccc659a111979e97542054d8588cfe4ca3851f"
+      },
+      "rebuilt_snapshot": {
+        "status": "COMPLETE",
+        "files": [
+          {
+            "path": "assembly.step",
+            "size": 15426,
+            "sha256": "80765833d2a156c7982fe91effb13abbaaf0a6bd3c242510d803c70b30f60916"
+          },
+          {
+            "path": "build.py",
+            "size": 146,
+            "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+          },
+          {
+            "path": "cube.stl",
+            "size": 684,
+            "sha256": "d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06"
+          },
+          {
+            "path": "design_manifest.json",
+            "size": 268,
+            "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+          }
+        ],
+        "total_bytes": 16524,
+        "sha256": "e04e137394f4edc7b865097872f384ea7d9b1cabb154a232e97470a5d9e298fe"
+      },
+      "expected_outputs": [
+        "assembly.step",
+        "cube.stl"
+      ],
+      "missing_outputs": [],
+      "source_changed": [],
+      "outputs_created": true
+    },
+    "measurements": {
+      "step_kernel_readback": {
+        "raw_value": {
+          "environment": "PASS",
+          "interpreter": "/cad/bin/python",
+          "versions": {
+            "cadquery": "2.6.1",
+            "cadquery-ocp": "7.8.1.1.post1"
+          },
+          "parts": [
+            {
+              "path": "assembly.step",
+              "status": "PASS",
+              "solid_count": 1,
+              "valid": true,
+              "volume_mm3": 999.9999999999998,
+              "bbox_mm": [
+                10.0,
+                10.0,
+                10.0
+              ]
+            }
+          ],
+          "os_exit_code": 0,
+          "stdout_sha256": "dc3458551063dbbe05c62a80347c977c16e1332c2991c1ffd642fa50b338a6ea",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "failure_type": null
+      },
+      "stl_triangle_proxy": {
+        "raw_value": {
+          "parts": [
+            {
+              "id": "cube",
+              "stl": "cube.stl",
+              "measurement": {
+                "triangle_count": 12,
+                "bbox_mm": {
+                  "min": [
+                    -5.0,
+                    -5.0,
+                    -5.0
+                  ],
+                  "max": [
+                    5.0,
+                    5.0,
+                    5.0
+                  ],
+                  "size": [
+                    10.0,
+                    10.0,
+                    10.0
+                  ]
+                },
+                "absolute_volume_proxy_mm3": 1000.0000000000001,
+                "solid_validity_checked": false
+              }
+            }
+          ]
+        },
+        "status": "PASS",
+        "failure_type": null
+      },
+      "solid_validity_volume_count": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "MESH_SOLID_VALIDITY_NOT_IMPLEMENTED"
+      },
+      "all_printed_parts_envelope": {
+        "raw_value": {
+          "part_count": 1,
+          "sizes_mm": [
+            [
+              10.0,
+              10.0,
+              10.0
+            ]
+          ],
+          "limits_mm": [
+            220,
+            220,
+            250
+          ]
+        },
+        "status": "PASS",
+        "failure_type": null
+      },
+      "urdf_mjcf_parse": {
+        "raw_value": {
+          "urdf": {
+            "parse_pass": false,
+            "joint_count": null
+          },
+          "mjcf": {
+            "parse_pass": false,
+            "joint_count": null
+          }
+        },
+        "status": "NA",
+        "failure_type": "XML_MISSING_OR_INVALID"
+      },
+      "joint_counts": {
+        "raw_value": {
+          "urdf": null,
+          "mjcf": null
+        },
+        "status": "NA",
+        "failure_type": "XML_MISSING_OR_INVALID"
+      },
+      "mesh_reference_closure": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "XML_MISSING_OR_INVALID"
+      },
+      "joint_tree_actuator_contract": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "NOT_IMPLEMENTED"
+      },
+      "dynamics_load": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "NOT_IMPLEMENTED"
+      },
+      "swing_replay": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "NOT_IMPLEMENTED"
+      },
+      "wave_replay": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "NOT_IMPLEMENTED"
+      },
+      "robustness": {
+        "raw_value": null,
+        "status": "NA",
+        "failure_type": "NOT_IMPLEMENTED"
+      }
+    }
+  },
+  "negative_cases": {
+    "exit_zero_no_output": {
+      "source_snapshot": {
+        "status": "COMPLETE",
+        "files": [
+          {
+            "path": "assembly.step",
+            "size": 18,
+            "sha256": "93fdb390af7c6037c1f283cb193016f33fe74d71779bbd72939ac0a202db8b6e"
+          },
+          {
+            "path": "build.py",
+            "size": 6,
+            "sha256": "e0ba8b72f361b6f4f71dc78a0b7a570475bdd44e176caad604ba134208475403"
+          },
+          {
+            "path": "cube.stl",
+            "size": 17,
+            "sha256": "e5134e2ddbe87c07d53e300ee14e581bd836765fb9424e8782f4ddbd03682220"
+          },
+          {
+            "path": "design_manifest.json",
+            "size": 268,
+            "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+          }
+        ],
+        "total_bytes": 309,
+        "sha256": "18a305c8f64592961e3b72117a54635cf34827ce91d59f41407165da2964a15a"
+      },
+      "rebuild": {
+        "rule_version": "pilot-cad-20260923.2",
+        "command": [
+          "/cad/bin/python",
+          "-B",
+          "build.py"
+        ],
+        "os_exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "3985ac1788e105276fe6ca9b32e6b056930b492afd02c8a93fe4e8c94f61ad91",
+        "source_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "build.py",
+              "size": 6,
+              "sha256": "e0ba8b72f361b6f4f71dc78a0b7a570475bdd44e176caad604ba134208475403"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 268,
+              "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+            }
+          ],
+          "total_bytes": 274,
+          "sha256": "8ec341ae05083edc692ba8b8f0d0ce04db5e01b6fcf5b25ae3d0f9c103c5b685"
+        },
+        "rebuilt_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "build.py",
+              "size": 6,
+              "sha256": "e0ba8b72f361b6f4f71dc78a0b7a570475bdd44e176caad604ba134208475403"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 268,
+              "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+            }
+          ],
+          "total_bytes": 274,
+          "sha256": "8ec341ae05083edc692ba8b8f0d0ce04db5e01b6fcf5b25ae3d0f9c103c5b685"
+        },
+        "expected_outputs": [
+          "assembly.step",
+          "cube.stl"
+        ],
+        "missing_outputs": [
+          "assembly.step",
+          "cube.stl"
+        ],
+        "source_changed": [],
+        "outputs_created": false
+      },
+      "measurements": {
+        "step_kernel_readback": {
+          "raw_value": {
+            "environment": "PASS",
+            "interpreter": "/cad/bin/python",
+            "versions": {
+              "cadquery": "2.6.1",
+              "cadquery-ocp": "7.8.1.1.post1"
+            },
+            "parts": [
+              {
+                "path": "assembly.step",
+                "status": "FAIL",
+                "failure_type": "STEP_READBACK_FAILED",
+                "error_class": "ValueError"
+              }
+            ],
+            "os_exit_code": 0,
+            "stdout_sha256": "4aab68bbdd25af3234d28b0ab4e3a2c2b0ba732447ee00472bb05f0215c40c8a",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "FAIL",
+          "failure_type": "STEP_READBACK_FAILED"
+        },
+        "stl_triangle_proxy": {
+          "raw_value": {
+            "parts": [
+              {
+                "id": "cube",
+                "stl": "cube.stl",
+                "measurement": null
+              }
+            ]
+          },
+          "status": "FAIL",
+          "failure_type": "MISSING_OR_INVALID_STL"
+        },
+        "solid_validity_volume_count": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "MESH_SOLID_VALIDITY_NOT_IMPLEMENTED"
+        },
+        "all_printed_parts_envelope": {
+          "raw_value": {
+            "part_count": 1,
+            "sizes_mm": [
+              null
+            ],
+            "limits_mm": [
+              220,
+              220,
+              250
+            ]
+          },
+          "status": "FAIL",
+          "failure_type": "MISSING_INVALID_OR_OVERSIZE_PART"
+        },
+        "urdf_mjcf_parse": {
+          "raw_value": {
+            "urdf": {
+              "parse_pass": false,
+              "joint_count": null
+            },
+            "mjcf": {
+              "parse_pass": false,
+              "joint_count": null
+            }
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_counts": {
+          "raw_value": {
+            "urdf": null,
+            "mjcf": null
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "mesh_reference_closure": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_tree_actuator_contract": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "dynamics_load": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "swing_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "wave_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "robustness": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        }
+      }
+    },
+    "bad_step": {
+      "source_snapshot": {
+        "status": "COMPLETE",
+        "files": [
+          {
+            "path": "build.py",
+            "size": 228,
+            "sha256": "62f9acf9876865cb953cf76009e1d11c55badc4b9f6a904bd34000fc98135b30"
+          },
+          {
+            "path": "design_manifest.json",
+            "size": 268,
+            "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+          }
+        ],
+        "total_bytes": 496,
+        "sha256": "cd7f061f562d41b6afd78d242d8aa75dcb0cdacb1156e77d5b6362fdc926a17e"
+      },
+      "rebuild": {
+        "rule_version": "pilot-cad-20260923.2",
+        "command": [
+          "/cad/bin/python",
+          "-B",
+          "build.py"
+        ],
+        "os_exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "3985ac1788e105276fe6ca9b32e6b056930b492afd02c8a93fe4e8c94f61ad91",
+        "source_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "build.py",
+              "size": 228,
+              "sha256": "62f9acf9876865cb953cf76009e1d11c55badc4b9f6a904bd34000fc98135b30"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 268,
+              "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+            }
+          ],
+          "total_bytes": 496,
+          "sha256": "cd7f061f562d41b6afd78d242d8aa75dcb0cdacb1156e77d5b6362fdc926a17e"
+        },
+        "rebuilt_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "assembly.step",
+              "size": 18,
+              "sha256": "4770e3f56863db4fe899b6c3eb231b4006028e97bfe9974e74a311ee1000030e"
+            },
+            {
+              "path": "build.py",
+              "size": 228,
+              "sha256": "62f9acf9876865cb953cf76009e1d11c55badc4b9f6a904bd34000fc98135b30"
+            },
+            {
+              "path": "cube.stl",
+              "size": 684,
+              "sha256": "d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 268,
+              "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+            }
+          ],
+          "total_bytes": 1198,
+          "sha256": "536bfc4274dd3c83484a9b9531a401e44f629f9524074ba1a4a08f7a054bb779"
+        },
+        "expected_outputs": [
+          "assembly.step",
+          "cube.stl"
+        ],
+        "missing_outputs": [],
+        "source_changed": [],
+        "outputs_created": true
+      },
+      "measurements": {
+        "step_kernel_readback": {
+          "raw_value": {
+            "environment": "PASS",
+            "interpreter": "/cad/bin/python",
+            "versions": {
+              "cadquery": "2.6.1",
+              "cadquery-ocp": "7.8.1.1.post1"
+            },
+            "parts": [
+              {
+                "path": "assembly.step",
+                "status": "FAIL",
+                "failure_type": "STEP_READBACK_FAILED",
+                "error_class": "ValueError"
+              }
+            ],
+            "os_exit_code": 0,
+            "stdout_sha256": "6d4caa002086fe47639409b4eaec54b83ffc255060cb2eae43364533d7d97812",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "FAIL",
+          "failure_type": "STEP_READBACK_FAILED"
+        },
+        "stl_triangle_proxy": {
+          "raw_value": {
+            "parts": [
+              {
+                "id": "cube",
+                "stl": "cube.stl",
+                "measurement": {
+                  "triangle_count": 12,
+                  "bbox_mm": {
+                    "min": [
+                      -5.0,
+                      -5.0,
+                      -5.0
+                    ],
+                    "max": [
+                      5.0,
+                      5.0,
+                      5.0
+                    ],
+                    "size": [
+                      10.0,
+                      10.0,
+                      10.0
+                    ]
+                  },
+                  "absolute_volume_proxy_mm3": 1000.0000000000001,
+                  "solid_validity_checked": false
+                }
+              }
+            ]
+          },
+          "status": "PASS",
+          "failure_type": null
+        },
+        "solid_validity_volume_count": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "MESH_SOLID_VALIDITY_NOT_IMPLEMENTED"
+        },
+        "all_printed_parts_envelope": {
+          "raw_value": {
+            "part_count": 1,
+            "sizes_mm": [
+              [
+                10.0,
+                10.0,
+                10.0
+              ]
+            ],
+            "limits_mm": [
+              220,
+              220,
+              250
+            ]
+          },
+          "status": "PASS",
+          "failure_type": null
+        },
+        "urdf_mjcf_parse": {
+          "raw_value": {
+            "urdf": {
+              "parse_pass": false,
+              "joint_count": null
+            },
+            "mjcf": {
+              "parse_pass": false,
+              "joint_count": null
+            }
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_counts": {
+          "raw_value": {
+            "urdf": null,
+            "mjcf": null
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "mesh_reference_closure": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_tree_actuator_contract": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "dynamics_load": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "swing_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "wave_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "robustness": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        }
+      }
+    },
+    "missing_part": {
+      "source_snapshot": {
+        "status": "COMPLETE",
+        "files": [
+          {
+            "path": "build.py",
+            "size": 146,
+            "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+          },
+          {
+            "path": "design_manifest.json",
+            "size": 349,
+            "sha256": "b96e05a68063cde1c067c3be2b6ecc78a71353c0c7fad5e8f97d88c7163fb71d"
+          }
+        ],
+        "total_bytes": 495,
+        "sha256": "464ab862b476805b04d132d970690dca6834681c03632bc078ec0a35474d7e52"
+      },
+      "rebuild": {
+        "rule_version": "pilot-cad-20260923.2",
+        "command": [
+          "/cad/bin/python",
+          "-B",
+          "build.py"
+        ],
+        "os_exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "3985ac1788e105276fe6ca9b32e6b056930b492afd02c8a93fe4e8c94f61ad91",
+        "source_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "build.py",
+              "size": 146,
+              "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 349,
+              "sha256": "b96e05a68063cde1c067c3be2b6ecc78a71353c0c7fad5e8f97d88c7163fb71d"
+            }
+          ],
+          "total_bytes": 495,
+          "sha256": "464ab862b476805b04d132d970690dca6834681c03632bc078ec0a35474d7e52"
+        },
+        "rebuilt_snapshot": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "assembly.step",
+              "size": 15426,
+              "sha256": "b9c0e3d6fbe5593d490b638a1234df11b93af424c452ae1f48dba5d3b2bff47e"
+            },
+            {
+              "path": "build.py",
+              "size": 146,
+              "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+            },
+            {
+              "path": "cube.stl",
+              "size": 684,
+              "sha256": "d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06"
+            },
+            {
+              "path": "design_manifest.json",
+              "size": 349,
+              "sha256": "b96e05a68063cde1c067c3be2b6ecc78a71353c0c7fad5e8f97d88c7163fb71d"
+            }
+          ],
+          "total_bytes": 16605,
+          "sha256": "f0d23a9c98ad2b639b0caffdbfdcec469a0f0bb20fc5675ee97933ad126b8428"
+        },
+        "expected_outputs": [
+          "assembly.step",
+          "cube.stl",
+          "missing.stl"
+        ],
+        "missing_outputs": [
+          "missing.stl"
+        ],
+        "source_changed": [],
+        "outputs_created": false
+      },
+      "measurements": {
+        "step_kernel_readback": {
+          "raw_value": {
+            "environment": "PASS",
+            "interpreter": "/cad/bin/python",
+            "versions": {
+              "cadquery": "2.6.1",
+              "cadquery-ocp": "7.8.1.1.post1"
+            },
+            "parts": [
+              {
+                "path": "assembly.step",
+                "status": "PASS",
+                "solid_count": 1,
+                "valid": true,
+                "volume_mm3": 999.9999999999998,
+                "bbox_mm": [
+                  10.0,
+                  10.0,
+                  10.0
+                ]
+              }
+            ],
+            "os_exit_code": 0,
+            "stdout_sha256": "dc3458551063dbbe05c62a80347c977c16e1332c2991c1ffd642fa50b338a6ea",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "failure_type": null
+        },
+        "stl_triangle_proxy": {
+          "raw_value": {
+            "parts": [
+              {
+                "id": "cube",
+                "stl": "cube.stl",
+                "measurement": {
+                  "triangle_count": 12,
+                  "bbox_mm": {
+                    "min": [
+                      -5.0,
+                      -5.0,
+                      -5.0
+                    ],
+                    "max": [
+                      5.0,
+                      5.0,
+                      5.0
+                    ],
+                    "size": [
+                      10.0,
+                      10.0,
+                      10.0
+                    ]
+                  },
+                  "absolute_volume_proxy_mm3": 1000.0000000000001,
+                  "solid_validity_checked": false
+                }
+              },
+              {
+                "id": "missing",
+                "stl": "missing.stl",
+                "measurement": null
+              }
+            ]
+          },
+          "status": "FAIL",
+          "failure_type": "MISSING_OR_INVALID_STL"
+        },
+        "solid_validity_volume_count": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "MESH_SOLID_VALIDITY_NOT_IMPLEMENTED"
+        },
+        "all_printed_parts_envelope": {
+          "raw_value": {
+            "part_count": 2,
+            "sizes_mm": [
+              [
+                10.0,
+                10.0,
+                10.0
+              ],
+              null
+            ],
+            "limits_mm": [
+              220,
+              220,
+              250
+            ]
+          },
+          "status": "FAIL",
+          "failure_type": "MISSING_INVALID_OR_OVERSIZE_PART"
+        },
+        "urdf_mjcf_parse": {
+          "raw_value": {
+            "urdf": {
+              "parse_pass": false,
+              "joint_count": null
+            },
+            "mjcf": {
+              "parse_pass": false,
+              "joint_count": null
+            }
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_counts": {
+          "raw_value": {
+            "urdf": null,
+            "mjcf": null
+          },
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "mesh_reference_closure": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "XML_MISSING_OR_INVALID"
+        },
+        "joint_tree_actuator_contract": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "dynamics_load": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "swing_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "wave_replay": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        },
+        "robustness": {
+          "raw_value": null,
+          "status": "NA",
+          "failure_type": "NOT_IMPLEMENTED"
+        }
+      }
+    },
+    "escape": {
+      "rejected_before_read": true,
+      "file_reads": 0,
+      "complete_snapshot_exists": false,
+      "junction_rejected": true,
+      "file_symlink_rejected": true
+    }
+  },
+  "exit_snapshot_cases": {
+    "normal": {
+      "os_exit_code": 0,
+      "snapshot": {
+        "exit_code": 0,
+        "final_snapshot": "D:\\Robotics Engineer\\SEALab\\robotgen-eval-swe\\outputs\\pilot_20260923\\cad_source_acceptance_3c1514c9614c\\normal\\final",
+        "final_snapshot_digest": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "partial.txt",
+              "size": 17,
+              "sha256": "ee79ef77557da2de0f965fad5a71ac656298b16a594bb5617e801903441f863e"
+            }
+          ],
+          "total_bytes": 17,
+          "sha256": "3b497b7d939a763bfe73312f442afe0216f2e2dc14b43961bdfcfe19dc371e46"
+        },
+        "snapshot_status": "COMPLETE"
+      }
+    },
+    "exception": {
+      "os_exit_code": 1,
+      "snapshot": {
+        "exit_code": 1,
+        "final_snapshot": "D:\\Robotics Engineer\\SEALab\\robotgen-eval-swe\\outputs\\pilot_20260923\\cad_source_acceptance_3c1514c9614c\\exception\\final",
+        "final_snapshot_digest": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "partial.txt",
+              "size": 17,
+              "sha256": "ee79ef77557da2de0f965fad5a71ac656298b16a594bb5617e801903441f863e"
+            }
+          ],
+          "total_bytes": 17,
+          "sha256": "3b497b7d939a763bfe73312f442afe0216f2e2dc14b43961bdfcfe19dc371e46"
+        },
+        "snapshot_status": "COMPLETE"
+      }
+    },
+    "timeout": {
+      "os_exit_code": 124,
+      "snapshot": {
+        "exit_code": 124,
+        "final_snapshot": "D:\\Robotics Engineer\\SEALab\\robotgen-eval-swe\\outputs\\pilot_20260923\\cad_source_acceptance_3c1514c9614c\\timeout\\final",
+        "final_snapshot_digest": {
+          "status": "COMPLETE",
+          "files": [
+            {
+              "path": "partial.txt",
+              "size": 17,
+              "sha256": "ee79ef77557da2de0f965fad5a71ac656298b16a594bb5617e801903441f863e"
+            }
+          ],
+          "total_bytes": 17,
+          "sha256": "3b497b7d939a763bfe73312f442afe0216f2e2dc14b43961bdfcfe19dc371e46"
+        },
+        "snapshot_status": "COMPLETE"
+      }
+    }
+  },
+  "unimplemented": [
+    "STL solid validity (triangle proxy only)",
+    "full joint topology/actuator contract",
+    "dynamics",
+    "motion",
+    "robustness"
+  ],
+  "old_fixture": "historical JSON read-only assertions only; no rebuild or geometry measurement",
+  "artifacts": [
+    {
+      "path": "results/pilot_20260923/cad_source_acceptance_3c1514c9614c/acceptance.json",
+      "size": 29377,
+      "sha256": "28c1ff28f3c58aadc239f8581d20566ed1371dffc9a15c16b3eb707d726d6519"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/environment_probe.json",
+      "size": 1908,
+      "sha256": "d8ecfca3aae688d855541a92fe651d020570d1af47eecc040e33fb90e999ec36"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/environment_probe_v2.json",
+      "size": 293,
+      "sha256": "bfd7fa67aeb7190525f46ee06c7718ce9a98a6de7f891e643d4262f6c965ad6f"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/environment_versions.json",
+      "size": 1620,
+      "sha256": "394d94824e1f406bbdaaaa4d8b4065b585aab61e344b5641ea2cf156b2661c15"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/validation_02.json",
+      "size": 501,
+      "sha256": "9f8269792f0d136cda6849f934a2abc2cc1045d37d4e91bd49ce6e582302a886"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/validation_03.json",
+      "size": 501,
+      "sha256": "2788f44b66ccb9003d42c29cc83ba6d34cc85127262c332856a5f1257279fd90"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/unittest_01.log",
+      "size": 4838,
+      "sha256": "f7b3a5cda4e50b54008b019e2b1af1e93da0e495b3f032c02d3ed99e2896b18f"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/unittest_02.log",
+      "size": 2056,
+      "sha256": "c4fb5c6569f92b45e5c8c7cb8012919177975a561890d91634b740c6b48eaf35"
+    },
+    {
+      "path": "results/pilot_20260923/cad_acceptance_20260923_v1/unittest_03.log",
+      "size": 2056,
+      "sha256": "7a932911f92ad03573ddcbb897e33057248987173d976d6ba33db847803fa80b"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/rebuild_execution.json",
+      "size": 276,
+      "sha256": "940f5717b97ccd48a4bbb2e99a773a02ec884d1a169681e3764e70fe239442d1"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/rebuilt/assembly.step",
+      "size": 15426,
+      "sha256": "80765833d2a156c7982fe91effb13abbaaf0a6bd3c242510d803c70b30f60916"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/rebuilt/build.py",
+      "size": 146,
+      "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/rebuilt/cube.stl",
+      "size": 684,
+      "sha256": "d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/rebuilt/design_manifest.json",
+      "size": 268,
+      "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/received/build.py",
+      "size": 146,
+      "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/received/design_manifest.json",
+      "size": 268,
+      "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/source/build.py",
+      "size": 146,
+      "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/source/design_manifest.json",
+      "size": 268,
+      "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/work/assembly.step",
+      "size": 15426,
+      "sha256": "80765833d2a156c7982fe91effb13abbaaf0a6bd3c242510d803c70b30f60916"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/work/build.py",
+      "size": 146,
+      "sha256": "ee2e5929cded4eda1ca108d57053a135748a8c33697c2daab4bd58152aede2f3"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/work/cube.stl",
+      "size": 684,
+      "sha256": "d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06"
+    },
+    {
+      "path": "outputs/pilot_20260923/cad_source_acceptance_3c1514c9614c/cube/work/design_manifest.json",
+      "size": 268,
+      "sha256": "f3ddb8fb863917f42d69190ef12be1f1a97c30a652bd9406090e15828bd6fc47"
+    }
+  ],
+  "notes": [
+    "No real model artifact was produced previously; this is a CAD acceptance test piece only.",
+    "No fixture result enters three-model table.",
+    "No score or subset normalization."
+  ]
+}

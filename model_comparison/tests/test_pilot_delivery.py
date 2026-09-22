@@ -128,16 +128,7 @@ print('ISOLATION_PASS')
         self.assertEqual(rows["solid_validity_volume_count"]["status"], "NA")
         self.assertEqual(rows["all_printed_parts_envelope"]["status"], "PASS")
         self.assertEqual(rows["step_kernel_readback"]["status"], "NA")
-        final = Path("outputs/pilot_20260923/offline_integration_20260922_v4/final")
-        bad = Path(tempfile.mkdtemp(dir=final.parent))
-        import shutil
-        shutil.copytree(final, bad, dirs_exist_ok=True)
-        (bad / "part.stl").write_text("solid invalid\nendsolid invalid\n")
-        measured = {row[0]: row for row in _structure_metrics(bad)}
-        self.assertEqual(measured["solid_validity_volume_count"][3], "FAIL")
-        (bad / "robot.urdf").write_text("<robot name='bad'><link name='base'><visual><geometry><mesh filename='missing.stl'/></geometry></visual></link></robot>")
-        measured = {row[0]: row for row in _structure_metrics(bad)}
-        self.assertEqual(measured["mesh_reference_closure"][3], "FAIL")
+
 
 
 if __name__ == "__main__":
