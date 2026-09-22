@@ -122,6 +122,22 @@ def build_run_evidence(state: dict[str, Any]) -> dict[str, Any]:
         state["local_runtime_ipc_targets"] = list(controller.local_runtime_ipc_targets)
     if agent is not None:
         state["agent_calls"] = int(getattr(agent, "n_calls", 0))
+        # Only visible text and parser-owned scalars; never SDK response/kwargs.
+        state["visible_messages"] = []
+        for message in agent.messages:
+            role = message.get("role")
+            extra = message.get("extra", {})
+            if role in {"system", "assistant"}:
+                content = message.get("content")
+                if isinstance(content, str):
+                    state["visible_messages"].append({"role": role, "content": content})
+            elif extra.get("interrupt_type") == "FormatError":
+                state["visible_messages"].append({
+                    "role": "format_error",
+                    "assistant_content": extra.get("model_response", ""),
+                    "n_actions": extra.get("n_actions"),
+                    "parser_error": message.get("content", ""),
+                })
     query_calls = state.get("model_query_calls", 0)
     if type(query_calls) is not int or query_calls < 0:
         query_calls = 0
@@ -365,6 +381,11 @@ def import_upstream(cache: Path):
 
 def fixed_prompt() -> str:
     return (
+        "Use the text action protocol. Every response must contain exactly one "
+        "action block with literal triple backticks, for example:\n"
+        "```mswea_bash_command\n<command>\n```\n"
+        "The command is executed and its observation is returned before your next turn. "
+        "To submit, the command output must start with COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT. "
         "Execute this task in exactly two turns. First, return exactly one "
         f"mswea_bash_command action with `{FIRST_COMMAND}`. Wait for the "
         "actual shell observation. Only after receiving that observation, "

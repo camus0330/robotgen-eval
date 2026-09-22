@@ -1,0 +1,4 @@
+experiment_id,slot,declared_model,request_model_id,admission,generation_status,query_calls,real_shell_launches,engineering_evaluation,failure_type
+robotgen-three-model-pilot-20260923,model_A,DeepSeek,deepseek-v4-pro,ACCESS_BLOCKED,NOT_STARTED,0,0,NOT_RUN,ACCESS_BLOCKED
+robotgen-three-model-pilot-20260923,model_B,Kimi,kimi-k3,ACCESS_BLOCKED,NOT_STARTED,0,0,NOT_RUN,ACCESS_BLOCKED
+robotgen-three-model-pilot-20260923,model_C,GLM,glm-5.3,ACCESS_BLOCKED,NOT_STARTED,0,0,NOT_RUN,ACCESS_BLOCKED

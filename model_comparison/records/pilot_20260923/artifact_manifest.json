@@ -1,0 +1,44 @@
+{
+  "experiment_id": "robotgen-three-model-pilot-20260923",
+  "artifacts": [
+    {
+      "path": "model_comparison/records/pilot_20260923/plan.json",
+      "kind": "frozen_plan",
+      "status": "tracked",
+      "size": 5339,
+      "sha256": "2dca9ae7443994595491250fb83e3bed97dacceaa5cd86c7a07e23c6e19aa29a"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/results.csv",
+      "kind": "result_table",
+      "status": "tracked",
+      "size": 491,
+      "sha256": "8f9f6227e50b6781c04e9ecf0b64d218c15799c8bced8bf8d208f3248a7b7e1b"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/metrics.json",
+      "kind": "metric_table",
+      "status": "tracked",
+      "size": 792,
+      "sha256": "fb9a2bd8c275ab4704f1e252ed8ab60d5cb636eb153dae62d6e1efa994b109e2"
+    },
+    {
+      "path": "results/pilot_20260923/admission.json",
+      "kind": "safe_admission_log",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 1905,
+      "sha256": "aebcc8428f33db80906c3860501460cab8f29372208baf4e8de5ef2263711943"
+    },
+    {
+      "path": "results/pilot_20260923/preflight.json",
+      "kind": "preflight_log",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 6614,
+      "sha256": "047d17512c68d2eb489be3631a8d1f359259570a504fca0e7c282cd77265b485"
+    }
+  ],
+  "robot_artifacts": [],
+  "note": "No generated design was produced; no artifact is represented as a result."
+}

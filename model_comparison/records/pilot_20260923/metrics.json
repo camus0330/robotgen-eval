@@ -1,0 +1,13 @@
+{
+  "experiment_id": "robotgen-three-model-pilot-20260923",
+  "evaluator_version": "pilot-intake-20260923.1",
+  "status": "PARTIAL",
+  "score": null,
+  "score_reason": "No candidate passed admission; no robot artifact exists.",
+  "rows": [
+    {"slot":"model_A","metrics_status":"NOT_STARTED","failure_type":"ACCESS_BLOCKED","query_calls":0,"engineering":"NOT_RUN"},
+    {"slot":"model_B","metrics_status":"NOT_STARTED","failure_type":"ACCESS_BLOCKED","query_calls":0,"engineering":"NOT_RUN"},
+    {"slot":"model_C","metrics_status":"NOT_STARTED","failure_type":"ACCESS_BLOCKED","query_calls":0,"engineering":"NOT_RUN"}
+  ],
+  "metric_policy": "Each metric retains status, failure_type, evidence path/hash, and evaluator version; missing values are not zero and no subset is renormalized."
+}

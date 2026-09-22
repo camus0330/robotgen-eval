@@ -1,0 +1,142 @@
+{
+  "experiment_id": "robotgen-three-model-pilot-20260923",
+  "status": "PARTIAL_ACCESS_BLOCKED",
+  "baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b",
+  "branch": "deadline/three-model-pilot-20260923",
+  "models": [
+    {
+      "slot": "model_A",
+      "provider": "Smart AGI Gateway",
+      "declared_model": "DeepSeek",
+      "request_model_id": "deepseek-v4-pro",
+      "endpoint": "https://big-model.smart-agi.com/v1/chat/completions",
+      "identity_evidence_source": "https://big-model.smart-agi.com/model-plaza?embedded=1",
+      "admission_status": "ACCESS_BLOCKED",
+      "admission_http_status": 404
+    },
+    {
+      "slot": "model_B",
+      "provider": "Smart AGI Gateway",
+      "declared_model": "Kimi",
+      "request_model_id": "kimi-k3",
+      "endpoint": "https://big-model.smart-agi.com/v1/chat/completions",
+      "identity_evidence_source": "https://big-model.smart-agi.com/model-plaza?embedded=1",
+      "admission_status": "ACCESS_BLOCKED",
+      "admission_http_status": 404
+    },
+    {
+      "slot": "model_C",
+      "provider": "Smart AGI Gateway",
+      "declared_model": "GLM",
+      "request_model_id": "glm-5.3",
+      "endpoint": "https://big-model.smart-agi.com/v1/chat/completions",
+      "identity_evidence_source": "https://big-model.smart-agi.com/model-plaza?embedded=1",
+      "admission_status": "ACCESS_BLOCKED",
+      "admission_http_status": 404
+    }
+  ],
+  "frozen_inputs": {
+    "source": "baseline Git blobs",
+    "manifest": "model_comparison/records/input_manifest.json",
+    "manifest_sha256": "afbc0430d9472ff8a5d7251e0db10e088315d4fbd31de41f258edf16e0ab8685",
+    "checkout_policy": "read-only originals; canonical bytes copied to ignored kit; CRLF discrepancy retained",
+    "files": [
+      {
+        "path": "PROMPT.md",
+        "sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2"
+      },
+      {
+        "path": "SUBMISSION_SPEC.md",
+        "sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb"
+      },
+      {
+        "path": "TASK_SPEC.md",
+        "sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206"
+      },
+      {
+        "path": "assets/reference.png",
+        "sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+      },
+      {
+        "path": "assets/xl330_m288_t.step",
+        "sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6"
+      },
+      {
+        "path": "environment.lock.txt",
+        "sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d"
+      },
+      {
+        "path": "legacy_digital_profile.json",
+        "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+      },
+      {
+        "path": "legacy_metrics_reference.csv",
+        "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+      },
+      {
+        "path": "motion_profile.json",
+        "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+      },
+      {
+        "path": "protocol.json",
+        "sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3"
+      },
+      {
+        "path": "robustness_cases_public.jsonl",
+        "sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466"
+      },
+      {
+        "path": "templates/design_manifest.json",
+        "sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a"
+      },
+      {
+        "path": "templates/submission.json",
+        "sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc"
+      }
+    ]
+  },
+  "prompt": {
+    "system_tool_prompt_sha256": "a3773e9cb3f50b137400ba44246653bb795658d7e6b1e9f98f35ba8fb90ed21c",
+    "task_prompt_sha256": "3f15558cee6eb7c84faefea012fdc22eef529278f71a26e1a3f716855692c65c",
+    "protocol": "one mswea_bash_command per turn; native submit sentinel"
+  },
+  "prompt_protocol": "pinned DefaultAgent text action: one mswea_bash_command per turn, native submit sentinel; no model-specific fallback",
+  "image_binding": {
+    "source": "inputs/assets/reference.png",
+    "transport": "planned identical data URI per model",
+    "status": "NOT_SENT"
+  },
+  "scaffold": {
+    "mini_swe_agent": "2.4.6",
+    "upstream_sha": "04d809ceab9df28f9adaed044884180159172930",
+    "litellm": "1.102.0",
+    "tiktoken": "0.14.0"
+  },
+  "execution": {
+    "pilot_per_model": 1,
+    "wall_time_s": 3600,
+    "max_queries_per_attempt": 48,
+    "provider_retries": 0,
+    "format_recovery_max_consecutive": 2,
+    "human_design_edit_minutes": 0,
+    "setup_query_budget": 12,
+    "setup_queries_used": 3,
+    "serial_order": [
+      "model_A",
+      "model_B",
+      "model_C"
+    ]
+  },
+  "isolation": {
+    "backend": "WSL Ubuntu-24.04 bubblewrap",
+    "credential_mount": false,
+    "network": "disabled in evaluator sandbox",
+    "status": "PREFLIGHT_ONLY"
+  },
+  "metrics": {
+    "version": "pilot-intake-20260923.1",
+    "engineering": "shared definitions; no total score or subset renormalization",
+    "status": "NOT_RUN"
+  },
+  "freeze_note": "All three candidate admission requests returned HTTP 404. No alias substitution or robot generation was performed."
+}
