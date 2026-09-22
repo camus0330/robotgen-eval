@@ -1,0 +1,140 @@
+{
+  "batch_id": "restored_20260923_v1",
+  "mode": "PILOT_RESTORED",
+  "execution_baseline": "1acfc0823bc35007adbe4a0131e2958885070289",
+  "scaffold_commit": "796ce67c6173c7de0a4cb57c7e99ce9dc154d5d3",
+  "frozen_input_baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b",
+  "created_at": "2026-09-22T18:18:14.370615+00:00",
+  "deadline": "2026-09-23T12:00:00+08:00",
+  "candidates": {
+    "model_A": [
+      "DeepSeek",
+      "deepseek-v4-pro",
+      "deepseek-v4.1-flash"
+    ],
+    "model_B": [
+      "Kimi",
+      "kimi-k3",
+      "kimi-k2.7"
+    ],
+    "model_C": [
+      "GLM",
+      "glm-5.3",
+      "glm-5.3-flash"
+    ]
+  },
+  "selection_policy": "all preferred once, then at most one same-family backup per unadmitted slot; stop shared 401/403",
+  "support": {
+    "source": "user_provided_support_screenshot",
+    "original_file": "not_provided",
+    "claimed_restored": true,
+    "quotes": [
+      "恢复了再试试",
+      "再重新试试",
+      "刚刚恢复了",
+      "这是支持的模型"
+    ],
+    "independently_verified_at_freeze": false
+  },
+  "input_files": [
+    {
+      "path": "PROMPT.md",
+      "sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2"
+    },
+    {
+      "path": "SUBMISSION_SPEC.md",
+      "sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb"
+    },
+    {
+      "path": "TASK_SPEC.md",
+      "sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206"
+    },
+    {
+      "path": "assets/reference.png",
+      "sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    },
+    {
+      "path": "assets/xl330_m288_t.step",
+      "sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6"
+    },
+    {
+      "path": "environment.lock.txt",
+      "sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d"
+    },
+    {
+      "path": "legacy_digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+    },
+    {
+      "path": "legacy_metrics_reference.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+    },
+    {
+      "path": "motion_profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3"
+    },
+    {
+      "path": "robustness_cases_public.jsonl",
+      "sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466"
+    },
+    {
+      "path": "templates/design_manifest.json",
+      "sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a"
+    },
+    {
+      "path": "templates/submission.json",
+      "sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc"
+    }
+  ],
+  "input_manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+  "addendum_sha256": "860e2e99396a0576e9906989b2c15cf0f9d30730b113008b07b9b92df29bf6e8",
+  "system_prompt_sha256": "a3773e9cb3f50b137400ba44246653bb795658d7e6b1e9f98f35ba8fb90ed21c",
+  "protocol_version": "restored-pilot-text-cad/1",
+  "identity_level": "gateway_declared",
+  "independent_backend_attestation": "not_observed",
+  "environment": {
+    "python": "3.12.3",
+    "executable": "/cad/bin/python",
+    "cadquery": "2.6.1",
+    "cadquery_ocp": "7.8.1.1.post1"
+  },
+  "code_sha256": {
+    "model_comparison/tools/pilot_access.py": "f1eedffc5b8df3c806428f994545d5f25fa6e5a15d3a14555472d5e24e0f156e",
+    "model_comparison/tools/pilot_cad.py": "b287f326ed21e88d34934364e0fc5c542f96bed4212dd987885e79f8b8db48fa",
+    "model_comparison/tools/pilot_evaluate.py": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17",
+    "model_comparison/tools/pilot_restored.py": "1b6385694552c8f05a2e153b18faca732969d732fe09cf76410207a6703ad0e8",
+    "model_comparison/tools/pilot_run.py": "676c990618eec3f9ef392becc0a8ce24d507d71b460e28487ad3145f3f22faa9",
+    "model_comparison/tools/pilot_sandbox.py": "be36c0d22b22879b7e187fe3cec69c74c62588f0d9a1772ef64a716aa9825240",
+    "model_comparison/tools/pilot_snapshot.py": "94fd0ac46631f007cab10bf466c6e3e5fe28efc94fe964b0f791ae3227636f70",
+    "model_comparison/spikes/mini_swe_gateway_agent_e2e.py": "3839dc36b5a9e604a7581d8128e09f0ca7fe59c535925ffe0c0a8a4dc481e1ce"
+  },
+  "evaluator_rule": "pilot-cad-20260923.2",
+  "evaluator_sha256": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17",
+  "client_python": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+  "endpoint": "https://big-model.smart-agi.com/v1/chat/completions",
+  "credential_source": "SMART_AGI_API_KEY env only",
+  "budget": {
+    "wall_time_s": 3600,
+    "max_queries": 48,
+    "provider_retries": 0,
+    "cost_limit": 1.0,
+    "cost_limit_semantics": "library estimate guard, not a billing cap; unknown cost stays not_observed",
+    "max_consecutive_format_errors": 2,
+    "human_design_edits": 0,
+    "operator_feedback_rounds": 0
+  },
+  "admission_query_budget": 6,
+  "admission_timeout_s": 600,
+  "admission_max_tokens": null,
+  "serial_order": [
+    "model_A",
+    "model_B",
+    "model_C"
+  ],
+  "generation_conditions_identical": true,
+  "budget_selection_reason": "At freeze more than 3 full 3600-second attempts plus admission and evaluation reserve remain before noon."
+}
