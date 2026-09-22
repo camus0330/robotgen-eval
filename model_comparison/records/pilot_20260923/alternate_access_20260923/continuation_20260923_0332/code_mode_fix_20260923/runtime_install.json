@@ -1,0 +1,15 @@
+{
+  "path": "/home/camus/robotgen-alt-client-20260923/codex-code-mode-host",
+  "binary_sha256": "d8a92060f125f1c6117be823e34bb33585aa5cea6bf82f61266bfd3ed5801580",
+  "archive_sha256": "43a7f7697fc6b8733ad294a03b918df6c94e02c8d1ff240e22b87308199b7ed5",
+  "official_digest_matched": true,
+  "release": "rust-v0.154.0-alpha.6.1",
+  "asset_url": "https://github.com/openai/codex/releases/download/rust-v0.154.0-alpha.6.1/codex-code-mode-host-x86_64-unknown-linux-musl.tar.gz",
+  "file": "/home/camus/robotgen-alt-client-20260923/codex-code-mode-host: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped",
+  "file_exit_code": 0,
+  "help_exit_code": 0,
+  "help": "Usage: codex-code-mode-host [OPTIONS]\n\nOptions:\n      --listen <URL>               Transport endpoint: `stdio`, `stdio://`, or `grpc://IP:PORT`\n                                   [default: stdio]\n      --otel-trace-listen <URL>    Optional WebSocket endpoint that streams only raw OTLP trace\n                                   batches\n      --otel-trace-exporter <URL>  Optional OTLP/HTTP JSON trace exporter endpoint, analogous to\n                                   `otel.trace_exporter` in app-server configuration\n  -h, --help                       Print help\n",
+  "help_stderr": "",
+  "mode": "0755",
+  "main_cli_unchanged": true
+}

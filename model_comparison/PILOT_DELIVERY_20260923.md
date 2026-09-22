@@ -469,3 +469,68 @@ Exact generation and evaluation argv, start/end times with timezone, raw safe CL
 Exit-code clarification: the launch tool observed **PowerShell outer exit 1** on each failed worker command; the separate WSL/Python worker native exit was not captured and is not inferred. The Codex child exit is directly captured (0 for these two completed sessions, -15 for interrupted ones). Evaluator LASTEXITCODE=2 was captured immediately. `exit_code_clarification.json` clarifies earlier transfer field naming without rewriting historical records.
 
 At 04:40:53 +08:00, process inspection found no matching Codex client, worker or MCP process. All authorized post-fix attempts are now consumed. Astra remains user-cancelled/excluded. The only remaining generation blocker is model-facing CAD tool exposure in the unchanged official CLI configuration; addressing it would require a separate public-tool configuration revision and any further generation budget. This network-only repair does not expand that scope. Host/system proxy settings, CAD network permissions, official model_A config and frozen inputs were untouched.
+
+
+## 2026-09-23: Code-mode runtime repair and single real CAD-tool gate
+
+Execution baseline: `e1277cb789e7d1b508fc7cf3251c238d2f2c7760`; branch `deadline/alternate-access-20260923`. Initial fetch/local/remote checks matched and the worktree was clean. Started at **04:51:52 +08:00**; runtime verification and closure reached **05:04:22 +08:00**, before the unchanged 12:00 deadline. This is a **two-model pilot** scope; astra remains cancelled/excluded.
+
+| Delivery status | Actual result |
+|---|---|
+| CODE_MODE_RUNTIME | PASS: verified same-release helper installed; real model session spawned it (PID 695); disabled-host error absent |
+| MODEL_MEDIATED_CAD_TOOL_CHECK | FAIL: CAD execute and submit each attempted once by the client, both rejected by MCP approval policy before server execution |
+| SOL_REPLACEMENT_PILOT | NOT_STARTED_TOOL_CHECK_FAILED; replacement allowance unused |
+| TERRA_REPLACEMENT_PILOT | NOT_STARTED_TOOL_CHECK_FAILED; replacement allowance unused |
+| ASTRA | CANCELLED_EXCLUDED |
+
+### Fixed-version component and scoped configuration
+
+The exact official release `rust-v0.154.0-alpha.6.1` supplied asset `codex-code-mode-host-x86_64-unknown-linux-musl.tar.gz` (25,720,846 bytes). Its actual SHA-256 matched the digest returned by the [official release metadata](https://api.github.com/repos/openai/codex/releases/tags/rust-v0.154.0-alpha.6.1):
+`43a7f7697fc6b8733ad294a03b918df6c94e02c8d1ff240e22b87308199b7ed5`.
+
+Installed only at `/home/camus/robotgen-alt-client-20260923/codex-code-mode-host`, mode 0755; actual binary SHA-256 `d8a92060f125f1c6117be823e34bb33585aa5cea6bf82f61266bfd3ed5801580`. `file` reported x86-64 static-PIE ELF; `--help` exited 0. This helper has no reported independent version string: release identity is established by the verified official asset, not fabricated `--version` output. Main CLI stayed 0.154.0-alpha.6.1 and was not replaced. No binary is committed.
+
+[Fixed-version install-context source](https://github.com/openai/codex/blob/rust-v0.154.0-alpha.6.1/codex-rs/install-context/src/lib.rs) resolves this custom installation's sibling `codex-code-mode-host`. Only that exact runtime file was added to the existing read permission grants. No home, repository, authentication directory or broad filesystem grant was added.
+
+`config_args(cad=True)` now explicitly emits **code_mode=true** and **code_mode_host=true**, once each, after removing both from unconditional disabling. Non-CAD admission remains disabled. These are distinct exposure/runtime features; model metadata may also select tool mode. New actual argv are rebuilt in `pilot_alt_runtime.generation_argv`, not copied from old frozen argv. `code_mode_fix_20260923/plan.json` and its Linux `operator/code_mode_plan.json` copy have matching hash `c0cfce1114126818f302e40bb1841e98f573559a116bc7bb24af6dcb4394fced`. Script, plan and per-model argv hashes are in `sync.json`. Original plans and public prompt/addendum/input hashes are unchanged.
+
+The official feature query reports code_mode=true, code_mode_host=true, shell_tool=false, multi_agent=false. It reports unified_exec=true despite the preserved legacy false argument: [managed_features.rs](https://github.com/openai/codex/blob/rust-v0.154.0-alpha.6.1/codex-rs/core/src/config/managed_features.rs) deliberately enables that backend absent a managed pin, while [spec_plan.rs](https://github.com/openai/codex/blob/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/spec_plan.rs) returns before registering shell tools when shell_tool is false. This is disclosed rather than falsely claiming every supplied false flag is effective.
+
+The first no-model features command incorrectly used exec-only ignore flags and exited 2. The corrected supported features query exited 0; its initial verifier assertion exited 1 because it expected unified_exec=false. The source-backed explanation above resolves that assertion expectation; both records are preserved. Actual generation/short-session exec retains `--ignore-user-config --ignore-rules --strict-config` with no later code_mode_host=false override.
+
+The [Code-mode nested dispatcher](https://github.com/openai/codex/blob/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/code_mode/mod.rs) routes inner calls through normal tool handling. Outer exec is a custom payload, whereas inner CAD MCP function calls receive existing hooks. Guard code was **not changed**; native exec/shell/patch/read_file/subagent/other-MCP requests remain denied. No blanket exec exemption, sandbox bypass, CAD network change or authentication mount was introduced. Working proxy/login/CAD isolation results were reused without network probes, cube/fixture reruns or image admission.
+
+### Actual validation and one model-mediated check
+
+Pinned Windows test interpreter:
+`C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe`.
+
+```powershell
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_alt_runtime.py' -v
+# exit 0, three tests: distinct effective argv flags/exact runtime grant,
+# unchanged admission disabling, original inner-tool deny rules
+wsl -d Ubuntu-24.04 -u camus -- /home/camus/robotgen-alt-client-20260923/codex-code-mode-host --help
+# exit 0; component startup only, not the model-mediated acceptance
+wsl -d Ubuntu-24.04 -u camus -- /usr/bin/python3 -B /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_runtime.py --short-check /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/code_mode_plan.json
+# official client exit 0; short-check runner and immediately captured LASTEXITCODE 2
+```
+
+The one fresh gpt-5.6-sol connectivity session used a new empty directory, no image and no robot prompt, and ran **30.809 seconds** within its 120-second bound. Its exact task was one `echo ROBOTGEN_CODE_MODE_CAD_OK` through CAD execute, inspect output, then CAD submit. The actual standalone host process was observed. CLI events contain one execute attempt with that exact command and one submit attempt. Both failed with:
+`MCP tool call requires approval, but approval policy is never`.
+
+The server-side state is authoritative: **tool_calls=0, records=[], submitted=false, tool_stopped=true**. No CAD action exit code or marker exists; neither a visible model assertion nor client exit 0 is counted as acceptance. No native host command execution event occurred. This proves the disabled-host failure was resolved and identifies a subsequent MCP approval gate; it does **not** prove end-to-end CAD execution. The separate approval path is evidenced in fixed-version `mcp_tool_call.rs`; no approval setting was relaxed after the failure.
+
+CLI usage: input 24799, cached input 22528, output 708, reasoning-output count 309. Hidden reasoning text was not retained. Underlying API query/retry counts remain null/not_observed. **One short model session was used; zero replacement robot sessions were started.** The short check is infrastructure evidence, never a robot result. There was no second short check, no model fallback and no Smart AGI request.
+
+### Replacement scope, failure references and stop condition
+
+| Requested model / identity | New run_id suffix | Replaces prior run | Result |
+|---|---|---|---|
+| gpt-5.6-sol / client_requested | code_mode_fix_20260923/model_B | continuation_20260923_0332/model_B_network1 | Not started; failed required tool gate |
+| gpt-5.6-terra / client_requested | code_mode_fix_20260923/model_C | continuation_20260923_0332/model_C | Not started; failed required tool gate |
+
+Backend identities remain unverified. `prior_failure_annotation.json` adds failure_domain=INFRASTRUCTURE_TOOL_CONFIGURATION and reason=code-mode host disabled before CAD execution to references to the old failures; original GENERATION_FAILED journals, requests, replies and exits are not rewritten or dismissed as zero requests.
+
+No replacement source, CAD artifact or first/final robot snapshot exists. File-contract assessment, source rebuild, STEP/STL/XML measurements and all other engineering metrics are NOT_RUN/NA; no total score is reported. Replacement worker commands were prepared in the new plan but **not executed**. This follows the explicit instruction to stop real design startup if the single short model tool check fails; sufficient time remains, but elapsed time cannot override that gate.
+
+Safe short-check records are retained in `results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/tool_check`, with committed copies `short_check.json`, `short_tool_state.json`, and snapshot/path/hash bindings in `closure.json`. Runtime process inspection at 05:04:22 +08:00 found no remaining client, host, worker or MCP process. The remaining blocker is the CAD MCP approval configuration conflicting with approval_policy=never. No user credentials, global settings, old CAD environment, evaluator or formal configuration were changed.

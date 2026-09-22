@@ -1,0 +1,84 @@
+{
+  "files": [
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/approval_failure_source.json",
+      "size": 429,
+      "sha256": "353764b56d0b8e7665a206a13f33f296369b9fb159e8e78a03499f33e3429928"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/closure.json",
+      "size": 2832,
+      "sha256": "d319169fb6886f609dbc3a5c9ba6fbde34236c3355adf28446fb343abee9f694"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/commands.json",
+      "size": 825,
+      "sha256": "b5324aa61a96956162405d580469815901a58fce1aeef8a00c603bff4d7acf70"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/effective_features.json",
+      "size": 3258,
+      "sha256": "99d0ff577afed25b610db5fd28dd3b8b6457bd363aea832907e520699f7724e4"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/effective_features_supported_cli.json",
+      "size": 3496,
+      "sha256": "17d9c71695ce650151524ef200cc6aeb92e37b0333f33fd6709e6ad1ddd9272d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/no_model_validation.json",
+      "size": 2958,
+      "sha256": "099ef07b7a82a1af4086e29642443e5df7b4afb7abebe1765c759a02dc754b1b"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/plan.json",
+      "size": 18643,
+      "sha256": "c0cfce1114126818f302e40bb1841e98f573559a116bc7bb24af6dcb4394fced"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/prior_failure_annotation.json",
+      "size": 627,
+      "sha256": "9b326563e98309c55f008dffcfd1a60114e7029bf3157302fb0100475f91b9ef"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/runtime_install.json",
+      "size": 1337,
+      "sha256": "add95a95ef462c86dfcd630642890e9edafb002e5fc1679e344d68d08e8bb2fd"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/short_check.json",
+      "size": 7398,
+      "sha256": "5c5a9981427aaec60c352f2c902dc3f6bc8e3ebbe07ff0d23fead8bc525c45ba"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/short_tool_state.json",
+      "size": 85,
+      "sha256": "7c9bbc328075b96344e86da62bff92c68278adb9b46905887c589638981e868d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/sync.json",
+      "size": 1270,
+      "sha256": "0f3d68229949ee899e7e8106a1b37e66256eaa49fa8754ee25f623d31fbdd776"
+    },
+    {
+      "path": "model_comparison/PILOT_DELIVERY_20260923.md",
+      "size": 69925,
+      "sha256": "3c0c13605b7e3095f0fbc1d981c2eb0f7c0571d8e18ed30f955282662f3e14cf"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_access.py",
+      "size": 6330,
+      "sha256": "cb71657c43f22319fb85ac4c6e10c0094817f8cda570988c230ac0f037541c45"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_runtime.py",
+      "size": 6226,
+      "sha256": "ad9801866ef18e56f4f417be1237f4cc847739215b4bd977583bec1bfa2760db"
+    },
+    {
+      "path": "model_comparison/tests/test_pilot_alt_runtime.py",
+      "size": 2227,
+      "sha256": "23bbced00cca7f402b298bd5b7587db86f6bdce0215efa4815261504ebf8118f"
+    }
+  ]
+}

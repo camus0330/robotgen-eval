@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "pilot_alt_access.py": {
+      "repository_sha256": "cb71657c43f22319fb85ac4c6e10c0094817f8cda570988c230ac0f037541c45",
+      "linux_sha256": "cb71657c43f22319fb85ac4c6e10c0094817f8cda570988c230ac0f037541c45"
+    },
+    "pilot_alt_runtime.py": {
+      "repository_sha256": "ad9801866ef18e56f4f417be1237f4cc847739215b4bd977583bec1bfa2760db",
+      "linux_sha256": "ad9801866ef18e56f4f417be1237f4cc847739215b4bd977583bec1bfa2760db"
+    },
+    "pilot_alt_worker.py": {
+      "repository_sha256": "2c2f204e58b3d5e04ffc2e3dccc1c838623fd2baab4fe9f385d53bd50323fb16",
+      "linux_sha256": "2c2f204e58b3d5e04ffc2e3dccc1c838623fd2baab4fe9f385d53bd50323fb16"
+    }
+  },
+  "plan_sha256": "c0cfce1114126818f302e40bb1841e98f573559a116bc7bb24af6dcb4394fced",
+  "argv_sha256": {
+    "model_B": "a28d2c0c5664138632419939cbdb829ccd8f766fe2547300ac96bcd52a374372",
+    "model_C": "4ed9cc84941f32fc261a3d9ed06f828a0f4f17a1a210aa382dd45a2b790b872a"
+  },
+  "public_prompt_addendum_sha256": "4df55b7ff4e05f880d8b29846549ed9e7bec93cb51ff928e0bdc18313be83224",
+  "input_manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+  "copied_linux_plan": "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/code_mode_plan.json"
+}

@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/install-context/src/lib.rs",
+      "sha256": "18eef650f329b27fbfe986f88c565230d347cb6f5575e953260ace7d794b51b8"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/features/src/lib.rs",
+      "sha256": "451604ebcb3e805ce22e62a87fc425b95f774bcdadc9bcc60b422075cedd7c85"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/config/managed_features.rs",
+      "sha256": "3a6bf274ea4931337d81da237307b22f632845ee80c3e7bc4e5a140c9a6ad500"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/spec_plan.rs",
+      "sha256": "451622e76c45dd1585318c200fdee9a00d7aaf785d4a540facca1010146307b7"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/code_mode/mod.rs",
+      "sha256": "be419aef3b8100ec9cd59bb3706ee55e3c28facadb13eb25e68fc87b0c300eba"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/registry.rs",
+      "sha256": "f90bfac6c021ffa0aadce1208bd7d13679915ac2b1bfcec227e9648e9992343a"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/tools/code_mode/execute_handler.rs",
+      "sha256": "217655094d20f95d79bf0a4ba3c8b4aab7a0d1b3f4a65f8d1e309479a8c00f19"
+    }
+  ],
+  "effective_code_mode": true,
+  "effective_code_mode_host": true,
+  "effective_shell_tool": false,
+  "effective_unified_exec": true,
+  "unified_exec_explanation": "managed_features.rs explicitly enables UnifiedExec absent managed requirement pin; legacy user opt-out does not select removed shell backend. spec_plan.rs add_shell_tools returns early when ShellTool is disabled. No change to this pre-existing setting.",
+  "outer_exec": "Custom payload; default pre_tool_use_payload returns None for non-function payload. Not a blanket guard allow.",
+  "inner_mcp": "submit_nested_tool constructs Function payload, invokes normal tool runtime; registry pre-tool hooks remain applied. Existing guard unchanged.",
+  "effective_features_initial_cli_exit": 2,
+  "effective_features_corrected_cli_exit": 0,
+  "initial_verifier_assertion_exit": 1,
+  "assertion_reason": "Incorrect expectation that legacy unified_exec=false remains effective; actual value preserved, source gate verified.",
+  "host_install_layout": "Exact same directory sibling codex-code-mode-host per install-context fallback",
+  "tests_command": "python -B -m unittest discover -s model_comparison/tests -p test_pilot_alt_runtime.py -v",
+  "tests_exit_code": 0,
+  "tests_passed": 3,
+  "network_and_cad_environment_tests_reused": true,
+  "model_requests_so_far": 0
+}

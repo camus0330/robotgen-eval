@@ -1,0 +1,32 @@
+{
+  "runtime_help": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "-u",
+    "camus",
+    "--",
+    "/home/camus/robotgen-alt-client-20260923/codex-code-mode-host",
+    "--help"
+  ],
+  "runtime_help_exit_code": 0,
+  "short_check": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "-u",
+    "camus",
+    "--",
+    "/usr/bin/python3",
+    "-B",
+    "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_runtime.py",
+    "--short-check",
+    "/home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/code_mode_plan.json"
+  ],
+  "short_check_exit_code": 2,
+  "cad_action_exit_code": null,
+  "archive_closure_exit_code": 0,
+  "replacement_worker_commands_executed": false,
+  "independent_evaluations_executed": false,
+  "reason": "required short check failed"
+}

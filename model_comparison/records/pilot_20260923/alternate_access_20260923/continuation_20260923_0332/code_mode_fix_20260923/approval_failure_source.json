@@ -1,0 +1,7 @@
+{
+  "url": "https://raw.githubusercontent.com/openai/codex/rust-v0.154.0-alpha.6.1/codex-rs/core/src/mcp_tool_call.rs",
+  "sha256": "8971564fc9aaa3e087097f98d629ed731beb490cdc88fea8362ce5cbf65ffca2",
+  "observation": "A separate MCP approval policy is evaluated before the server call; existing PreToolUse allow does not establish that this gate is satisfied.",
+  "policy_changed": false,
+  "short_check_retried": false
+}

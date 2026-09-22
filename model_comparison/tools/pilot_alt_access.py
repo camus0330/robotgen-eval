@@ -17,7 +17,7 @@ RECORD = ROOT / "model_comparison/records/pilot_20260923/alternate_access_202609
 CANDIDATES = ("gpt-6-astra", "gpt-5.6-sol", "gpt-5.6-terra")
 DISABLED = ("shell_tool", "unified_exec", "apps", "plugins", "browser_use",
             "browser_use_external", "computer_use", "image_generation", "view_image",
-            "code_mode", "code_mode_host", "multi_agent", "multi_agent_v2", "memories",
+            "multi_agent", "multi_agent_v2", "memories",
             "skill_search", "goals", "unbounded_connection_retries", "workspace_dependencies")
 
 
@@ -37,6 +37,8 @@ def config_args(*, cad=False, python_executable=None, guard_path=None, native_li
                 "show_raw_agent_reasoning": False, "shell_environment_policy.inherit": "none",
                 "include_permissions_instructions": False}
     settings.update({"features." + name: False for name in DISABLED})
+    # Tool exposure and the standalone execution host are separate features.
+    settings.update({"features.code_mode": cad, "features.code_mode_host": cad})
     guard = guard_path or Path(__file__).with_name("pilot_alt_guard.py")
     command_argv = [python_executable or sys.executable, "-I", "-B", str(guard)] + (["--cad"] if cad else [])
     command = shlex.join(command_argv) if native_linux else subprocess.list2cmdline(command_argv)

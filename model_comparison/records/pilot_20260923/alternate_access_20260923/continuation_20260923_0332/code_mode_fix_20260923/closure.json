@@ -1,0 +1,83 @@
+{
+  "execution_baseline": "e1277cb789e7d1b508fc7cf3251c238d2f2c7760",
+  "CODE_MODE_RUNTIME": "PASS",
+  "MODEL_MEDIATED_CAD_TOOL_CHECK": "FAIL_MCP_APPROVAL_REQUIRED_POLICY_NEVER",
+  "SOL_REPLACEMENT_PILOT": "NOT_STARTED_TOOL_CHECK_FAILED",
+  "TERRA_REPLACEMENT_PILOT": "NOT_STARTED_TOOL_CHECK_FAILED",
+  "ASTRA": "CANCELLED_EXCLUDED",
+  "short_session_os_exit_code": 0,
+  "short_runner_exit_code": 2,
+  "short_elapsed_s": 30.808746015,
+  "client_execute_attempts": 1,
+  "client_submit_attempts": 1,
+  "actual_cad_tool_calls": 0,
+  "actual_submit": false,
+  "actual_cad_action_exit_code": null,
+  "marker_observed": false,
+  "runtime_host_pids_observed": [
+    695
+  ],
+  "no_code_mode_disabled_error": true,
+  "unexpected_host_command_events": 0,
+  "short_snapshot": {
+    "status": "COMPLETE",
+    "files": [
+      {
+        "path": "check.json",
+        "size": 7398,
+        "sha256": "5c5a9981427aaec60c352f2c902dc3f6bc8e3ebbe07ff0d23fead8bc525c45ba"
+      },
+      {
+        "path": "tool_state.json",
+        "size": 85,
+        "sha256": "7c9bbc328075b96344e86da62bff92c68278adb9b46905887c589638981e868d"
+      }
+    ],
+    "total_bytes": 7483,
+    "sha256": "a524d928b3914e164c747e60e795d940c77a43956e82b1f39e8a2deae0c8db03"
+  },
+  "short_check_sha256": "5c5a9981427aaec60c352f2c902dc3f6bc8e3ebbe07ff0d23fead8bc525c45ba",
+  "generation_model_sessions": 0,
+  "short_model_sessions": 1,
+  "api_queries": null,
+  "provider_retries": null,
+  "count_source": "not_observed",
+  "cli_usage": [
+    {
+      "input_tokens": 24799,
+      "cached_input_tokens": 22528,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 708,
+      "reasoning_output_tokens": 309
+    }
+  ],
+  "models": [
+    {
+      "model": "gpt-5.6-sol",
+      "identity": "client_requested",
+      "backend_identity": "not_independently_verified",
+      "run_id": "continuation_20260923_0332/code_mode_fix_20260923/model_B",
+      "replaces_run_id": "continuation_20260923_0332/model_B_network1",
+      "attempt_used": false,
+      "worker_started": false,
+      "design_files": 0,
+      "independent_rebuild": "NOT_RUN",
+      "engineering_metrics": "NA_NO_GENERATION"
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "identity": "client_requested",
+      "backend_identity": "not_independently_verified",
+      "run_id": "continuation_20260923_0332/code_mode_fix_20260923/model_C",
+      "replaces_run_id": "continuation_20260923_0332/model_C",
+      "attempt_used": false,
+      "worker_started": false,
+      "design_files": 0,
+      "independent_rebuild": "NOT_RUN",
+      "engineering_metrics": "NA_NO_GENERATION"
+    }
+  ],
+  "stop_reason": "User explicitly requires stopping design startup after the single short check fails; no retry or approval-policy relaxation",
+  "remaining_processes": [],
+  "closed_at": "2026-09-22T21:04:21.384751+00:00"
+}

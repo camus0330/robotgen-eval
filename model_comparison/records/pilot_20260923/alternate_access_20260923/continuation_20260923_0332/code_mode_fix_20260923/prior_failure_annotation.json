@@ -1,0 +1,19 @@
+{
+  "original_journals_unchanged": true,
+  "runs": [
+    {
+      "run_id": "continuation_20260923_0332/model_B_network1",
+      "failure_domain": "INFRASTRUCTURE_TOOL_CONFIGURATION",
+      "reason": "code-mode host disabled before CAD execution",
+      "original_classification": "GENERATION_FAILED",
+      "model_quality_score": null
+    },
+    {
+      "run_id": "continuation_20260923_0332/model_C",
+      "failure_domain": "INFRASTRUCTURE_TOOL_CONFIGURATION",
+      "reason": "code-mode host disabled before CAD execution",
+      "original_classification": "GENERATION_FAILED",
+      "model_quality_score": null
+    }
+  ]
+}
