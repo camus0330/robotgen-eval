@@ -146,3 +146,69 @@ final child stdout/stderr and parent summary were clean. Logging state, stdout,
 stderr, and profile state were restored; raw capture buffers and traceback data
 were discarded. The formal configuration, real key, live route, and real
 gateway remain unread and unexecuted.
+
+## Current repair: parent verdict and count semantics
+
+IMPLEMENTATION: PASS
+OFFLINE_SELF_TEST: PASS (exit code 0)
+REAL GATEWAY E2E: NOT RUN
+
+Baseline: `2c47a1d1dd45e820552b2a2b7b33fa876950f8cb`
+Interpreter: Python `3.13.13` from the reviewed venv
+Dependencies: `mini-swe-agent 2.4.6`, upstream SHA
+`04d809ceab9df28f9adaed044884180159172930`, `litellm 1.102.0`,
+`tiktoken 0.14.0`
+Cache: `C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-569bm_v2`
+Cache SHA-256:
+`223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`
+
+The reviewed interpreter existed. The commands and exit codes were:
+
+```powershell
+& $py -B -u model_comparison/spikes/mini_swe_gateway_probe.py --audit-self-test
+# exit 0
+& $py -B -u model_comparison/spikes/mini_swe_offline_import_preflight.py
+# exit 0; cache path above came from this run
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py `
+  --self-test --cache C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-569bm_v2
+# exit 0
+```
+
+The four independent Agent processes returned these parent-validated results:
+
+| Case | Query calls | Shell launches | Child exit | Classification |
+|---|---:|---:|---:|---|
+| success | 2 | 2 | 0 | `PASS` |
+| first format error | 1 | 0 | 4 | `FORMAT_MISMATCH` |
+| second completion endpoint fixture failure | 2 | 1 | 5 | `ENDPOINT_FAILED` |
+| first command boundary rejection | 1 | 0 | 2 | `ENVIRONMENT_BLOCKED` |
+
+Every case also passed the required `exit_code == child_exit_code`, clean
+stdout/stderr, credential-leak, profile-restored, and
+`real_llm_api_calls == 0` checks. The parent accepts the expected non-zero
+failure exits and returns `OFFLINE_SELF_TEST` only after all evidence passes.
+
+The six pure-data rejection regressions all returned `REJECTED`:
+
+| Mutation | Result |
+|---|---|
+| `external_output_clean=False` | `REJECTED` |
+| `child_stdout_clean=False` | `REJECTED` |
+| `child_stderr_clean=False` | `REJECTED` |
+| success `child_exit_code=9` | `REJECTED` |
+| `profile_restored=False` | `REJECTED` |
+| missing required safety field | `REJECTED` |
+
+The unified count semantics are: `model_query_calls` is the observed client
+model-query attempt count; `gateway_queries` is `0` for offline and the same
+observed client count for live, without claiming server completion; and live
+`real_llm_api_calls` is `null` with source `not_observed` because no independent
+server counter exists. Offline uses `real_llm_api_calls=0` with source
+`offline_fixture`. Pure state checks for offline/live at query counts 0, 1, and
+2 all passed, for both success and failure classifications.
+
+The four-case totals remain fixture calls `6`, cost-fixture calls `5`, model
+queries `6`, real shell launches `3`, gateway queries `0`, and real LLM API
+calls `0`. No additional Agent, fixture, shell, or network process was started
+for the pure-data regressions. Formal configuration, real keys, live gateway
+execution, and `--live` remain unexecuted by design.

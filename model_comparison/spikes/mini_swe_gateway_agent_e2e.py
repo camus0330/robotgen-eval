@@ -103,7 +103,9 @@ def new_run_state(case: str, mode: str = "offline") -> dict[str, Any]:
         "safe_exception_class": None,
         "fixture_calls": 0,
         "cost_fixture_calls": 0,
-        "real_llm_api_calls": 0,
+        "gateway_queries": 0,
+        "real_llm_api_calls": 0 if mode == "offline" else None,
+        "real_llm_api_calls_source": "offline_fixture" if mode == "offline" else "not_observed",
         "_controller": None,
         "_agent": None,
         "_work_directory": None,
@@ -120,6 +122,16 @@ def build_run_evidence(state: dict[str, Any]) -> dict[str, Any]:
         state["local_runtime_ipc_targets"] = list(controller.local_runtime_ipc_targets)
     if agent is not None:
         state["agent_calls"] = int(getattr(agent, "n_calls", 0))
+    query_calls = state.get("model_query_calls", 0)
+    if type(query_calls) is not int or query_calls < 0:
+        query_calls = 0
+    state["gateway_queries"] = 0 if state.get("mode") == "offline" else query_calls
+    if state.get("mode") == "offline":
+        state["real_llm_api_calls"] = 0
+        state["real_llm_api_calls_source"] = "offline_fixture"
+    else:
+        state["real_llm_api_calls"] = None
+        state["real_llm_api_calls_source"] = "not_observed"
     result = {
         key: value for key, value in state.items() if not key.startswith("_")
     }
@@ -559,7 +571,6 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
                     "native submit result mismatch")
     runtime_require(agent.config.output_path is None, "trajectory persistence must be disabled")
     runtime_require(not controller.failed, "boundary was rejected")
-    state["gateway_queries"] = query_observation["calls"] if mode == "live" else 0
     state["exit_status"] = result["exit_status"]
     state["submission"] = result["submission"]
     return build_run_evidence(state)
@@ -840,6 +851,8 @@ def run_case_process(cache: Path, case: str) -> dict[str, Any]:
     result = subprocess.run(command, capture_output=True, text=True, env=clean_env)
     summary = parse_case_output(result.stdout)
     if summary is None:
+        clean_stdout = SYNTHETIC_CREDENTIAL not in result.stdout
+        clean_stderr = SYNTHETIC_CREDENTIAL not in result.stderr
         return {
             "case": case, "classification": "ENVIRONMENT_BLOCKED",
             "exit_code": EXIT["ENVIRONMENT_BLOCKED"], "stage": "child_dispatch",
@@ -848,12 +861,16 @@ def run_case_process(cache: Path, case: str) -> dict[str, Any]:
             "local_runtime_ipc_targets": [], "native_tools_observed": {
                 "observed": False, "present": "not_observed",
             }, "safe_exception_class": "ChildNoSummary",
-            "child_stdout_clean": SYNTHETIC_CREDENTIAL not in result.stdout,
-            "child_stderr_clean": SYNTHETIC_CREDENTIAL not in result.stderr,
+            "child_stdout_clean": clean_stdout,
+            "child_stderr_clean": clean_stderr,
+            "external_output_clean": clean_stdout and clean_stderr,
         }
     summary["child_exit_code"] = result.returncode
     summary["child_stdout_clean"] = SYNTHETIC_CREDENTIAL not in result.stdout
     summary["child_stderr_clean"] = SYNTHETIC_CREDENTIAL not in result.stderr
+    summary["external_output_clean"] = (
+        summary["child_stdout_clean"] and summary["child_stderr_clean"]
+    )
     return summary
 
 
@@ -943,6 +960,140 @@ def run_injection_process() -> dict[str, Any]:
     return summary
 
 
+def case_summary_is_valid(summary: Any, expected: tuple[str, int, int]) -> bool:
+    """Pure fail-closed validation for one child process summary."""
+    if not isinstance(summary, dict):
+        return False
+    required_types = {
+        "case": str,
+        "classification": str,
+        "exit_code": int,
+        "child_exit_code": int,
+        "model_query_calls": int,
+        "real_shell_launches": int,
+        "gateway_queries": int,
+        "real_llm_api_calls": int,
+        "child_stdout_clean": bool,
+        "child_stderr_clean": bool,
+        "external_output_clean": bool,
+        "credential_leak_check": bool,
+        "profile_restored": bool,
+    }
+    if any(key not in summary or type(summary[key]) is not value_type
+           for key, value_type in required_types.items()):
+        return False
+    wanted_classification, wanted_queries, wanted_shells = expected
+    return (
+        (summary["classification"], summary["child_exit_code"],
+         summary["model_query_calls"], summary["real_shell_launches"])
+        == (wanted_classification, expected_exit_code(wanted_classification),
+            wanted_queries, wanted_shells)
+        and summary["exit_code"] == summary["child_exit_code"]
+        and summary["gateway_queries"] == 0
+        and summary["real_llm_api_calls"] == 0
+        and summary["child_stdout_clean"] is True
+        and summary["child_stderr_clean"] is True
+        and summary["external_output_clean"] is True
+        and summary["credential_leak_check"] is True
+        and summary["profile_restored"] is True
+    )
+
+
+def expected_exit_code(classification: str) -> int:
+    return {
+        "PASS": EXIT["PASS"],
+        "FORMAT_MISMATCH": EXIT["FORMAT_MISMATCH"],
+        "ENDPOINT_FAILED": EXIT["ENDPOINT_FAILED"],
+        "ENVIRONMENT_BLOCKED": EXIT["ENVIRONMENT_BLOCKED"],
+    }.get(classification, EXIT["FAIL"])
+
+
+def injection_summary_is_valid(summary: Any) -> bool:
+    if not isinstance(summary, dict):
+        return False
+    if (summary.get("classification") != "SYNTHETIC_INJECTION_PASS"
+            or type(summary.get("child_exit_code")) is not int
+            or summary["child_exit_code"] != 0
+            or type(summary.get("external_output_clean")) is not bool
+            or summary["external_output_clean"] is not True
+            or type(summary.get("raw_capture_persisted")) is not bool
+            or summary["raw_capture_persisted"] is not False):
+        return False
+    checks = summary.get("injection_checks")
+    required = {
+        "stdout", "stderr", "logging", "ordinary_exception", "boundary_abort",
+        "streams_restored", "logging_restored", "captured_secret_expected",
+    }
+    return (
+        isinstance(checks, dict)
+        and all(key in checks and type(checks[key]) is bool and checks[key] is True
+                for key in required)
+    )
+
+
+def summary_regression_checks(summary: dict[str, Any], expected: tuple[str, int, int]) -> dict[str, str]:
+    """Reject one-field safety regressions without starting another process."""
+    mutations: dict[str, tuple[str, Any] | None] = {
+        "external_output_clean_false": ("external_output_clean", False),
+        "child_stdout_clean_false": ("child_stdout_clean", False),
+        "child_stderr_clean_false": ("child_stderr_clean", False),
+        "success_child_exit_code_9": ("child_exit_code", 9),
+        "profile_restored_false": ("profile_restored", False),
+        "missing_required_field": None,
+    }
+    result: dict[str, str] = {}
+    for name, mutation in mutations.items():
+        candidate = deepcopy(summary)
+        if mutation is None:
+            candidate.pop("profile_restored", None)
+        else:
+            candidate[mutation[0]] = mutation[1]
+        result[name] = "REJECTED" if not case_summary_is_valid(candidate, expected) else "ACCEPTED"
+    return result
+
+
+def count_semantics_checks() -> dict[str, str]:
+    """Pure state checks for offline/live count and observation semantics."""
+    results: dict[str, str] = {}
+    for mode in ("offline", "live"):
+        for query_count in (0, 1, 2):
+            key_sets: set[frozenset[str]] = set()
+            for classification, exit_code in (("PASS", 0), ("ENDPOINT_FAILED", 5)):
+                state = new_run_state(f"count-{mode}-{query_count}", mode=mode)
+                state["classification"] = classification
+                state["exit_code"] = exit_code
+                state["model_query_calls"] = query_count
+                evidence = build_run_evidence(state)
+                key_sets.add(frozenset(evidence))
+                if mode == "offline":
+                    valid = (evidence["gateway_queries"] == 0
+                             and evidence["real_llm_api_calls"] == 0
+                             and evidence["real_llm_api_calls_source"] == "offline_fixture")
+                else:
+                    valid = (evidence["gateway_queries"] == query_count
+                             and evidence["real_llm_api_calls"] is None
+                             and evidence["real_llm_api_calls_source"] == "not_observed")
+                runtime_require(valid, "count semantics state check failed")
+            runtime_require(len(key_sets) == 1, "success/failure evidence fields diverged")
+            results[f"{mode}:{query_count}"] = "PASS"
+    return results
+
+
+def parent_failure_summary(failed_check: str) -> int:
+    """Emit only fixed, allowlisted diagnostics when child evidence is unsafe."""
+    output = {
+        "classification": "OFFLINE_SELF_TEST_FAILED",
+        "implementation": "FAIL",
+        "safe_exception_class": "SafetyEvidenceRejected",
+        "failed_check": failed_check,
+        "real_llm_api_calls": 0,
+    }
+    print(json.dumps(output, ensure_ascii=True, indent=2))
+    print("REAL GATEWAY E2E: NOT RUN")
+    print("FINAL: OFFLINE_SELF_TEST_FAILED")
+    return EXIT["FAIL"]
+
+
 def run_self_test(cache: Path) -> int:
     scrub_environment()
     provenance_info = provenance()
@@ -950,14 +1101,6 @@ def run_self_test(cache: Path) -> int:
     cases = ("success", "format_error", "endpoint_failure", "boundary_rejection")
     case_results = [run_case_process(cache, case) for case in cases]
     injection = run_injection_process()
-    aggregate = {
-        "fixture_calls": sum(int(item.get("fixture_calls", 0)) for item in case_results),
-        "cost_fixture_calls": sum(int(item.get("cost_fixture_calls", 0)) for item in case_results),
-        "model_query_calls": sum(int(item.get("model_query_calls", 0)) for item in case_results),
-        "real_shell_launches": sum(int(item.get("real_shell_launches", 0)) for item in case_results),
-        "gateway_queries": sum(int(item.get("gateway_queries", 0)) for item in case_results),
-        "real_llm_api_calls": 0,
-    }
     expected = {
         "success": ("PASS", 2, 2),
         "format_error": ("FORMAT_MISMATCH", 1, 0),
@@ -965,12 +1108,28 @@ def run_self_test(cache: Path) -> int:
         "boundary_rejection": ("ENVIRONMENT_BLOCKED", 1, 0),
     }
     for result in case_results:
-        wanted = expected[result["case"]]
-        runtime_require((result["classification"], result["model_query_calls"],
-                         result["real_shell_launches"]) == wanted,
-                        f"offline case evidence mismatch: {result['case']}")
-    runtime_require(injection["classification"] == "SYNTHETIC_INJECTION_PASS",
-                    "synthetic injection case failed")
+        case = result.get("case") if isinstance(result, dict) else None
+        wanted = expected.get(case)
+        if wanted is None or not case_summary_is_valid(result, wanted):
+            return parent_failure_summary("agent_case_safety_evidence")
+    if not injection_summary_is_valid(injection):
+        return parent_failure_summary("credential_injection_safety_evidence")
+    regression_template = case_results[0]
+    regression_checks = summary_regression_checks(regression_template, expected["success"])
+    if any(value != "REJECTED" for value in regression_checks.values()):
+        return parent_failure_summary("summary_regression_acceptance")
+    try:
+        count_checks = count_semantics_checks()
+    except RuntimeFailure:
+        return parent_failure_summary("count_semantics")
+    aggregate = {
+        "fixture_calls": sum(item["fixture_calls"] for item in case_results),
+        "cost_fixture_calls": sum(item["cost_fixture_calls"] for item in case_results),
+        "model_query_calls": sum(item["model_query_calls"] for item in case_results),
+        "real_shell_launches": sum(item["real_shell_launches"] for item in case_results),
+        "gateway_queries": sum(item["gateway_queries"] for item in case_results),
+        "real_llm_api_calls": 0,
+    }
     output = {
         "classification": "OFFLINE_SELF_TEST",
         "implementation": "PASS",
@@ -982,6 +1141,8 @@ def run_self_test(cache: Path) -> int:
         "cases": case_results,
         "aggregate": aggregate,
         "synthetic_injection": injection,
+        "summary_regressions": regression_checks,
+        "count_semantics": count_checks,
         "formal_config_read": False,
         "real_key_read": False,
     }
