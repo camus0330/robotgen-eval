@@ -34,5 +34,16 @@
   },
   "decision": "No retry or fallback; no robot artifact or engineering score claimed.",
   "interpreter": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
-  "config_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\\gateway_agent_live.json"
+  "config_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\\gateway_agent_live.json",
+  "pre_request_startup_check": {
+    "run_id": "integration_only_20260922_v1",
+    "os_exit_code": 1,
+    "model_query_calls": 0,
+    "real_shell_launches": 0,
+    "classification": "INFRASTRUCTURE_FAILED",
+    "stage": "worker_exception",
+    "safe_exception_class": "JSONDecodeError",
+    "request_sent": false,
+    "note": "temporary config BOM rejected before model client request; not counted as the real robot attempt"
+  }
 }

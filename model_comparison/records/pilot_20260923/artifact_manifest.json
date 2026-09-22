@@ -118,8 +118,8 @@
       "kind": "real_integration_attempt_record",
       "status": "tracked",
       "contains_credentials": false,
-      "size": 2001,
-      "sha256": "bf7ccab927ebf8b4c5084984f984de3df9eae04d75720ec7102a1619d2ba499c"
+      "size": 2442,
+      "sha256": "f0bd9ea66d5370fe79098aa9ecc4cf6b491f3e55cc4dcbcf596c1bc3b691d9de"
     },
     {
       "path": "results/pilot_20260923/integration_only_20260923_v2/run.json",
@@ -148,5 +148,5 @@
   ],
   "robot_artifacts": [],
   "note": "No real model design was produced; the offline integration fixture is validation-only and is not represented as a model result.",
-  "updated_at": "2026-09-22T16:25:00Z"
+  "updated_at": "2026-09-22T16:28:00Z"
 }

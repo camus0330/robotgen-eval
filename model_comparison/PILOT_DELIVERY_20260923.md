@@ -76,6 +76,8 @@ The evaluator now executes the manifest's declared rebuild command in the isolat
 
 ## Real integration-only robot attempt (execution baseline `6204f7e07c71a2e3c3297ddde30a9106b6e38d37`)
 
+A preliminary CLI launch (`integration_only_20260922_v1`) exited `1` before the model client request because the temporary JSON contained a UTF-8 BOM; its safe evidence recorded `model_query_calls=0` and `real_shell_launches=0`. The reader was corrected to accept the reviewed UTF-8 configuration. That startup-only failure did not consume a model request.
+
 The executable live path was invoked once with the reviewed temporary Smart AGI configuration `C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\gateway_agent_live.json` and the pinned interpreter. The recorded interval was `2026-09-23 00:15:12` to `00:16:45` Asia/Shanghai (`2026-09-22T16:15:12Z` to `2026-09-22T16:16:45Z`). The route was `gpt-5.6-sol`; backend identity was not confirmed. The task included the frozen text inputs and the reference PNG data URI. No formal `model_A` configuration or real key file was read. The child environment retained no credential mount and used the existing network-deny isolated action executor.
 
 ```text
