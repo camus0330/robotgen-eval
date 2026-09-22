@@ -1,4 +1,18 @@
+IMPLEMENTATION: PASS
+OFFLINE_SELF_TEST: PASS (exit code 0)
+REAL GATEWAY E2E: NOT RUN
+
 # Guarded mini-swe gateway agent E2E spike
+
+Repair baseline: `d1f99d94919d8d45c1890d73930fec9652383925`<br>
+Previous PASS baseline: `69a3b39b046b0579832317ce9651c042b647f214`<br>
+Pinned upstream: `mini-swe-agent 2.4.6`, SHA
+`04d809ceab9df28f9adaed044884180159172930`<br>
+Reviewed dependencies: `litellm 1.102.0`, `tiktoken 0.14.0`<br>
+Prepared cache used for the recorded run:
+`C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-_683fx7j`<br>
+Cache SHA-256:
+`223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`
 
 This spike adds a small, bounded integration path around the pinned
 `mini-swe-agent` 2.4.6 upstream implementation. It is not RobotGen Harness,
@@ -49,5 +63,38 @@ rejection aborts the run and prevents retries. Output is a short allowlisted,
 redacted summary; SDK request dumps, raw third-party logs, tracebacks, and
 credentials are not emitted.
 
-This spike has no live result in the repository run: **REAL GATEWAY E2E: NOT
-RUN**. The self-test is the only intended validation for this change.
+The recorded validation used these exact commands:
+
+```powershell
+& $py -B -u model_comparison/spikes/mini_swe_gateway_probe.py --audit-self-test
+# exit 0
+& $py -B -u model_comparison/spikes/mini_swe_offline_import_preflight.py
+# exit 0; prepared cache path recorded above
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py `
+  --self-test --cache C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-_683fx7j
+# exit 0
+```
+
+The self-test observed two fixture completions, two model query calls, two real
+bounded `LocalEnvironment` shell launches, zero gateway queries, no native-tool
+arguments in the observed completion kwargs, native `Submitted`, and the exact
+submission `robotgen_gateway_agent_submission\n`. Regression cases rejected an
+illegal command before OS launch, a legal first command after rejection, the
+configured gateway address after rejection, ordinary loopback after rejection,
+wrong executable, `child_env=None`, wrong cwd, wrong order, a third execution,
+and a synthetic credential in the child environment. Synthetic wrong-model,
+inline-key, and request-override configs were rejected before key access. The
+real third-party stdout/stderr and logging capture passed without writing raw
+content to a report or temporary output file.
+
+Startup provenance is checked at runtime before LiteLLM or mini-swe-agent
+imports. Runtime failures are classified as `CONFIG_BLOCKED`,
+`ENVIRONMENT_BLOCKED`, `FORMAT_MISMATCH`, `ENDPOINT_FAILED`, or `FAIL`; the
+successful path records the observed model query count rather than assuming a
+gateway request count. Live native-tool observation remains
+`not_observed` because live mode is intentionally not run.
+
+The run was offline only: **REAL GATEWAY E2E: NOT RUN** and real LLM API calls
+were `0`. The formal `api_config.json` and real API key were not read, modified,
+or staged. Live endpoint behavior, real model output stability, and endpoint
+failure counts remain skipped by design.
