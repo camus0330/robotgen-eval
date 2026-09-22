@@ -274,3 +274,87 @@ The formal `model_A` configuration was not read or modified. No Prompt or
 frozen input, dependency, upstream file, Python implementation, benchmark, or
 RobotGen generation was changed. This single live attempt is an execution
 record, not a robot-generation metric or formal model comparison.
+
+## Proxy bypass repair and one restricted live attempt
+
+Baseline: `154c4aeb20e23b1351e0a19fd68315df7add9c6d`.
+Local branch, local/remote HEAD and clean working tree matched before edits.
+Python changed only at the two authorized settings: `NO_PROXY` was added to
+`SAFE_ENV_NAMES`, and `scrub_environment()` forces `NO_PROXY="*"` before
+third-party imports and client initialization. No audit or action rule changed.
+
+The interpreter, cache and temporary configuration below existed:
+
+```powershell
+$py = 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe'
+$cache = 'C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-569bm_v2'
+$cfg = 'C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-36293e17b5e64255a4fbbcb9bb7839b8\gateway_agent_live.json'
+```
+
+Cache file `9b5ad71b2ce5302211f9c61530b329a4922fc6a4` had SHA-256
+`223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`.
+Key source was `SMART_AGI_API_KEY` in the environment; the precheck only
+tested nonempty presence. The script retained its configuration/provenance
+checks. A separate read-only configuration field comparison was performed
+after the run and passed: reviewed route/HTTPS endpoint, empty inline key,
+designated key variable, stream false, timeout 600, retries 0, null generation
+parameters and empty extra body. The config was not modified; its recorded
+last-write time remained `2026-09-22T21:42:51.2093461+08:00`.
+
+Commands and results, in execution order:
+
+```powershell
+& $py -B -c "import sys, os, urllib.request; sys.path.insert(0, 'model_comparison/spikes'); import mini_swe_gateway_agent_e2e as m; m.scrub_environment(); p=urllib.request.getproxies(); assert os.environ.get('NO_PROXY')=='*'; assert p.get('no')=='*'; assert not any(k in p for k in ('http','https','all')); print('PROCESS_PROXY_BYPASS: PASS')"
+# PROCESS_PROXY_BYPASS: PASS; actual LASTEXITCODE=0
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py --self-test --cache $cache
+# OFFLINE_SELF_TEST PASS; actual LASTEXITCODE=0; executed once
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py --live --config $cfg --cache $cache
+# Executed once; JSON exit_code=4; FINAL: FORMAT_MISMATCH
+```
+
+The existing self-test retained fixture/cost-fixture/query/shell totals
+`6/5/6/3`, gateway queries `0`, and real LLM API calls `0`. All four Agent
+cases, injection checks, six rejection regressions and six count-state checks
+passed. No new tests, downloads or installations were added.
+
+The live command assigned LASTEXITCODE immediately after execution, but the
+tool yielded before completion and its final outer-shell status/timestamps
+were not recovered. Therefore the process exit code is not independently
+observed; `4` is the saved script summary value, not a recovered shell status.
+The approximate window, based on the new output directory creation and stdout
+last-write times, was `2026-09-22T21:54:38.7114852+08:00` through
+`2026-09-22T21:55:41.7042758+08:00` (China Standard Time, UTC+08:00).
+
+New external stdout/stderr files, preserving the previous logs, are under
+`C:\Users\hp\AppData\Local\Temp\robotgen-live-e2e-repair-dca88532ccc7453d9832a3c8d289990f`.
+Only the script's external output was saved; stderr was empty. The live
+summary reported:
+
+| Field | Observed value |
+|---|---|
+| classification / stage | `FORMAT_MISMATCH` / `agent_run` |
+| safe exception class | `FormatMismatch` |
+| summary exit_code | `4` |
+| agent_calls / model_query_calls / gateway_queries | `1 / 1 / 1` |
+| real_shell_launches | `0` |
+| fixture_calls / cost_fixture_calls | `0 / 0` |
+| real_llm_api_calls / source | `null` / `not_observed` |
+| native_tools / usage / cost / returned_model | `not_observed` |
+| exit_status / submission | `not_observed`; no `Submitted` |
+
+Gateway records were two `socket.getaddrinfo` observations for
+`big-model.smart-agi.com:443` and one `socket.connect` to `198.18.0.68:443`.
+`unrelated_network_attempts=[]`; `127.0.0.1:7897` did not reappear.
+The local IPC record was `socket.connect` to `127.0.0.1:10733`, reason
+`cpython_socketpair`, stdlib file `C:\ProgramData\miniconda3\Lib\socket.py`,
+function `_fallback_socketpair`, `asyncio_self_pipe=true`.
+
+The real query path started and the existing format check stopped it before
+any shell action. No request was added after failure. Gateway queries remain
+client attempts, not independently confirmed server completions. The gateway
+route was `gpt-5.6-sol`, routed as `openai/gpt-5.6-sol`; backend identity remains
+unconfirmed. No live fixture/parser/provider patch, retry, fallback route,
+availability probe or further repair was performed. System proxy, registry,
+persistent environment and formal model_A configuration were not modified;
+the formal configuration was not read. This is not a robot-generation metric
+or formal model comparison.
