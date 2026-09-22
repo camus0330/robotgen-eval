@@ -1,0 +1,36 @@
+{
+  "command": [
+    "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "model_comparison/tests",
+    "-p",
+    "test_pilot_alt_*.py",
+    "-v"
+  ],
+  "os_exit_code": 0,
+  "tests": {
+    "generation_cad_hook_configuration": "PASS",
+    "guard_allowlist": "PASS",
+    "native_linux_filesystem_and_cad_mcp": "PASS",
+    "preserved_windows_failure_evidence": "PASS as evidence integrity, NOT Windows isolation acceptance"
+  },
+  "windows_new_startup_attempts": 1,
+  "windows_child_os_exit_code": 1,
+  "windows_wrapper_exit_code": 2,
+  "windows_reason": "Restricted read-only access requires the elevated Windows sandbox backend",
+  "windows_second_attempt": "NOT_RUN: first result not 267; switched to WSL",
+  "linux_native_boundary_os_exit_code": 0,
+  "linux_cad_mcp_os_exit_code": 0,
+  "linux_login_status_exit_code": 1,
+  "worker_import_check_exit_code": 0,
+  "worker_live_validation": "NOT_RUN awaiting official login",
+  "new_model_requests": 0,
+  "old_image_admission_repeated": false,
+  "cad_environment_reinstalled": false,
+  "subagents_used_this_continuation": 0,
+  "prepared_at": "2026-09-22T19:47:42.068939+00:00"
+}

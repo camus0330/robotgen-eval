@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "/usr/bin/python3",
+    "-B",
+    "-"
+  ],
+  "os_exit_code": 0,
+  "result": {
+    "input_hashes_match": true,
+    "file_count": 13
+  }
+}

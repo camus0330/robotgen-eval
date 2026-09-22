@@ -24,6 +24,10 @@ def child_environment():
 
 def linux_path(path):
     path = Path(path).resolve()
+    if os.name != "nt":
+        if not path.is_absolute():
+            raise ValueError("Expected absolute Linux path")
+        return str(path)
     if not path.drive or path.is_symlink():
         raise ValueError("Expected regular absolute Windows path")
     return "/mnt/" + path.drive[0].lower() + path.as_posix()[2:]
@@ -45,7 +49,8 @@ def execute_python(source, *, kit, submission=None, writable_output=None, second
     if cad:
         inner += cad_mount()
     inner += ["--chdir", "/tmp", "/cad/bin/python" if cad else "/usr/bin/python3", "-I", "-B", "-c", source]
-    command = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
+    command = ([str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
+               if os.name == "nt" else inner)
     # Linux timeout owns the namespace/process group; the outer timeout bounds a
     # stuck WSL launch for these checks. execute_command handles design actions.
     return subprocess.run(command, env=child_environment(), capture_output=True, text=True,
@@ -68,6 +73,7 @@ def execute_command(command_text, *, kit, writable_output, seconds=30, cad=False
     if cad:
         inner += cad_mount()
     inner += ["--chdir", "/work", "/bin/sh", "-c", limits + "exec /bin/sh -c " + shlex.quote(command_text)]
-    cmd = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
+    cmd = ([str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
+           if os.name == "nt" else inner)
     return subprocess.run(cmd, env=child_environment(), capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=seconds + 20)

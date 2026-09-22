@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "sh"
+  ],
+  "stdin_script": "set -eu\nif [ -e /home/camus/robotgen-alt-client-20260923 ]; then echo DEDICATED_DIRECTORY_ALREADY_EXISTS; exit 3; fi\nmkdir -p /home/camus/robotgen-alt-client-20260923\ntar -xzf /mnt/c/Users/hp/AppData/Local/Temp/robotgen-linux-client-lbxhnatu/codex-linux.tar.gz -C /home/camus/robotgen-alt-client-20260923 codex-x86_64-unknown-linux-musl\nfile /home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl\n/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl --version\n",
+  "os_exit_code": 0,
+  "stdout": "/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped\ncodex-cli 0.154.0-alpha.6.1\n",
+  "stderr": ""
+}

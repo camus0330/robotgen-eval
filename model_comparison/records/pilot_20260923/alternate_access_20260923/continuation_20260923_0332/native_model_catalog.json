@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl",
+    "debug",
+    "models",
+    "--bundled"
+  ],
+  "os_exit_code": 0,
+  "models": [
+    {
+      "slug": "gpt-6-astra",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "default_reasoning_level": "low",
+      "visibility": "list"
+    },
+    {
+      "slug": "gpt-5.6-sol",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "default_reasoning_level": "low",
+      "visibility": "list"
+    },
+    {
+      "slug": "gpt-5.6-terra",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "default_reasoning_level": "medium",
+      "visibility": "list"
+    }
+  ],
+  "model_requests": 0
+}

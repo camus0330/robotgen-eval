@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -29,15 +30,16 @@ def write(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def config_args():
+def config_args(*, cad=False, python_executable=None, guard_path=None, native_linux=False):
     settings = {"model_provider": "openai", "approval_policy": "never", "web_search": "disabled",
                 "project_doc_max_bytes": 0, "skills.include_instructions": False,
                 "skills.bundled.enabled": False, "features.skip_host_skill_discovery": True,
                 "show_raw_agent_reasoning": False, "shell_environment_policy.inherit": "none",
                 "include_permissions_instructions": False}
     settings.update({"features." + name: False for name in DISABLED})
-    guard = Path(__file__).with_name("pilot_alt_guard.py")
-    command = subprocess.list2cmdline([sys.executable, "-I", "-B", str(guard)])
+    guard = guard_path or Path(__file__).with_name("pilot_alt_guard.py")
+    command_argv = [python_executable or sys.executable, "-I", "-B", str(guard)] + (["--cad"] if cad else [])
+    command = shlex.join(command_argv) if native_linux else subprocess.list2cmdline(command_argv)
     args = []
     for k, v in settings.items():
         args += ["-c", k + "=" + json.dumps(v)]

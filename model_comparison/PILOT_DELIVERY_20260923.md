@@ -302,3 +302,95 @@ Two authorized read-only engineering subagents were used: one for client/provide
 The remaining blocker is specific: this installed native client's scoped filesystem sandbox fails before executing the synthetic read-boundary test, and there is no independently verified complete native tool exclusion to replace that boundary. The existing CAD namespace itself works. Generation has not been enabled or claimed implemented end-to-end. The full task/Codex public addendum and generation configuration remain to be frozen after the safety gate is resolved; canonical input hashes were rechecked unchanged. The three models retain unused single-attempt 1800-second design budgets, subject to the unchanged 2026-09-23 12:00 +08:00 closure deadline. This run stops at the user's explicit unsafe-wiring condition, not because model access is absent.
 
 Pre-commit checks: actual authorized environment-key scan plus token-pattern scan of new evidence, source and report found no credential match. New Python source parsed successfully. `git diff --check` exited 0; only allowed paths changed. No generated model, CAD build or MCP worker remains running. Final Git push/remote SHA and clean-tree checks are reported in the review pack.
+
+
+## Continuation 2026-09-23 03:31 +08 ? WSL boundary PASS; waiting for official login
+
+**STATUS: WAITING_OFFICIAL_LINUX_LOGIN.** The native Linux scoped filesystem boundary and actual CAD MCP checks passed. Real robot generation is not started: the new official Linux client's `login status` returns **Not logged in / exit 1**. This is the explicit human-login stopping condition, not a new model-access failure. Existing three image admissions remain valid evidence and were not repeated; new model requests and Smart AGI requests are **0**.
+
+Execution baseline/local/remote at startup: `60d8a88a5726144f60900bfe410815e036ab4fe1`, branch `deadline/alternate-access-20260923`, clean worktree after `git fetch origin`. Original frozen input SHA and old results are unchanged. New evidence uses `continuation_20260923_0332` beneath the alternate-access records/results directories. No engineering subagents were used in this continuation.
+
+### One bounded Windows launch difference, then WSL2
+
+The one new no-model Windows check used an ordinary non-reparse D-drive directory, explicit Python `subprocess.run(cwd=work)`, matching Codex `-C work`, absolute Codex and PowerShell executables, a named `robotgen-alt` permissions profile, and no legacy `--sandbox`/`sandbox_mode`. Parent cwd, child cwd, executables and exact argv are recorded in `windows_startup_1.json`. External synthetic markers were in a dedicated D-drive sibling data directory, outside workspace and platform minimal runtime paths.
+
+The installed `sandbox --help` has no `--ignore-user-config`, so this no-auth check used an empty dedicated `CODEX_HOME` plus explicit profile parameters. Planned authenticated `exec` uses its supported `--ignore-user-config` and the same scoped profile policy; no global config was edited.
+
+Result: native OS exit **1**, wrapper exit **2**, with `Restricted read-only access requires the elevated Windows sandbox backend`. The read/write assertions did not run. This is neither an ACL finding nor a model-permission denial. It was no longer 267, so the conditional second Windows launch experiment was not used. Windows debugging stopped after this one check, within the ten-minute bound. Historical 267 evidence was retained unchanged.
+
+Ubuntu-24.04 was confirmed as **WSL version 2**, WSL runtime 2.6.3.0, x86_64. No native Linux Codex was found; the Linux PATH's npm was a Windows installation and was not used. An official same-version release was available, so a single dedicated install was made without modifying Windows Codex, global toolchains or the CAD venv:
+
+- Official asset: `https://github.com/openai/codex/releases/download/rust-v0.154.0-alpha.6.1/codex-x86_64-unknown-linux-musl.tar.gz`
+- Archive size: 98,984,633 bytes.
+- Actual SHA-256 matched release metadata: `d7d23bf50decb639cee9eded7a66174e86c349efb5f3f4fbbc7db6cd8dd16d00`.
+- Binary: `/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl`.
+- `file`: **ELF 64-bit x86-64 static PIE**, not Windows EXE.
+- `--version`: **codex-cli 0.154.0-alpha.6.1**, same as all previous image admissions.
+- Installation and version checks: OS exit 0; `login status`: OS exit 1, `Not logged in`.
+
+Native bundled metadata still lists gpt-6-astra, gpt-5.6-sol and gpt-5.6-terra with text/image input. Defaults are low, low and medium reasoning respectively; no override is requested, and this difference is disclosed in the continuation plan. No model call was used to recheck the catalog.
+
+### Linux acceptance and minimal cross-platform adaptation
+
+Linux workspace/public-kit/operator directories are dedicated under `/home/camus/robotgen-alt-runtime/continuation_20260923_0332`. Public input copies match all frozen hashes. The permission profile grants only minimal runtime files, the exact installed Codex binary, and the current isolated session root. It does not grant entire `/mnt/c`, `/mnt/d`, home, repository, authentication directory or other designs.
+
+The first Linux sandbox launch showed that re-executing its dedicated Codex binary required an explicit runtime-file read grant. That failure and a rejected quoted dotted-key config form were preserved. Supplying the exact binary path as an inline filesystem-table entry succeeded. These were no-model configuration checks, not model retries.
+
+| Actual check | OS exit / result |
+|---|---|
+| Scoped Linux inside synthetic-file read | 0 / PASS |
+| Outside synthetic-file read denied | 0 / PASS |
+| Outside unauthorized write denied | 0 / PASS |
+| Native CAD MCP initialize / tools list / execute | 0 / PASS |
+| `/kit` and `/cad` mount readonly; HOME=/tmp; host mounts/home absent; synthetic credential absent | PASS |
+| Actual `/cad/bin/python` runtime | Python 3.12.3, CadQuery 2.6.1, cadquery-ocp 7.8.1.1.post1 |
+| MCP submit then execute rejection | PASS; tool calls stay 1, submitted=true, tool_stopped=true |
+| Native `mcp get cad --json` with prepared per-run configuration | 0; stdio command/args/server/env match the intended CAD bridge |
+| Prepared Linux worker `--help` import check | 0; no model call, not live validation |
+
+Only the allowed cross-platform changes were made to `pilot_sandbox.py`: accept native Linux absolute paths and invoke the existing identical timeout/bubblewrap argv directly on Linux. Windows invocation remains unchanged. The CAD environment was not rebuilt. Snapshot, CAD and evaluator implementation files were not edited. No old cube, four-triangle fixture, or historical smoke suite was run; the new synthetic file is boundary-test data, not a robot result.
+
+The shared configuration builder now has an explicit CAD mode with Linux-safe command quoting. Generation argv calls `pilot_alt_guard.py --cad`, allows the fixed `mcp__cad__execute` / `mcp__cad__submit` endpoints, and disables native shell, browser/apps, extra skills/memory and contestant subagents. The OS permissions profile supplies the file boundary; the hook is additional tool restriction. Direct MCP checks and native config inspection passed; authenticated model-mediated tool calls have not yet occurred.
+
+### Frozen continuation and actual commands
+
+`plan.json` preserves the three-model order, client_requested identity, backend_identity=not_independently_verified, one independent 1800-second attempt per model, serial execution, zero operator design edits, unchanged evaluator `pilot-cad-20260923.2`, and the 2026-09-23 12:00 +08 closure deadline. Public `PROMPT_ADDENDUM.md` explicitly replaces mini-swe fences/submit markers with native CAD execute/submit, preserves original task/rebuild contracts, and identifies `/kit/inputs`, `/cad/bin/python` and `/work`. Actual model-specific argv and per-model Linux cwd are frozen in the plan; prepared commands are clearly marked unexecuted.
+
+Windows tools interpreter:
+`C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe`
+
+```powershell
+& $py -B -u model_comparison/tools/pilot_alt_continue.py --windows-check
+# wrapper 2; native sandbox 1; no model
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_alt_*.py' -v
+# 0, four tests pass; native Linux boundary/MCP actually executed
+```
+
+The four tests cover generation hook configuration, guard allowlist, actual Linux boundary/CAD MCP, and preservation of failed Windows evidence. The last is an integrity check, **not** Windows isolation PASS; no skip was used. Linux checks ran through actual WSL `/usr/bin/python3`, and exact nested commands/cwd/OS exits are retained in the unique `linux_test_*.json` records.
+
+Prepared actual generation entrypoint (not executed for any slot):
+
+```powershell
+wsl -d Ubuntu-24.04 -- /usr/bin/python3 -B /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_worker.py --plan /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/plan.json --slot model_A
+# Repeat serially with model_B and model_C only after each attempt is frozen/evaluated.
+```
+
+The worker checks official login and input hashes before creating its one-attempt journal, uses the frozen native exec argv, filters reasoning text from persisted CLI events, records visible messages/MCP/usage/OS exit, applies the 1800-second bound, terminates its process group and refuses complete snapshots when tool stop is unconfirmed. Explicit fallback errors stop the process and invalidate its model classification. Process metadata is overlaid separately from the raw model snapshot; CAD source/manifest design fields are not repaired. This worker has only passed import/syntax checks at this point; live lifecycle behavior is not claimed validated. Independent artifact transfer/evaluation remains to be performed after each real attempt, using the existing safe-snapshot and evaluate_integration path.
+
+| Requested model / run_id suffix | Actual started | Attempt used | OS exit | Robot / rebuild / STEP / STL / XML |
+|---|---|---|---|---|
+| gpt-6-astra / model_A | no | no | null | NOT_RUN |
+| gpt-5.6-sol / model_B | no | no | null | NOT_RUN |
+| gpt-5.6-terra / model_C | no | no | null | NOT_RUN |
+
+No first/final robot hash exists. Physics, full topology/drive contracts, motion, robustness and total score remain NA. Underlying API query/retry values stay null/not_observed; no session-to-query conversion is made.
+
+### Required human step
+
+The official Linux client has no existing login. Run this one command in local PowerShell and finish its official browser/device flow:
+
+```powershell
+wsl -d Ubuntu-24.04 -- /home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl login --device-auth
+```
+
+Do not send a device code, token or key to chat. No Windows auth.json/token, browser credential database or `.sandbox-secrets` was read, copied or exported; no subscription token was repurposed as an API key. No model/CAD generation worker or background login process was left running by this task. The remaining external blocker is **official Linux login**. After it is completed, continue the frozen three real attempts and independent measurement without repeating image admission or old gateway requests. This pauses under the user's explicit authentication exception, not at a claimed completed pilot.

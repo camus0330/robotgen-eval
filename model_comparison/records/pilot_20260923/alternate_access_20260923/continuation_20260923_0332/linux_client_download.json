@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/openai/codex/releases/download/rust-v0.154.0-alpha.6.1/codex-x86_64-unknown-linux-musl.tar.gz",
+  "sha256": "d7d23bf50decb639cee9eded7a66174e86c349efb5f3f4fbbc7db6cd8dd16d00",
+  "expected_sha256": "d7d23bf50decb639cee9eded7a66174e86c349efb5f3f4fbbc7db6cd8dd16d00",
+  "size": 98984633,
+  "download_elapsed_s": 19.241045475006104,
+  "archive": "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-linux-client-lbxhnatu\\codex-linux.tar.gz",
+  "same_version_available": true
+}

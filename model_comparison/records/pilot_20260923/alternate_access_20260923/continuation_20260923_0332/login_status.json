@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl",
+    "login",
+    "status"
+  ],
+  "os_exit_code": 1,
+  "stdout": "",
+  "stderr": "Not logged in\n"
+}

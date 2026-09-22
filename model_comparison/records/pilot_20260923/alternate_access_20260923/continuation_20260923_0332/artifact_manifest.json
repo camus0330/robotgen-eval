@@ -1,0 +1,174 @@
+{
+  "files": [
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/closure.json",
+      "sha256": "7613d56ffc531cd6edbacc7eebf5762d0195e41cf21a4bc6a7a238c71a37e381",
+      "size": 563
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/exec_help.json",
+      "sha256": "37853ce7c39fc535c8ff8b128adc80d4eb2c9f2d15f7215b03c4232863c7ebc2",
+      "size": 4390
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_boundary.json",
+      "sha256": "f09cdf436c30a1223b6b35c45412feca3730d606f4dbf26c08f8e5bbad3ae5d6",
+      "size": 10283
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_boundary_client_path_missing.json",
+      "sha256": "2cefdc2d7817dc8a35ec1c389e0bf4ab85c8bd6eb791c15a6eec8891a5565a3e",
+      "size": 10225
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_boundary_quoted_key_rejected.json",
+      "sha256": "bd9de9617117ad734df55ef8844e14f26540fcf213223dea2db3e1024c7d42bd",
+      "size": 10403
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_client_download.json",
+      "sha256": "98fb15e191151f6a0f5273e74b927bea28ae774f85ec748c039f2cb0cafc9f2a",
+      "size": 511
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_input_hashes.json",
+      "sha256": "4cf620bda478f4cbc4e8b925e493664d3a11682be63989467158f353cdb02b8a",
+      "size": 222
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_install.json",
+      "sha256": "6f24dcc8058c0e60ed606c380c53036ab48eda89cd6de43ba2697d8ac516b8ed",
+      "size": 861
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_prepare.json",
+      "sha256": "e9a477540133590fc6188ca11d2045768f90a505eb3a6e87dc4e00d534e091fc",
+      "size": 1458
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_test_a5d84dfcc7ee4d02860933848eb293a5.json",
+      "sha256": "fd347bc1aa94db84b8eb687bee04ce44b39714b88648907419fa5d156424f116",
+      "size": 11093
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/linux_test_ce9ef71aa2784ecda0804e0410e9126a.json",
+      "sha256": "b0e5efa58f1f3792126ce3dbed2a74307bb8d7296960cfe6b178de4824c153d8",
+      "size": 10284
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/login_help.json",
+      "sha256": "b62c8078145743556d9f22b737286f21d974bfd58ce1d5140ac17b4292568db0",
+      "size": 1509
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/login_status.json",
+      "sha256": "35c348547de69f6b4e3085e54da628d8852599c6480fdfe62afa5b402940321f",
+      "size": 259
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/login_status_final.json",
+      "sha256": "35c348547de69f6b4e3085e54da628d8852599c6480fdfe62afa5b402940321f",
+      "size": 259
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/native_mcp_configuration.json",
+      "sha256": "aa9d9bc623fa5c86f087259746c87a918c8e6b131052791a7498f13cc78f1dc8",
+      "size": 3838
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/native_model_catalog.json",
+      "sha256": "2c6b255a10d4ed4179cd6a37b29b46679d584e701dadcc9e292deef61239e19b",
+      "size": 838
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/NEXT_ACTION.md",
+      "sha256": "cfb7ee7e03bc42af0a0fb609d194182e637e74224b64e73a389d06a0dd38d94c",
+      "size": 1320
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/plan.json",
+      "sha256": "856e0a726fad36d2a5cca0409dade3ba6d5db3cbe8309d0827ba1c1b98f27346",
+      "size": 18109
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/PROMPT_ADDENDUM.md",
+      "sha256": "4df55b7ff4e05f880d8b29846549ed9e7bec93cb51ff928e0bdc18313be83224",
+      "size": 4594
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/results.json",
+      "sha256": "19844e51dd7d290d17a6491e8bc209d5024c2d6eda0e08347e700475112cb9fe",
+      "size": 2408
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/sandbox_help.json",
+      "sha256": "87f9a69a1414824f7a3b671ad57c2e650e6b7a2b704bee01fa549353fe381fee",
+      "size": 2045
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/session_prepare.json",
+      "sha256": "6b47e8d78e812b435f3cd79a97a64fe126f6ecb719916e398ea2601ffc03acea",
+      "size": 1932
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/validation.json",
+      "sha256": "ec1116fcb301848fb312ffe51ec5e525f4f558847f13c777db83c2e919a0c4d7",
+      "size": 1298
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/windows_startup_1.json",
+      "sha256": "ce9040961da22299365a8a497500db21cdf18b7e67b4cef83dd5eb302f390211",
+      "size": 2488
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/worker_import_check.json",
+      "sha256": "630885f839064738de13dfec58985a802367fcc4467927dd146a72cdfc5907b6",
+      "size": 839
+    },
+    {
+      "path": "model_comparison/PILOT_DELIVERY_20260923.md",
+      "sha256": "18e81f9521ed9212d0c5e4f9beafcbf082bc850e9e2503baeda5f960a5b7b8a1",
+      "size": 49661
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_access.py",
+      "sha256": "08fdd8011e08e8e112f750b3b817d4c0075e2b44433856de2e82ec846b6db759",
+      "size": 6203
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_continue.py",
+      "sha256": "ff982d2cb2160fc35a48cacad6ecb0f8206d6ddcb2e19cafb0bd40cdaad46a54",
+      "size": 3837
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_guard.py",
+      "sha256": "9d9d51e319fe5a085ea71ef5258ecb7194e4a7d7825a9fa57834041a9937138f",
+      "size": 694
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_linux_check.py",
+      "sha256": "f3e313e524d46e1165f0786bbe2b67f9d8cf9dec2c0b285cc2cf2df61d74e984",
+      "size": 5278
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_mcp.py",
+      "sha256": "52d2912b9cbe3797cc6d4b7122a292745bcfc5e9451bea343fd6fbfc37573e89",
+      "size": 4171
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_worker.py",
+      "sha256": "758f181a58bcff65c72337f2ec41d952bb82c8ac173bbc1670e8327e40079af1",
+      "size": 7422
+    },
+    {
+      "path": "model_comparison/tools/pilot_sandbox.py",
+      "sha256": "ce0beb63679453520cabaa096c21dc389022a3b49630e6ea2821110cac73a5c5",
+      "size": 4187
+    },
+    {
+      "path": "model_comparison/tests/test_pilot_alt_isolation.py",
+      "sha256": "605dc9267417e86642ed614c5bcea791054f3263b6217c06a9a8d6461a053281",
+      "size": 2908
+    }
+  ]
+}

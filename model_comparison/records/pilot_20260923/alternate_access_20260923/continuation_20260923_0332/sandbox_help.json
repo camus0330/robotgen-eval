@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "/home/camus/robotgen-alt-client-20260923/codex-x86_64-unknown-linux-musl",
+    "sandbox",
+    "--help"
+  ],
+  "os_exit_code": 0,
+  "stdout": "Run commands within a Codex-provided sandbox\n\nUsage: codex sandbox [OPTIONS] [COMMAND]...\n\nArguments:\n  [COMMAND]...\n          Full command args to run under the Linux sandbox\n\nOptions:\n  -c, --config <key=value>\n          Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`.\n          Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed\n          as TOML. If it fails to parse as TOML, the raw string is used as a literal.\n          \n          Examples: - `-c model=\"o3\"` - `-c 'sandbox_permissions=[\"disk-full-read-access\"]'` - `-c\n          shell_environment_policy.inherit=all`\n\n      --sandbox-state-json <JSON>\n          JSON value from `codex/sandbox-state-meta` to apply directly\n\n      --enable <FEATURE>\n          Enable a feature (repeatable). Equivalent to `-c features.<name>=true`\n\n      --sandbox-state-readable-root <SANDBOX_STATE_READABLE_ROOT>\n          Add a readable root to the supplied sandbox state. Repeat for multiple roots\n\n      --disable <FEATURE>\n          Disable a feature (repeatable). Equivalent to `-c features.<name>=false`\n\n      --sandbox-state-disable-network\n          Disable direct network access in the supplied sandbox state\n\n  -P, --permission-profile <NAME>\n          Named permissions profile to apply from the active configuration stack\n\n  -p, --profile <CONFIG_PROFILE>\n          Layer $CODEX_HOME/<name>.config.toml on top of the base user config\n\n  -C, --cd <DIR>\n          Working directory used for profile resolution and command execution\n\n      --include-managed-config\n          Include managed requirements while resolving an explicit permissions profile\n\n  -h, --help\n          Print help (see a summary with '-h')\n",
+  "stderr": ""
+}

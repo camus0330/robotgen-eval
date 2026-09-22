@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "wsl",
+    "-d",
+    "Ubuntu-24.04",
+    "--",
+    "sh"
+  ],
+  "stdin_script": "set -eu\nmkdir -p /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator /home/camus/robotgen-alt-runtime/continuation_20260923_0332/public /home/camus/robotgen-alt-runtime/continuation_20260923_0332/boundary/work /home/camus/robotgen-alt-runtime/continuation_20260923_0332/boundary/external /home/camus/robotgen-alt-runtime/continuation_20260923_0332/boundary/client-state\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/tools/pilot_alt_mcp.py' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_mcp.py\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/tools/pilot_alt_guard.py' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_guard.py\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/tools/pilot_snapshot.py' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_snapshot.py\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/tools/pilot_sandbox.py' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_sandbox.py\ncp -R '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/outputs/pilot_20260923/input_kit/inputs' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/public/\n",
+  "os_exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

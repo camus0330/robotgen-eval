@@ -1,0 +1,7 @@
+{
+  "stdin_script": "set -eu\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/tools/pilot_alt_worker.py' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/\ncp '/mnt/d/Robotics Engineer/SEALab/robotgen-eval-swe/model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/plan.json' /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/plan.json\n/usr/bin/python3 -B /home/camus/robotgen-alt-runtime/continuation_20260923_0332/operator/pilot_alt_worker.py --help\n",
+  "os_exit_code": 0,
+  "stdout": "usage: pilot_alt_worker.py [-h] --plan PLAN --slot {model_A,model_B,model_C}\n\noptions:\n  -h, --help            show this help message and exit\n  --plan PLAN\n  --slot {model_A,model_B,model_C}\n",
+  "stderr": "",
+  "model_requests": 0
+}

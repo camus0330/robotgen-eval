@@ -1,0 +1,17 @@
+{
+  "status": "WAITING_OFFICIAL_LINUX_LOGIN",
+  "time": "2026-09-22T19:49:25.955638+00:00",
+  "windows_new_checks": 1,
+  "linux_boundary": "PASS",
+  "cad_mcp": "PASS",
+  "tests_exit_code": 0,
+  "new_model_requests": 0,
+  "real_robot_attempts": 0,
+  "uncompleted": [
+    "official Linux login",
+    "three independent real design attempts",
+    "safe robot snapshots and independent CAD evaluation"
+  ],
+  "owned_generation_processes_running": false,
+  "credential_scan_method": "pattern scan only; no authentication material read for scanning"
+}
