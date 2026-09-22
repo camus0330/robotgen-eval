@@ -440,3 +440,32 @@ The same helper provides interactive `login` if later needed, but no device-auth
 Astra was cancelled by the user and excluded. Its prior client was stopped with SIGTERM after 866.95 seconds, client exit -15, outer observed exit 1, tool calls 0, no design. Sol's old environment also produced only connection timeout events; it was stopped for this network repair after 735.15 seconds, client exit -15, outer observed exit 1, tool calls 0. Both workers completed safe final snapshots containing operator metadata, not robot designs. Raw worker GENERATION_FAILED classifications are preserved; neither is interpreted as a robot design quality failure. Astra's evidence is under `execution_20260923_0403/model_A`; sol's is under `network_fix_20260923/model_B_interrupted`. Original API request/retry counts remain null/not_observed; CLI reconnect events are not server request counts.
 
 The user then explicitly authorized **one new complete 1800-second sol attempt**. `network_execution_plan.json` records that authorization, the new independent `model_B_network1` paths, the network code hashes and the original plan hash; terra retains its unused original attempt. Astra stays excluded. The public task, image, CAD environment, tools, reasoning defaults and evaluator remain unchanged. Continue serially sol then terra, with immediate independent intake/rebuild/measurement after each; generation outcomes will be appended below. The 12:00 +08:00 closure deadline remains in force.
+
+
+### Actual proxy-routed attempts and independent evaluation ? closed 04:43 +08:00
+
+Network repair commit: `a5ef54fd862e69300956742061fb4171377213e3`. Network preparation completed in about eight minutes; it made **0 model requests**. The subsequent two explicitly authorized design sessions did contact the official client service and returned visible model messages and CLI usage. Those generation sessions are not part of the zero-call network diagnostic count.
+
+| Requested model (client_requested) | Run suffix | Elapsed s | Codex OS exit / outer PowerShell exit | CAD calls / native submit | Design files | Independent intake / evaluator exit |
+|---|---|---:|---|---|---:|---|
+| gpt-5.6-sol | model_B_network1 | 23.819 | 0 / 1 | 0 / no | 0 | FAILED_ATTEMPT_RECORDED / 2 |
+| gpt-5.6-terra | model_C | 26.371 | 0 / 1 | 0 / no | 0 | FAILED_ATTEMPT_RECORDED / 2 |
+
+Both raw workers report `GENERATION_FAILED`, while the directly observed client failure layer is **CLIENT_TOOL_EXPOSURE**: `code-mode host is disabled`. Both models report that native CAD execute/submit were unavailable, and actual CAD MCP state confirms zero calls. Therefore this is not scored as robot design quality failure. Direct MCP tests from the earlier environment work remain historical evidence; they did not prove model-facing tool exposure. No public tool configuration was changed to work around this error, and neither model was retried after this result.
+
+The independent existing evaluator was invoked immediately after each session, with mode `CODEX_HARNESS_PILOT`, rule `pilot-cad-20260923.2`, and the corresponding safe final snapshot. Its isolated intake child exited 0 and recorded the failed attempt; the evaluator exited 2. Rebuild was not attempted because no model source/manifest/CAD existed. STEP solid counts/validity/volume/bounds, STL envelopes, XML, full topology/drives, dynamics, motion, robustness and scores are **NA / NOT_RUN**. No fixture or operator-written robot substituted for either design.
+
+All four stopped-session snapshots (cancelled astra, old sol, newly authorized sol, terra) preserve their original journals. There is no first-design snapshot because no model wrote a design file. Each post-fix final directory contains three operator metadata/log files, not three design artifacts. Safe Linux-to-Windows transfer digests were independently rechecked.
+
+| Run suffix | Final metadata snapshot SHA-256 | Independent evaluation SHA-256 |
+|---|---|---|
+| model_B_network1 | `b3a095c52a5876b492e9016daf3266622528b1f73d072c562f24ddce3e8c2bbb` | `4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0` |
+| model_C | `02d358f678102c293e6bec40336825e4420cf7bb55c73297353d87cf8e2e15fb` | `b7a72391615ba05bafefcf391543f71c68ecc67b9d22eb0d52b10e7917370b90` |
+
+CLI usage (not independently metered API billing): sol input=22105, cached input=10880, output=507, reasoning output=294; terra input=56173, cached input=43264, output=580, reasoning output=317. API queries, provider retries, returned backend identity and billing cost remain null/not_observed. The requested identities are not independently confirmed backend identities. Default reasoning remained low for sol and medium for terra, as disclosed in the frozen plan. Human design edits=0.
+
+Exact generation and evaluation argv, start/end times with timezone, raw safe CLI events, usage, snapshot inventories and individual evaluation/metric JSON are under `network_fix_20260923/{model_B_network1,model_C,final_results.json}`. Runtime snapshots remain under `outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/`; original independent evaluator files remain under the matching `results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/` directories.
+
+Exit-code clarification: the launch tool observed **PowerShell outer exit 1** on each failed worker command; the separate WSL/Python worker native exit was not captured and is not inferred. The Codex child exit is directly captured (0 for these two completed sessions, -15 for interrupted ones). Evaluator LASTEXITCODE=2 was captured immediately. `exit_code_clarification.json` clarifies earlier transfer field naming without rewriting historical records.
+
+At 04:40:53 +08:00, process inspection found no matching Codex client, worker or MCP process. All authorized post-fix attempts are now consumed. Astra remains user-cancelled/excluded. The only remaining generation blocker is model-facing CAD tool exposure in the unchanged official CLI configuration; addressing it would require a separate public-tool configuration revision and any further generation budget. This network-only repair does not expand that scope. Host/system proxy settings, CAD network permissions, official model_A config and frozen inputs were untouched.

@@ -1,0 +1,185 @@
+{
+  "run_id": "alternate_access_20260923/continuation_20260923_0332/model_B_network1",
+  "mode": "CODEX_HARNESS_PILOT",
+  "metrics": [
+    {
+      "metric_id": "clean_rebuild",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "step_kernel_readback",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "solid_validity_volume_count",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "all_printed_parts_envelope",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "mesh_reference_closure",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "urdf_mjcf_parse",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "joint_counts",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "joint_tree_actuator_contract",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "dynamics_load",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "swing_replay",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "wave_replay",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    },
+    {
+      "metric_id": "robustness",
+      "definition_version": "pilot-cad-20260923.2",
+      "raw_value": null,
+      "unit": null,
+      "status": "NOT_RUN",
+      "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+      "evidence_path": "results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/evaluation.json",
+      "evidence_hash": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0",
+      "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17"
+    }
+  ],
+  "evidence": {
+    "run_id": "alternate_access_20260923/continuation_20260923_0332/model_B_network1",
+    "mode": "CODEX_HARNESS_PILOT",
+    "rule_version": "pilot-cad-20260923.2",
+    "submission": "D:\\Robotics Engineer\\SEALab\\robotgen-eval-swe\\outputs\\pilot_20260923\\alternate_access_20260923\\continuation_20260923_0332\\model_B_network1\\final",
+    "rebuild_attempted": false,
+    "rebuild_os_exit_code": null,
+    "engineering_evaluation": "NOT_RUN",
+    "evaluator_hash": "2f1de6da8c497ec1a45df34e822483695d0689e8813a31ca41ae145a11603e17",
+    "received_snapshot": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 943,
+          "sha256": "b6e843cca9d59046e71f5d4b3a77f8f72e8afb2a01c57233010b719cc91f6260"
+        },
+        {
+          "path": "runner_log.json",
+          "size": 5664,
+          "sha256": "7084287a4dcb84a8c519681e31a80a5cebd1b13cb30c38017587af4444851ad9"
+        },
+        {
+          "path": "submission.json",
+          "size": 953,
+          "sha256": "9445f02eeb8cdc94942d5d99b190f8f9281e91ec3dee0a25bf937724ace1e507"
+        }
+      ],
+      "total_bytes": 7560,
+      "sha256": "b3a095c52a5876b492e9016daf3266622528b1f73d072c562f24ddce3e8c2bbb"
+    },
+    "intake": {
+      "submission_path": "/submission",
+      "intake_status": "FAILED_ATTEMPT_RECORDED",
+      "errors": [],
+      "engineering_evaluation": "NOT_RUN",
+      "quality_score": null,
+      "scope": "file contract and declarations only; no geometry, dynamics or authenticity validation",
+      "evidence_sha256": {
+        "submission.json": "9445f02eeb8cdc94942d5d99b190f8f9281e91ec3dee0a25bf937724ace1e507",
+        "runner_log.json": "7084287a4dcb84a8c519681e31a80a5cebd1b13cb30c38017587af4444851ad9"
+      },
+      "child_exit_code": 0
+    },
+    "failure_type": "SOURCE_OUTPUT_CONTRACT_UNCLEAR_OR_FILE_CONTRACT",
+    "safe_exception_class": "RebuildContractError"
+  }
+}

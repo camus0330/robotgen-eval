@@ -1,0 +1,45 @@
+{
+  "snapshots": {
+    "model_final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 943,
+          "sha256": "b6e843cca9d59046e71f5d4b3a77f8f72e8afb2a01c57233010b719cc91f6260"
+        }
+      ],
+      "total_bytes": 943,
+      "sha256": "71c1f229578df8d87bc263f83ba0ae2a8599ddf6dbc60426f29a02cecae806ed"
+    },
+    "final": {
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "operator_metadata.json",
+          "size": 943,
+          "sha256": "b6e843cca9d59046e71f5d4b3a77f8f72e8afb2a01c57233010b719cc91f6260"
+        },
+        {
+          "path": "runner_log.json",
+          "size": 5664,
+          "sha256": "7084287a4dcb84a8c519681e31a80a5cebd1b13cb30c38017587af4444851ad9"
+        },
+        {
+          "path": "submission.json",
+          "size": 953,
+          "sha256": "9445f02eeb8cdc94942d5d99b190f8f9281e91ec3dee0a25bf937724ace1e507"
+        }
+      ],
+      "total_bytes": 7560,
+      "sha256": "b3a095c52a5876b492e9016daf3266622528b1f73d072c562f24ddce3e8c2bbb"
+    }
+  },
+  "client_os_exit_code": 0,
+  "failure_layer": "CLIENT_TOOL_EXPOSURE",
+  "tool_calls": 0,
+  "cad_design_files": 0,
+  "powershell_outer_exit_code": 1,
+  "worker_native_exit_code": null,
+  "worker_native_exit_count_source": "not_observed_separately"
+}

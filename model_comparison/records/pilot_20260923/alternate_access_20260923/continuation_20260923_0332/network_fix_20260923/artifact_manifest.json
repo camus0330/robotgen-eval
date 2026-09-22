@@ -1,0 +1,194 @@
+{
+  "files": [
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/authorization.json",
+      "size": 261,
+      "sha256": "93e9cd1cbcc1537fef02aae4c8f06a099a124b1b34625b5c9098406ebdb2bbf9"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/check.json",
+      "size": 2297,
+      "sha256": "ed30b7e46e664d95d1423a1af980402407e8f40ba75089c8b18987d09d7c8018"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/clash_safe_fields.json",
+      "size": 359,
+      "sha256": "ff33f4fb35fd89d688d1ee695d7b79fb18af90de1fd684161f8258449cbb2a42"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/discovery.json",
+      "size": 1905,
+      "sha256": "c54194f4da137baba4d1c2eb9e3065b300dab65b9c604fc4ef28e7f9e7acb1fc"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/exit_code_clarification.json",
+      "size": 462,
+      "sha256": "5817c7d203f043d4f0b03594f78497bb300db33daeebadd8d7f164f54d6c5987"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/final_results.json",
+      "size": 14112,
+      "sha256": "97a9193321afe5c20f6ea71614ec8eb7eee39fdd61e2b4322b26d23ad1527cfe"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/isolation_test.json",
+      "size": 503,
+      "sha256": "98464a93926c21c5bb22ee6e2880e80b8ec7f1c0c3700b24fe37ffa4af5f3caa"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/login-status.json",
+      "size": 416,
+      "sha256": "4dd47d1c50288a9214d8f7618114cead167d67edc32820b77f22d41694d0451b"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/network_execution_plan.json",
+      "size": 14043,
+      "sha256": "05c78a554f85149df5e6f25b8562c75ec49a05bc6600f6f5b0a3226c22cb1dac"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/operator_sync.json",
+      "size": 688,
+      "sha256": "431a29ea94532862f086a47b5dfb33c59947b3b90b129c11ccbd67b1183a937d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/process_closure.json",
+      "size": 133,
+      "sha256": "465fed3a7c1961824375ab8bfc7a7d8d9d7cc83d7a2541dfe6445f510ba46bc7"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/validation.json",
+      "size": 429,
+      "sha256": "cd5c538939360ed3d9cffcdd2e652dbd8202c7c8731f80eaa398bce7f31728bb"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/windows_transport.json",
+      "size": 1532,
+      "sha256": "8cc381a6d8d6f2c6c53af51c704a11e424f699c3bce3caf05ffe1c28488c5b85"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_interrupted/run.json",
+      "size": 6036,
+      "sha256": "f825add47fd49c3582c5e88841e34d8e02171a3654176fcad5ebf5a642cad33e"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_interrupted/tool_state.json",
+      "size": 85,
+      "sha256": "7c9bbc328075b96344e86da62bff92c68278adb9b46905887c589638981e868d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_interrupted/transfer.json",
+      "size": 1237,
+      "sha256": "2e931815ebe2bed2b58b5e17c95fc8116a1025ec0f1f5dd0db3e44fc406d23d2"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_network1/evaluation.json",
+      "size": 1891,
+      "sha256": "4131ab17f9e2cd8c1de895fb0234df4b7eb0d2498179e7e694920cc206be93b0"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_network1/metrics.json",
+      "size": 9085,
+      "sha256": "efa191056729a41dd632f87b929e95adf6b1d37b33cfc32ea5c50f1c6d7c6beb"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_network1/run.json",
+      "size": 6394,
+      "sha256": "e06577c0e5d93d9bff6c73dbb1d624712b7a45b9e35708fd8453259035865f60"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_network1/tool_state.json",
+      "size": 85,
+      "sha256": "7c9bbc328075b96344e86da62bff92c68278adb9b46905887c589638981e868d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_B_network1/transfer.json",
+      "size": 1380,
+      "sha256": "85769f2f1ff52209d429be4a52c3dc6cd5ca9fda87f40f51912d4d5f13787bec"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_C/evaluation.json",
+      "size": 1873,
+      "sha256": "b7a72391615ba05bafefcf391543f71c68ecc67b9d22eb0d52b10e7917370b90"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_C/metrics.json",
+      "size": 8950,
+      "sha256": "cefea192eb25ff5dd5f9c63dbf9eb1f0bd28cf0d8bea6c110759d1555793c184"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_C/run.json",
+      "size": 6480,
+      "sha256": "66a240fcf12842e20dd7cd506c6b18abfd55be4deea75f6bc63061512d5b0769"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_C/tool_state.json",
+      "size": 85,
+      "sha256": "7c9bbc328075b96344e86da62bff92c68278adb9b46905887c589638981e868d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/network_fix_20260923/model_C/transfer.json",
+      "size": 1335,
+      "sha256": "12eae15311b58bed49ac14d66adc9255fb6cb0da254c704715f0443f5ae70ea3"
+    },
+    {
+      "path": "model_comparison/PILOT_DELIVERY_20260923.md",
+      "size": 60922,
+      "sha256": "23a488bbbf4decddcc96aef2f822a7ed1d153e916fccbd91b9859d5feef611ff"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_network.py",
+      "size": 4610,
+      "sha256": "13254c1c4cae5d810dd4b64f15023c9256c7c067283318b82c003c7094c500ba"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_worker.py",
+      "size": 7429,
+      "sha256": "2c2f204e58b3d5e04ffc2e3dccc1c838623fd2baab4fe9f385d53bd50323fb16"
+    },
+    {
+      "path": "model_comparison/tests/test_pilot_alt_network.py",
+      "size": 4304,
+      "sha256": "59449ba18077b5d609bf44a46b1fcd43d50ce6dd8d23f9594e2d9101e82b38eb"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/final/operator_metadata.json",
+      "size": 943,
+      "sha256": "b6e843cca9d59046e71f5d4b3a77f8f72e8afb2a01c57233010b719cc91f6260"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/final/runner_log.json",
+      "size": 5664,
+      "sha256": "7084287a4dcb84a8c519681e31a80a5cebd1b13cb30c38017587af4444851ad9"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/final/submission.json",
+      "size": 953,
+      "sha256": "9445f02eeb8cdc94942d5d99b190f8f9281e91ec3dee0a25bf937724ace1e507"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_B_network1/model_final/operator_metadata.json",
+      "size": 943,
+      "sha256": "b6e843cca9d59046e71f5d4b3a77f8f72e8afb2a01c57233010b719cc91f6260"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_C/final/operator_metadata.json",
+      "size": 927,
+      "sha256": "e71411079036810d2046f2795fb7213bd0fc98a713ed92cbd53dc76d90625138"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_C/final/runner_log.json",
+      "size": 5750,
+      "sha256": "26880a8b13c750799704800ce770ca0ac60f8976a089a7aa8bd34e4817ada6dd"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_C/final/submission.json",
+      "size": 952,
+      "sha256": "de1d85895c4f5ed6a0a0f5c9acefa65ea8e37d86ed82ae24c07266ab99bc6f5c"
+    },
+    {
+      "path": "outputs/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/model_C/model_final/operator_metadata.json",
+      "size": 927,
+      "sha256": "e71411079036810d2046f2795fb7213bd0fc98a713ed92cbd53dc76d90625138"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "historical_worker_observed_exit_code_1": "Observed PowerShell outer process exit, not separately captured WSL/Python worker native exit. Codex child exits -15 or 0 are directly observed by worker. Existing records preserved.",
+  "applies_to": [
+    "execution_20260923_0403/model_A/transfer.json",
+    "network_fix_20260923/model_B_interrupted/transfer.json"
+  ],
+  "evaluation_exit_codes": "Both evaluations immediately captured LASTEXITCODE=2."
+}
