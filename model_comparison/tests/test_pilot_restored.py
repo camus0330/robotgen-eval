@@ -30,6 +30,11 @@ class RestoredWiring(unittest.TestCase):
     def test_exact_endpoint_and_model_before_key(self):
         config=p.new_config("kimi-k3")
         p.validate_config(config,"kimi-k3")
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"gateway.json"
+            p.write_config(path,"kimi-k3")
+            self.assertEqual(p.read(path),config)
+            p.validate_config(p.read(path),"kimi-k3")
         for name,value in (("model","gpt-5.6-sol"),("base_url","https://unrelated.invalid"),
                            ("api_path","/v1/models"),("api_key","synthetic-inline"),("api_key_env","OTHER_KEY")):
             wrong=copy.deepcopy(config);wrong[name]=value

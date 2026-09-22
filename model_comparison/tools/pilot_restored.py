@@ -59,6 +59,15 @@ def new_config(model):
                        "top_p":None,"max_tokens":None,"seed":None,"extra_body":{}}}
 
 
+def write_config(path, model):
+    # Config schema contains the mandatory empty api_key and request object;
+    # evidence sanitization intentionally drops those keys and is unsuitable here.
+    config = new_config(model)
+    validate_config(config,model)
+    with Path(path).open("x",encoding="utf-8") as stream:
+        json.dump(config,stream,ensure_ascii=False,indent=2)
+
+
 def validate_config(config, model):
     if model not in ALLOWED or config != new_config(model):
         raise ValueError("config must match exact reviewed endpoint, model, credential source and request policy")
@@ -112,7 +121,8 @@ def error_fields(error, key):
     if request_id is None and response is not None:
         request_id = getattr(response,"headers",{}).get("x-request-id")
     result["request_id"] = str(sanitize(str(request_id),[key]))[:200] if request_id else "not_observed"
-    if status in (401,403) or "CONFIG_BLOCKED" in result["error_message"]: classification = "CONFIG_BLOCKED"
+    if type(error) is ValueError and "config must match" in result["error_message"]: classification = "CONFIG_VALIDATION_FAILED"
+    elif status in (401,403) or "CONFIG_BLOCKED" in result["error_message"]: classification = "CONFIG_BLOCKED"
     elif "timeout" in type(error).__name__.lower(): classification = "TIMEOUT"
     elif type(error).__name__ == "FormatError": classification = "FORMAT_MISMATCH"
     elif status in (400,422) and any(x in result["error_message"].lower() for x in ("image","vision","multimodal")):
@@ -214,9 +224,10 @@ def selected(plan, admission, slot):
     return None
 
 
-def admission_batch(plan_path):
+def admission_batch(plan_path, output):
     plan = verify_plan(plan_path)
-    output = RECORD / "admission.json"
+    output = Path(output)
+    if output.parent.resolve() != RECORD.resolve(): raise ValueError("admission output outside new batch")
     if output.exists(): raise ValueError("admission batch already reserved")
     result = {"batch_id":BATCH,"plan_sha256":sha(plan_path),"source":"user_provided_support_screenshot",
               "original_screenshot_file":"not_provided","cases":[],"client_query_budget":6,"started_at":stamp()}
@@ -229,8 +240,8 @@ def admission_batch(plan_path):
             if dt.datetime.now(dt.timezone.utc) >= DEADLINE: stop=True; break
             model_id = candidates[level]
             cfg = config_dir / (model_id+".json")
-            write(cfg,new_config(model_id))
-            case_dir = RUNTIME / "admission" / model_id
+            write_config(cfg,model_id)
+            case_dir = RUNTIME / output.stem / model_id
             case_dir.mkdir(parents=True,exist_ok=False)
             evidence = case_dir / "result.json"
             argv = [str(CLIENT),"-B","-u",str(Path(__file__).resolve()),"admit-worker","--plan",str(plan_path),"--model",model_id,"--config",str(cfg),"--result",str(evidence)]
@@ -247,7 +258,7 @@ def admission_batch(plan_path):
             result["client_query_calls"] = sum(c.get("client_query_calls",0) for c in result["cases"])
             write(output,result)
             print(json.dumps({k:case.get(k) for k in ("slot","request_model_id","classification","http_status","client_query_calls","error_message")}),flush=True)
-            if case["classification"] == "CONFIG_BLOCKED": stop=True
+            if case["classification"] in ("CONFIG_BLOCKED","CONFIG_VALIDATION_FAILED"): stop=True
     result["selected"] = {slot:selected(plan,result,slot) for slot in CANDIDATES}
     result["ended_at"] = stamp()
     write(output,result)
@@ -661,7 +672,7 @@ def main():
     p.add_argument("--slot",choices=tuple(CANDIDATES));p.add_argument("--run-id")
     a=p.parse_args()
     if a.command=="prepare": return prepare_batch()
-    if a.command=="admission": return admission_batch(a.plan)
+    if a.command=="admission": return admission_batch(a.plan,a.admission)
     if a.command=="preflight": return preflight_batch(a.plan,a.admission)
     if a.command=="run-batch": return run_batch(a.plan,a.admission)
     if a.command=="summary": return summarize(a.plan,a.admission)
