@@ -1,0 +1,67 @@
+{
+  "guard_policy": "PASS (native shell/patch/read/other MCP denied; only CAD endpoints permitted in generation mode)",
+  "mcp_namespace": "PASS (real /cad/bin/python, public task readable, /mnt and host home absent, synthetic credential absent)",
+  "native_filesystem_gate": "FAIL (not a PASS for denial; allowed process never started)",
+  "native_os_exit_code": 1,
+  "native_error": "CreateProcessWithLogonW failed: 267",
+  "control_readonly_sandbox_exit_code": 0,
+  "guard_and_mcp_do_not_establish_full_client_file_boundary": true,
+  "test_command": [
+    "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "model_comparison/tests",
+    "-p",
+    "test_pilot_alt_*.py",
+    "-v"
+  ],
+  "test_os_exit_code": 1,
+  "test_results": {
+    "passed": 2,
+    "failed": 1
+  },
+  "followup_command": [
+    "C:\\Users\\hp\\AppData\\Local\\Temp\\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\\venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "model_comparison/tests",
+    "-p",
+    "test_pilot_alt_*.py",
+    "-k",
+    "native_external",
+    "-v"
+  ],
+  "followup_os_exit_code": 1,
+  "local_config_rejection_before_requests": {
+    "file": "gpt-6-astra_config_rejected.json",
+    "os_exit_code": 1,
+    "reason": "Built-in provider openai cannot be overridden",
+    "api_requests": 0
+  },
+  "admission_os_exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "generation_os_exit_codes": [
+    null,
+    null,
+    null
+  ],
+  "generation_attempts": 0,
+  "backend_api_query_counts": null,
+  "smart_agi_calls": 0,
+  "native_sandbox_notes": [
+    "owner-only mkdtemp ACL observed; inherited-ACL directory still failed",
+    "flat and nested scoped workspaces failed",
+    "explicit and implicit workspace root variants failed",
+    "ordinary :read-only control succeeds but does not prove restricted host reads"
+  ],
+  "prior_batch_history_not_overwritten": true
+}

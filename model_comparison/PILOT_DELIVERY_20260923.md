@@ -234,3 +234,71 @@ The directed checks cover exact endpoint/model/config round-trip validation befo
 The new six requests provide an external account-group blocker. There is no remaining admitted model to run; no loop, extra diagnostic request or unauthorized route was attempted. All local wiring, shared condition freezing, targeted validation, safe diagnostics and result files that do not depend on account access are complete. The failure is not attributed to old quotas, old plans, expired baselines or the prior gpt timeout. No robot design is available for independent rebuild in this batch. Full topology/actuator, dynamics, motion and robustness remain NA; no subset score or model ranking is produced.
 
 The complete new batch record contains `plan.json`, `plan_revision_2.json`, `PROMPT_ADDENDUM.md`, both admission records, normalized diagnostics, `results.csv`, `metrics.json`, `artifact_manifest.json`, and `NEXT_ACTION.md`. The latter includes a ready-to-forward, sanitized customer-support diagnostic. Runtime evidence and exact subprocess argv/OS exits remain under `results/pilot_20260923/restored_20260923_v1/`. The new artifact manifest binds these files by actual SHA-256; there are no new robot artifact links.
+
+
+## Alternate access pilot ? 2026-09-23: image access confirmed, generation safety blocked
+
+**Status: PARTIAL_ACCESS_CONFIRMED_SAFETY_BLOCKED.** Three independent native Codex image checks succeeded. Robot generation was not started because scoped native host-file isolation could not be established. This is an access result, not three robot results or measured robot CAD evidence.
+
+Execution baseline: `8c474b968e91a99a10c32f8ec0a72e9e3d2e6a80`; source local/remote `deadline/three-model-pilot-20260923` matched and the working tree was clean after `git fetch origin` (exit 0). New branch: `deadline/alternate-access-20260923`. Frozen input baseline remains `f1d77516e35d7191a942d842b83f7ae23bb0710b`. Original inputs, formal configuration, old six Smart AGI 404 cases, CAD acceptance and frozen artifacts were preserved.
+
+### Actual channel and access evidence
+
+Discovery started 2026-09-23 **02:56:47 +08:00**. All three responses were obtained by **03:05:21 +08:00**, within the 20-minute limit. `Get-Command codex`, `codex --version`, `codex login status`, `codex exec --help`, and `codex debug models --bundled` succeeded (exit 0). Installed client: **codex-cli 0.154.0-alpha.6.1**; authentication: **existing ChatGPT login**, managed by the official CLI. `auth.json`, browser stores and token values were not read or exported. Each invocation explicitly selected provider `openai`, ignored user configuration, and received no API-key environment variable. The unused Smart AGI custom provider was not selected. Actual network hostname and independently returned backend model were not captured: **not_observed**, not an asserted backend attestation.
+
+The first three visible bundled-catalog IDs were fixed before design quality was observable. Each advertised text/image input and was then tested once with the actual canonical reference image (SHA-256 `518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b`). All gave an image-specific short description and `ACCESS_IMAGE_OK` in a fresh independent `codex exec` session, with no resume/fork of engineering history.
+
+| Requested client model | Image response | OS exit | Elapsed seconds | Native usage input/output tokens | Robot attempt |
+|---|---|---:|---:|---:|---|
+| gpt-6-astra | PASS | 0 | 7.570447 | 9939 / 30 | NOT_STARTED |
+| gpt-5.6-sol | PASS | 0 | 7.728377 | 8723 / 35 | NOT_STARTED |
+| gpt-5.6-terra | PASS | 0 | 6.088138 | 8726 / 31 | NOT_STARTED |
+
+These are client-requested identities supported by native catalog/configuration and visible responses. Server-returned model, fallback/override observation and backend identity remain not_observed. API query/retry counts are **null / not_observed**; a session is not counted as one underlying API request. No new Smart AGI request, differential request, alias sweep, or old fixture/cube rerun occurred. The candidate list is not DeepSeek/Kimi/GLM and is not merged into that comparison.
+
+An initial local launch exited 1 in 0.114 seconds before creating a session: the CLI rejected nested overrides of the reserved built-in `openai` provider. Its safe startup diagnostic is retained in `gpt-6-astra_config_rejected.json` (zero model requests). Removing those unsupported retry overrides allowed the one image admission above; native retry counts remain unknown. No network retry is inferred from this local correction.
+
+Exact native argv, timestamps, independent session IDs, whitelisted visible final messages and native usage are in each `*_admission.json`. No hidden reasoning text, raw SDK dump or token was retained. Admission used the model's native tool protocol and a deny-all tool hook; no robot design/code was requested. It does not constitute a same-task robot experiment.
+
+### Minimal wiring and actual isolation checks
+
+`pilot_alt_mcp.py` exposes only `execute` and `submit`, with execute delegated to the unchanged `pilot_sandbox.execute_command(..., cad=True)`. The actual tool uses `/cad/bin/python` in Ubuntu-24.04 bubblewrap, read-only `/kit` and `/cad`, writable `/work`, no external network or inherited credentials. Existing accepted versions remain Python 3.12.3, CadQuery 2.6.1 and cadquery-ocp 7.8.1.1.post1. The existing `safe_snapshot`, `source_rebuild` and `step_readback` code and prior acceptance hashes were reused, not retested as new CAD results.
+
+| Directed check | Actual result |
+|---|---|
+| PreToolUse policy: native shell/patch/read/other MCP denied; only fixed CAD endpoints allowed in generation mode | PASS, local policy test |
+| Actual MCP initialize/list/execute into existing CAD namespace | PASS; action OS exit 0; public task readable, `/mnt` and host home absent, synthetic credential absent |
+| Native scoped filesystem sandbox: allowed local file readable, external synthetic marker denied | **FAIL before executing the check**, sandbox OS exit 1, `CreateProcessWithLogonW failed: 267` |
+| Native ordinary `:read-only` sandbox control, `exit 0` only | OS exit 0; does **not** prove restricted host-file reads |
+
+Owner-only Windows `mkdtemp` ACLs were observed and investigated, but changing only the new test directory creation to inherited ACLs did not fix the failure. Nested/flat directories, explicit/implicit workspace roots and documented minimal-read profiles still failed. No ACL on existing user data, global Codex config, login, system proxy or installed environment was changed. Only synthetic markers were used, never real sensitive files.
+
+The native guard is additional protection, not a substitute for a working file boundary. Official [hooks documentation](https://learn.chatgpt.com/docs/hooks) describes paths outside hook coverage; the installed `debug prompt-input` does not expose the authoritative complete registered tool list. Thus disabling documented shell/browser/apps features and passing the guard unit check cannot alone certify absence of every host file-read path. The [permissions documentation](https://learn.chatgpt.com/docs/permissions) supplied the scoped profile used in the failing check. No broad-read fallback, `--yolo`, global sandbox disable or credential-bearing host execution was used for design.
+
+### Commands, results and remaining work
+
+Interpreter for the batch tools/tests:
+`C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe`
+
+```powershell
+& $py -B -u model_comparison/tools/pilot_alt_access.py --admit gpt-6-astra
+# local unsupported-config launch: 1; corrected pre-request config: one image session, 0
+& $py -B -u model_comparison/tools/pilot_alt_access.py --admit gpt-5.6-sol  # 0
+& $py -B -u model_comparison/tools/pilot_alt_access.py --admit gpt-5.6-terra # 0
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_alt_*.py' -v
+# 1: two checks passed, scoped native sandbox failed
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_alt_*.py' -k native_external -v
+# 1: focused startup variants still fail; exact argv and diagnostics retained
+codex sandbox -P :read-only -C <fresh synthetic test root> <PowerShell> -NoProfile -NonInteractive -Command 'exit 0'
+# 0: control only
+```
+
+The initial two-check test runs exited 1 (guard pass, native boundary fail). The later three-check run exited 1 (guard and MCP pass, native boundary fail). Focused native checks also exited 1. The final test-only change gives future evidence unique filenames so reruns cannot replace this batch's records; it does not change the failing assertion. One documentation-inspection command mistakenly treated `windows` as a sandbox subcommand; the installed Windows CLI interpreted it as an executable and exited 1 / Windows error 2. The top-level `codex sandbox --help` was then followed. This invoked no model or design code.
+
+Two authorized read-only engineering subagents were used: one for client/provider/model capabilities, one for existing input/CAD/evaluator contracts. They made no design calls, source changes or descendant agents. Contestant design sessions: **0**. Three admission sessions were independent.
+
+`access_inventory.json`, `plan.json`, `validation.json`, the individual native records, `metrics.json`, `results.csv`, `NEXT_ACTION.md` and `artifact_manifest.json` are under `model_comparison/records/pilot_20260923/alternate_access_20260923/`. Runtime copies of the summary and safe checks are under `results/pilot_20260923/alternate_access_20260923/`. There is no first/final robot snapshot; its path/hash is null. File acceptance, independent robot rebuild, STEP solids/volume/bounds and XML were **NOT_RUN**. Dynamics, motion, robustness and total score remain NA; no subset score is invented.
+
+The remaining blocker is specific: this installed native client's scoped filesystem sandbox fails before executing the synthetic read-boundary test, and there is no independently verified complete native tool exclusion to replace that boundary. The existing CAD namespace itself works. Generation has not been enabled or claimed implemented end-to-end. The full task/Codex public addendum and generation configuration remain to be frozen after the safety gate is resolved; canonical input hashes were rechecked unchanged. The three models retain unused single-attempt 1800-second design budgets, subject to the unchanged 2026-09-23 12:00 +08:00 closure deadline. This run stops at the user's explicit unsafe-wiring condition, not because model access is absent.
+
+Pre-commit checks: actual authorized environment-key scan plus token-pattern scan of new evidence, source and report found no credential match. New Python source parsed successfully. `git diff --check` exited 0; only allowed paths changed. No generated model, CAD build or MCP worker remains running. Final Git push/remote SHA and clean-tree checks are reported in the review pack.

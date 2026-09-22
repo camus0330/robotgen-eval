@@ -1,0 +1,125 @@
+{
+  "created_at": "2026-09-22T19:18:07.131756+00:00",
+  "files": [
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/access_inventory.json",
+      "size": 3245,
+      "sha256": "235596753f3cafe3309558480190feae44fe84905c1fc6a043ba433c6199fe4a"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/gpt-5.6-sol_admission.json",
+      "size": 3758,
+      "sha256": "de531bfb8e22175c22ac7cb7d19325b027d3d2eed6c32c18ac91355592ed9083"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/gpt-5.6-terra_admission.json",
+      "size": 3735,
+      "sha256": "2f3baa4e3b69a07c8d3382a55ddd04a63be235e468b492d200ae3581aef2168c"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/gpt-6-astra_admission.json",
+      "size": 3721,
+      "sha256": "13a1f723f15f76e11075722180941dfefbed53822acbc8db0bf064a791320a0b"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/gpt-6-astra_config_rejected.json",
+      "size": 3390,
+      "sha256": "f86472eccbdd8fe52116770ebf34dbf8f6d6d852118ba37857258db07906b48c"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/mcp_boundary_check.json",
+      "size": 5142,
+      "sha256": "1c55e883edc1edcca70967f9446c2027761c20588a0476081bd3382715c55ff3"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/metrics.json",
+      "size": 3887,
+      "sha256": "6c4e0abbad4585f22a77b3c3465e3b8456447ca04fe5628fc420d04bbed2da3d"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_check.json",
+      "size": 1238,
+      "sha256": "eeac1309ccd140810cbc9f375d3bf07c81e433fcfc7431030377950a71587756"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_explicit_root_denial_failed.json",
+      "size": 1070,
+      "sha256": "a850b1fe1a503a03bb1325d9617215662bc26a383a076449626db2b7b3bc4f76"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_implicit_workspace_failed.json",
+      "size": 1087,
+      "sha256": "61160cba39ac55a2cff7da7d37d43fdaedfdde9f74552b337daba11ed63b4ae9"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_nested_workspace_failed.json",
+      "size": 1099,
+      "sha256": "b2b548f9ed0b3ae521113e8919c5455b98db6f753f3ec7c48da508e37b7fc2b0"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_owner_acl_failed.json",
+      "size": 1051,
+      "sha256": "c026ce93a1b971712374b49f438af4cc23885c67b43912788de96af486f048b7"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_boundary_user_temp_failed.json",
+      "size": 1106,
+      "sha256": "f069b9e411792eeed25ddce8b3a9b55c3d27543cd8d6a93d7df3827b8eb39ec1"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/native_sandbox_control.json",
+      "size": 198,
+      "sha256": "984c15275e6979b379cb1eafaa2404d4676adcb5e0258f346caa17e26057e1dc"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/NEXT_ACTION.md",
+      "size": 1501,
+      "sha256": "3fb58b13f2e7f72afcfbab247ab3658be32670d78535063911fa858042a485d2"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/plan.json",
+      "size": 3599,
+      "sha256": "2487a2c4c1c7f867274fda82d1697d62058976a0cdff31e767f3d4dc43786ca9"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/precommit_checks.json",
+      "size": 189,
+      "sha256": "b550fe197e5a6f8595e7f63605733035a454fa41dc0bcbc6d69cdd11b870dc43"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/results.csv",
+      "size": 886,
+      "sha256": "9c7a6c0ffd2439bf9a6846132e6b12a4433f3aac75edff1b21e393cf60151943"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/alternate_access_20260923/validation.json",
+      "size": 2100,
+      "sha256": "168a83a6a44a725ef650406b09a1f3f58d05b7f75033abaa939cf4b3959e5d1c"
+    },
+    {
+      "path": "model_comparison/PILOT_DELIVERY_20260923.md",
+      "size": 39473,
+      "sha256": "5b945b132b1af23e71df853d139d0ac98c7a46d38206b34e9d48f092f3d3ac0b"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_access.py",
+      "size": 5975,
+      "sha256": "a733b4bd388a926b8fe33db9296727188e2c0894fbc5604ddca017d118b2bbd5"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_guard.py",
+      "size": 694,
+      "sha256": "9d9d51e319fe5a085ea71ef5258ecb7194e4a7d7825a9fa57834041a9937138f"
+    },
+    {
+      "path": "model_comparison/tools/pilot_alt_mcp.py",
+      "size": 4171,
+      "sha256": "52d2912b9cbe3797cc6d4b7122a292745bcfc5e9451bea343fd6fbfc37573e89"
+    },
+    {
+      "path": "model_comparison/tests/test_pilot_alt_isolation.py",
+      "size": 4871,
+      "sha256": "a4897fdea6c85c721a8ae76089817bd82841f14e7af3433a3f7ac4bb6855ba66"
+    }
+  ]
+}

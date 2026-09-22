@@ -1,0 +1,90 @@
+{
+  "batch_id": "alternate_access_20260923",
+  "execution_baseline": "8c474b968e91a99a10c32f8ec0a72e9e3d2e6a80",
+  "branch": "deadline/alternate-access-20260923",
+  "created_at": "2026-09-22T19:15:29.163719+00:00",
+  "status": "BLOCKED_BEFORE_GENERATION",
+  "batch_type": "CODEX_HARNESS_PILOT",
+  "selection_policy": "First three visible models in installed bundled catalog, fixed as code constants before image admission; no robot quality observed",
+  "selected_models": [
+    "gpt-6-astra",
+    "gpt-5.6-sol",
+    "gpt-5.6-terra"
+  ],
+  "generation_ready": false,
+  "gate": "Native scoped filesystem isolation must pass; currently fails with OS exit 1 / Windows error 267",
+  "budget": {
+    "per_model_wall_seconds": 1800,
+    "attempts_per_model": 1,
+    "attempts_used": 0,
+    "api_queries": null,
+    "api_queries_source": "not_observed",
+    "provider_retries": null,
+    "provider_retries_source": "not_observed"
+  },
+  "deadline": "2026-09-23T12:00:00+08:00",
+  "frozen_input_baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b",
+  "input_files": [
+    {
+      "path": "PROMPT.md",
+      "sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2"
+    },
+    {
+      "path": "SUBMISSION_SPEC.md",
+      "sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb"
+    },
+    {
+      "path": "TASK_SPEC.md",
+      "sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206"
+    },
+    {
+      "path": "assets/reference.png",
+      "sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    },
+    {
+      "path": "assets/xl330_m288_t.step",
+      "sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6"
+    },
+    {
+      "path": "environment.lock.txt",
+      "sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d"
+    },
+    {
+      "path": "legacy_digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+    },
+    {
+      "path": "legacy_metrics_reference.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+    },
+    {
+      "path": "motion_profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3"
+    },
+    {
+      "path": "robustness_cases_public.jsonl",
+      "sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466"
+    },
+    {
+      "path": "templates/design_manifest.json",
+      "sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a"
+    },
+    {
+      "path": "templates/submission.json",
+      "sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc"
+    }
+  ],
+  "input_manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+  "restored_public_addendum_sha256": "860e2e99396a0576e9906989b2c15cf0f9d30730b113008b07b9b92df29bf6e8",
+  "addendum_status": "No generation addendum applied: safety gate failed before design task launch; mini-swe protocol must be explicitly superseded before future Codex generation",
+  "image_actually_bound_to_access_checks": true,
+  "full_task_bound_to_generation": false,
+  "public_inputs_verified_unchanged": true,
+  "evaluator_rule": "pilot-cad-20260923.2",
+  "reused_cad_acceptance": "model_comparison/records/pilot_20260923/cad_acceptance_20260923_v1.json",
+  "new_robot_outputs": 0
+}

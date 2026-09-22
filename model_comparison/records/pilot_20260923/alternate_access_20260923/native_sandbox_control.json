@@ -1,0 +1,5 @@
+﻿{
+    "output":  "",
+    "command":  "codex sandbox -P :read-only -C \u003cnew synthetic test root\u003e powershell.exe -NoProfile -NonInteractive -Command exit 0",
+    "os_exit_code":  0
+}

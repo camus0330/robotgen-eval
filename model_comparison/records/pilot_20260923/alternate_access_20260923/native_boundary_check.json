@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "c:\\Users\\hp\\.vscode\\extensions\\openai.chatgpt-26.5908.31748-win32-x64\\bin\\windows-x86_64\\codex.EXE",
+    "sandbox",
+    "-P",
+    "robotgen-alt",
+    "-C",
+    "C:\\WINDOWS\\Temp\\robotgen-alt-boundary-98115a2ae0a646ea8bfa5db1420a77dc",
+    "-c",
+    "default_permissions=\"robotgen-alt\"",
+    "-c",
+    "permissions.robotgen-alt.filesystem={\":minimal\"=\"read\",\":workspace_roots\"={\".\"=\"read\"}}",
+    "-c",
+    "permissions.robotgen-alt.network.enabled=false",
+    "-c",
+    "permissions.robotgen-alt.workspace_roots={\"C:\\\\WINDOWS\\\\Temp\\\\robotgen-alt-boundary-98115a2ae0a646ea8bfa5db1420a77dc\"=true}",
+    "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "try { $null=[IO.File]::ReadAllText('allowed.txt') } catch { exit 3 }; try { $null=[IO.File]::ReadAllText('C:\\WINDOWS\\Temp\\robotgen-alt-boundary-98115a2ae0a646ea8bfa5db1420a77dc-external-marker.txt'); exit 2 } catch { Write-Output 'EXTERNAL_READ_DENIED'; exit 0 }"
+  ],
+  "os_exit_code": 1,
+  "stdout": "",
+  "stderr": "windows sandbox failed: CreateProcessWithLogonW failed: 267\n",
+  "synthetic_only": true,
+  "passed": false
+}

@@ -1,0 +1,4 @@
+model_requested,scaffold,access,generation,design_produced,generation_os_exit_code,file_contract,source_rebuild,step_readback,solid_count,volume_mm3,bbox_mm,xml,failure
+gpt-6-astra,CODEX_HARNESS_PILOT,IMAGE_RESPONSE_RECEIVED,NOT_STARTED_SAFETY_BLOCKED,False,,NOT_RUN,NOT_RUN,NOT_RUN,,,,NOT_RUN,Native Windows scoped-read sandbox CreateProcessWithLogonW error 267; no verified full contestant file boundary
+gpt-5.6-sol,CODEX_HARNESS_PILOT,IMAGE_RESPONSE_RECEIVED,NOT_STARTED_SAFETY_BLOCKED,False,,NOT_RUN,NOT_RUN,NOT_RUN,,,,NOT_RUN,Native Windows scoped-read sandbox CreateProcessWithLogonW error 267; no verified full contestant file boundary
+gpt-5.6-terra,CODEX_HARNESS_PILOT,IMAGE_RESPONSE_RECEIVED,NOT_STARTED_SAFETY_BLOCKED,False,,NOT_RUN,NOT_RUN,NOT_RUN,,,,NOT_RUN,Native Windows scoped-read sandbox CreateProcessWithLogonW error 267; no verified full contestant file boundary

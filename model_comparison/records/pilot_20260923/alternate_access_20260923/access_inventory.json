@@ -1,0 +1,95 @@
+{
+  "started_at": "2026-09-22T18:56:47+00:00",
+  "three_responses_confirmed_at": "2026-09-22T19:05:21.171669+00:00",
+  "recorded_at": "2026-09-22T19:14:25.630957+00:00",
+  "discovery_timebox_s": 1200,
+  "discovery_elapsed_to_three_responses_s": 514.172,
+  "status": "INDEPENDENT_IMAGE_ACCESS_CONFIRMED_GENERATION_SAFETY_BLOCKED",
+  "client_version": "codex-cli 0.154.0-alpha.6.1",
+  "authentication_type": "ChatGPT login managed only by official CLI",
+  "provider": "openai (explicit scoped configuration)",
+  "endpoint_hostname": "not_observed",
+  "smart_agi_custom_provider_selected": false,
+  "ignored_user_config": true,
+  "token_exported": false,
+  "auth_file_read_by_engineering": false,
+  "environment_key_passed_to_client": false,
+  "candidate_source": "current bundled catalog plus read-only cached model metadata",
+  "candidate_models": [
+    "gpt-6-astra",
+    "gpt-5.6-sol",
+    "gpt-5.6-terra"
+  ],
+  "candidate_modalities": [
+    "text",
+    "image"
+  ],
+  "image_response_checks": [
+    {
+      "model_requested": "gpt-6-astra",
+      "started_at": "2026-09-22T19:04:38.086662+00:00",
+      "ended_at": "2026-09-22T19:04:45.659399+00:00",
+      "os_exit_code": 0,
+      "elapsed_s": 7.5704467999894405,
+      "image_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    },
+    {
+      "model_requested": "gpt-5.6-sol",
+      "started_at": "2026-09-22T19:04:54.873893+00:00",
+      "ended_at": "2026-09-22T19:05:02.605119+00:00",
+      "os_exit_code": 0,
+      "elapsed_s": 7.728377000006731,
+      "image_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    },
+    {
+      "model_requested": "gpt-5.6-terra",
+      "started_at": "2026-09-22T19:05:15.079444+00:00",
+      "ended_at": "2026-09-22T19:05:21.171669+00:00",
+      "os_exit_code": 0,
+      "elapsed_s": 6.088137700004154,
+      "image_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    }
+  ],
+  "server_returned_model": "not_observed",
+  "backend_attestation": "not_observed",
+  "independent_sessions": true,
+  "session_ids": [
+    "01a0ca81-7b10-7622-a5e1-452adf347afa",
+    "01a0ca81-bbb0-73a1-b4e0-14a18562ee24",
+    "01a0ca82-0aa2-7750-b483-e2c3e3284535"
+  ],
+  "fallback": "not_observed; client-requested identity only",
+  "commands": [
+    {
+      "command": "Get-Command codex",
+      "os_exit_code": 0
+    },
+    {
+      "command": "codex --version",
+      "os_exit_code": 0
+    },
+    {
+      "command": "codex login status",
+      "os_exit_code": 0
+    },
+    {
+      "command": "codex exec --help",
+      "os_exit_code": 0
+    },
+    {
+      "command": "codex debug models --bundled",
+      "os_exit_code": 0
+    }
+  ],
+  "engineering_agents": [
+    {
+      "role": "read-only authentication/provider/model/session inspection"
+    },
+    {
+      "role": "read-only CAD/input/evaluator reuse inspection"
+    }
+  ],
+  "smart_agi_differential_calls": 0,
+  "robot_generation_attempts": 0,
+  "blocked_capability": "Verified native host file read exclusion while retaining independent CLI auth; scoped sandbox fails before test command. Hooks alone not accepted as complete isolation."
+}
