@@ -9,7 +9,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from pilot_run import KIT, ROOT, checked_copy
-from pilot_sandbox import child_environment, execute_python
+from pilot_sandbox import child_environment, execute_python, execute_command
 from pilot_evaluate import intake, _structure_metrics
 
 
@@ -63,6 +63,15 @@ print('ISOLATION_PASS')
         child = execute_python("raise SystemExit(7)", kit=KIT)
         self.assertEqual(child.returncode, 7)
 
+    def test_model_command_path_isolated_and_writable(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "outputs/pilot_20260923") as name:
+            output = Path(name)
+            child = execute_command("python3 -c \"from pathlib import Path; Path('isolated.marker').write_text('ok')\"", kit=KIT, writable_output=output, seconds=10)
+            self.assertEqual(child.returncode, 0, child.stderr)
+            self.assertEqual((output / "isolated.marker").read_text(), "ok")
+            child = execute_command("python3 -c \"import os,socket; assert 'SMART_AGI_API_KEY' not in os.environ; socket.create_connection(('1.1.1.1',443),1)\"", kit=KIT, writable_output=output, seconds=10)
+            self.assertNotEqual(child.returncode, 0)
+
     def test_missing_valid_contract_and_bad_sample(self):
         # Valid means file contract ONLY. These bytes are deliberately not CAD.
         fixtures = ROOT / "outputs/pilot_20260923/test_fixtures"
@@ -107,7 +116,7 @@ print('ISOLATION_PASS')
             self.assertEqual(intake(folder)["intake_status"], "INVALID")
     def test_offline_integration_success_and_independent_measurement(self):
         run = Path("results/pilot_20260923/offline_integration_20260922_v4/run.json")
-        metrics = Path("results/pilot_20260923/offline_integration_20260922_v4/metrics.json")
+        metrics = Path("results/pilot_20260923/offline_integration_eval_20260922_v2/metrics.json")
         self.assertTrue(run.is_file())
         evidence = json.loads(run.read_text())
         self.assertEqual(evidence["classification"], "PASS")
@@ -126,6 +135,9 @@ print('ISOLATION_PASS')
         (bad / "part.stl").write_text("solid invalid\nendsolid invalid\n")
         measured = {row[0]: row for row in _structure_metrics(bad)}
         self.assertEqual(measured["solid_validity_volume_count"][3], "FAIL")
+        (bad / "robot.urdf").write_text("<robot name='bad'><link name='base'><visual><geometry><mesh filename='missing.stl'/></geometry></visual></link></robot>")
+        measured = {row[0]: row for row in _structure_metrics(bad)}
+        self.assertEqual(measured["mesh_reference_closure"][3], "FAIL")
 
 
 if __name__ == "__main__":

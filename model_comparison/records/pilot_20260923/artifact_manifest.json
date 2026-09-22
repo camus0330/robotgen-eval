@@ -5,6 +5,7 @@
       "path": "model_comparison/records/pilot_20260923/plan.json",
       "kind": "frozen_plan",
       "status": "tracked",
+      "contains_credentials": false,
       "size": 5339,
       "sha256": "49a2de334122bc707ae987dcb660e76b263acf59ad0052bd51b9a567759a8b3c"
     },
@@ -12,6 +13,7 @@
       "path": "model_comparison/records/pilot_20260923/results.csv",
       "kind": "result_table",
       "status": "tracked",
+      "contains_credentials": false,
       "size": 491,
       "sha256": "8f9f6227e50b6781c04e9ecf0b64d218c15799c8bced8bf8d208f3248a7b7e1b"
     },
@@ -19,6 +21,7 @@
       "path": "model_comparison/records/pilot_20260923/metrics.json",
       "kind": "metric_table",
       "status": "tracked",
+      "contains_credentials": false,
       "size": 792,
       "sha256": "fb9a2bd8c275ab4704f1e252ed8ab60d5cb636eb153dae62d6e1efa994b109e2"
     },
@@ -36,7 +39,7 @@
       "status": "ignored",
       "contains_credentials": false,
       "size": 6643,
-      "sha256": "fec7059449393b19acab5bbb395aec45256e5080ccbe40e6a66ab5cf61365136"
+      "sha256": "ae03da8adf2067c97b1d55952e740a224b0795e9319718a5f20d9761920abda3"
     },
     {
       "path": "model_comparison/records/pilot_20260923/continuation_20260922.json",
@@ -64,13 +67,54 @@
     },
     {
       "path": "results/pilot_20260923/offline_integration_20260922_v4/metrics.json",
-      "kind": "independent_evaluation",
+      "kind": "historical_independent_evaluation",
       "status": "ignored",
       "contains_credentials": false,
       "size": 9198,
       "sha256": "931a292eb730b04ac573b776855a848896dfdd397beea43a6e0bf1e18d829849"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/continuation_20260922_v2.json",
+      "kind": "continuation_evidence",
+      "status": "tracked",
+      "contains_credentials": false,
+      "size": 1757,
+      "sha256": "3a695c1213cc6ba774fd335cf66e8d218fdba87f0f39d7ce08e6756833a98147"
+    },
+    {
+      "path": "results/pilot_20260923/offline_integration_eval_20260922_v1/metrics.json",
+      "kind": "independent_evaluation_previous",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 10208,
+      "sha256": "2eecdff59ccefca95c34143da0563e5892e21b38c258685f92e6a272ab06a77f"
+    },
+    {
+      "path": "results/pilot_20260923/offline_integration_eval_20260922_v1/evaluation.json",
+      "kind": "rebuild_evidence_previous",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 2714,
+      "sha256": "6386113c11470ffa3593974c9baeb579bd5f35d83e425883d3901ef89714a9ef"
+    },
+    {
+      "path": "results/pilot_20260923/offline_integration_eval_20260922_v2/metrics.json",
+      "kind": "independent_evaluation",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 10208,
+      "sha256": "6e2e6d42354693df67025472563b5641bb33d7a09820c942544fcb0f6778638b"
+    },
+    {
+      "path": "results/pilot_20260923/offline_integration_eval_20260922_v2/evaluation.json",
+      "kind": "rebuild_evidence",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 2714,
+      "sha256": "a2bb7378264e5e90a4ba80ddeda5dd975a5d916f80c12556c17e17446262a490"
     }
   ],
   "robot_artifacts": [],
-  "note": "No real model design was produced; the offline integration fixture is validation-only and is not represented as a model result."
+  "note": "No real model design was produced; the offline integration fixture is validation-only and is not represented as a model result.",
+  "updated_at": "2026-09-22T15:53:00Z"
 }

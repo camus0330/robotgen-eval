@@ -4,19 +4,20 @@ import hashlib
 import json
 import importlib.util
 import re
+import shlex
 import shutil
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from pilot_run import KIT, RECORDS, RESULTS, ROOT, write_json
-from pilot_sandbox import execute_python
+from pilot_sandbox import execute_command, execute_python
 
 VERSION = "pilot-intake-20260923.1"
 ENGINEERING = ("clean_rebuild", "step_kernel_readback", "solid_validity_volume_count",
                "all_printed_parts_envelope", "mesh_reference_closure", "urdf_mjcf_load",
-               "joint_tree_actuator_contract", "swing_replay", "wave_replay", "robustness")
-INTEGRATION_RUN = "offline_integration_20260922_v4"
+               "joint_tree_actuator_contract", "dynamics_load", "swing_replay", "wave_replay", "robustness")
+INTEGRATION_RUN = "offline_integration_eval_20260922_v2"
 
 
 def intake(submission):
@@ -68,29 +69,51 @@ def _xml_measure(path, root_name):
 def _run_rebuild(submission):
     workspace = Path(tempfile.mkdtemp(prefix="robotgen-eval-rebuild-"))
     shutil.copytree(submission, workspace, dirs_exist_ok=True)
-    child = execute_python("import runpy; runpy.run_path('/submission/rebuild.py')",
-                          kit=KIT, submission=workspace, writable_output=workspace, seconds=30)
+    manifest = json.loads((workspace / "design_manifest.json").read_text(encoding="utf-8"))
+    command = manifest.get("rebuild_command")
+    if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
+        raise ValueError("manifest rebuild_command is missing or malformed")
+    if command == ["pilot_rebuild"]:
+        command = ["python3", "rebuild.py"]
+    child = execute_command(" ".join(shlex.quote(item) for item in command),
+                            kit=KIT, writable_output=workspace, seconds=30)
     return workspace, child
 
 
 def _structure_metrics(submission):
     rows = []
-    kernel = any(importlib.util.find_spec(name) for name in ("OCP", "cadquery"))
-    rows.append(("step_kernel_readback", None, "bool", "PASS" if kernel else "NA", None if kernel else "ADAPTER_UNSUPPORTED"))
-    stl = _stl_measure(submission / "part.stl")
-    solid_status = "PASS" if stl and stl["absolute_volume_mm3"] > 0 else "FAIL"
-    rows.append(("solid_validity_volume_count", stl, "mm3", solid_status, None if solid_status == "PASS" else "THRESHOLD"))
-    size = stl["bbox_mm"]["size"] if stl else None
-    envelope_status = "PASS" if size and all(x <= y for x, y in zip(size, (220, 220, 250))) else "FAIL"
-    rows.append(("all_printed_parts_envelope", {"part_count": 1, "sizes_mm": size, "limits_mm": [220, 220, 250]}, "mm", envelope_status, None if envelope_status == "PASS" else "THRESHOLD"))
-    refs = re.findall(r"(?:filename|mesh)\s*=\s*['\"]([^'\"]+)", (submission / "robot.urdf").read_text(encoding="utf-8"))
+    kernel_name = next((name for name in ("cadquery", "OCP") if importlib.util.find_spec(name)), None)
+    step_result = None
+    if kernel_name == "cadquery":
+        probe = execute_python("import cadquery as cq; s=cq.importers.importStep('/submission/assembly.step'); solids=s.solids().vals(); print({'solids':len(solids),'valid':all(x.isValid() for x in solids),'volume':sum(x.Volume() for x in solids)})", kit=KIT, submission=submission, seconds=30)
+        step_result = {"kernel":"cadquery", "exit_code":probe.returncode, "stdout_sha256":hashlib.sha256(probe.stdout.encode()).hexdigest(), "readback_pass":probe.returncode == 0}
+    elif kernel_name == "OCP":
+        step_result = {"kernel":"OCP", "readback_pass":False, "failure":"adapter not implemented"}
+    rows.append(("step_kernel_readback", step_result, "bool", "PASS" if step_result and step_result.get("readback_pass") else "NA", None if step_result and step_result.get("readback_pass") else "ADAPTER_UNSUPPORTED"))
+    manifest = json.loads((submission / "design_manifest.json").read_text(encoding="utf-8"))
+    parts = []
+    for part in manifest.get("parts", []):
+        measured = _stl_measure(submission / part["stl"])
+        parts.append({"id":part.get("id"), "stl":part.get("stl"), "measurement":measured})
+    valid_parts = [p for p in parts if p["measurement"] and p["measurement"]["absolute_volume_mm3"] > 0]
+    solid_status = "PASS" if parts and len(valid_parts) == len(parts) else "FAIL"
+    rows.append(("solid_validity_volume_count", {"parts":parts,"valid_part_count":len(valid_parts)}, "mm3", solid_status, None if solid_status == "PASS" else "THRESHOLD"))
+    sizes = [p["measurement"]["bbox_mm"]["size"] for p in valid_parts]
+    envelope_status = "PASS" if sizes and all(all(x <= y for x, y in zip(size, (220, 220, 250))) for size in sizes) else "FAIL"
+    rows.append(("all_printed_parts_envelope", {"part_count":len(parts), "sizes_mm":sizes, "limits_mm":[220,220,250]}, "mm", envelope_status, None if envelope_status == "PASS" else "THRESHOLD"))
+    refs = [node.get("filename") for node in ET.parse(submission / "robot.urdf").findall(".//mesh") if node.get("filename")]
     closure = {"references": refs, "missing": [r for r in refs if not (submission / r).is_file()]}
     rows.append(("mesh_reference_closure", closure, "count", "PASS" if not closure["missing"] else "FAIL", None if not closure["missing"] else "MISSING_EVIDENCE"))
     urdf = _xml_measure(submission / "robot.urdf", "robot")
     mjcf = _xml_measure(submission / "robot.mjcf", "mujoco")
     parsed = urdf["parse_pass"] and mjcf["parse_pass"]
-    rows.append(("urdf_mjcf_load", {"urdf": urdf, "mjcf": mjcf}, "bool", "PASS" if parsed else "FAIL", None if parsed else "EVALUATOR_ERROR"))
-    rows.append(("joint_tree_actuator_contract", {"urdf_joint_count": urdf["joint_count"], "mjcf_joint_count": mjcf["joint_count"]}, "count", "PASS" if urdf["joint_count"] >= 1 else "FAIL", None if urdf["joint_count"] >= 1 else "THRESHOLD"))
+    rows.append(("urdf_mjcf_parse", {"urdf":urdf,"mjcf":mjcf}, "bool", "PASS" if parsed else "FAIL", None if parsed else "EVALUATOR_ERROR"))
+    rows.append(("dynamics_load", None, "bool", "NA", "ADAPTER_UNSUPPORTED"))
+    expected_roles = {"left_shoulder_pitch","left_elbow_pitch","right_shoulder_pitch","right_elbow_pitch","left_hip_pitch","left_knee_pitch","right_hip_pitch","right_knee_pitch"}
+    declared_roles = {j.get("role") for j in manifest.get("joints", [])}
+    contract = {"declared_role_count":len(declared_roles),"expected_role_count":len(expected_roles),"urdf_joint_count":urdf["joint_count"],"mjcf_joint_count":mjcf["joint_count"]}
+    contract_pass = declared_roles == expected_roles and urdf["joint_count"] == 8 and mjcf["joint_count"] >= 8
+    rows.append(("joint_tree_actuator_contract", contract, "count", "PASS" if contract_pass else "FAIL", None if contract_pass else "THRESHOLD"))
     for metric in ("swing_replay", "wave_replay", "robustness"):
         rows.append((metric, None, None, "NA", "ADAPTER_UNSUPPORTED"))
     return rows

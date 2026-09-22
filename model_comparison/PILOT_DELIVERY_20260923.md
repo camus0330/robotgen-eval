@@ -62,3 +62,13 @@ python model_comparison/tools/pilot_evaluate.py --integration --submission ...  
 ```
 
 The offline run used only a completion/cost fixture and produced no real LLM API call. The three model admission attempts remain the earlier single attempts with HTTP 404; no new model request was made during this continuation.
+
+## Continuation from execution baseline `9d9d839`
+
+The real generation branch is now reachable at `pilot_run.py run --integration-only-config`. It validates the temporary HTTPS gateway configuration, reads only its selected environment credential, binds the frozen task files and reference PNG as an image data URI, uses the pinned `DefaultAgent`/`LitellmTextbasedModel`, counts queries, and executes model actions through the isolated command environment. The command environment has no credential mount, no external network, a writable `/work` output mount, timeout and shell resource limits, and returns the same observation to the Agent before its next action. It is fail-closed when no admitted candidate is present.
+
+The previously authorized gpt-5.6-sol integration-only attempt was already used in the historical live E2E records, so this continuation did not issue another real request. The three national-model admission attempts were not repeated. The saved 404 bodies do not exist; their detailed reason remains `not_observed`.
+
+The updated preflight was run once after this implementation and returned exit `2` with `ACCESS_BLOCKED`, provenance PASS, cache PASS, and `generation_ready=false` because no admission record contains a successful completion. No real model generation was started.
+
+The evaluator now executes the manifest's declared rebuild command in the isolated workspace, measures every manifest-listed STL part, performs actual STEP-kernel probing when a kernel is installed (otherwise records `NA/ADAPTER_UNSUPPORTED`), separates XML parsing from dynamics loading, and requires the full eight-role/joint contract before reporting PASS. The new evaluation run is `offline_integration_eval_20260922_v2`; it does not rerun or overwrite the historical fixture execution. It recorded rebuild exit `0`, positive proxy STL volume and envelope measurements, XML parse PASS, dynamics/STEP kernel NA, and the synthetic one-joint contract as FAIL rather than silently accepting it.

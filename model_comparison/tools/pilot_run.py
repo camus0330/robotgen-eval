@@ -1,7 +1,7 @@
-"""Deadline pilot preflight and fail-closed admission gate.
+"""Deadline pilot preflight plus bounded real and offline integration paths.
 
-Generation is deliberately unavailable while all candidate routes are blocked.
-This entry point never substitutes an unverified alias or executes model code.
+Generation is fail-closed while candidates are blocked; an admitted slot with an
+explicit reviewed config can reach the real pinned Agent path.
 """
 import argparse
 import datetime as dt
@@ -111,9 +111,11 @@ def preflight():
     return 2
 
 
-def run(slot):
+def run(slot, config_path=None):
     plan = json.loads((RECORDS / "plan.json").read_text(encoding="utf-8"))
     selected = next(m for m in plan["models"] if m["slot"] == slot)
+    if config_path is not None and selected.get("admission_status") == "ADMITTED":
+        return run_real_integration(config_path, run_id="pilot_" + slot + "_20260922_v1")
     target = RESULTS / slot / "run_gate.json"
     if target.exists():
         raise ValueError("Run-gate evidence already exists; refusing overwrite")
@@ -128,6 +130,80 @@ def run(slot):
     write_json(target, result)
     print(json.dumps(result))
     return 2
+
+
+def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1") -> int:
+    """Run one explicitly requested integration attempt through the real Agent.
+
+    This path is reachable only with a caller-supplied, validated temporary config;
+    it never maps the route to a three-model slot and never enters the model table.
+    """
+    evidence_path = RESULTS / run_id / "run.json"
+    if evidence_path.exists():
+        raise ValueError("INTEGRATION_ONLY attempt already recorded; refusing repeat")
+    raw = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    if raw.get("provider") != "smart_agi_gateway" or not raw.get("base_url", "").startswith("https://"):
+        raise ValueError("config is not the reviewed HTTPS gateway shape")
+    request = raw.get("request", {})
+    if request.get("max_retries") != 0 or request.get("stream") is not False:
+        raise ValueError("provider retry/stream policy mismatch")
+    key = os.environ.get(raw.get("api_key_env", ""), "")
+    if not key.strip():
+        result = {"run_id": run_id, "mode": "INTEGRATION_ONLY", "classification": "CONFIG_BLOCKED", "exit_code": 3, "stage": "credential_precheck", "model_query_calls": 0, "real_shell_launches": 0}
+        write_json(evidence_path, result); print(json.dumps(result)); return 3
+    sys.path.insert(0, str(ROOT / "model_comparison" / "spikes"))
+    from mini_swe_gateway_agent_e2e import check_cache, import_upstream, scrub_environment, sanitize
+    from pilot_sandbox import execute_command
+    scrub_environment(); check_cache(CACHE)
+    DefaultAgent, _, LitellmTextbasedModel = import_upstream(CACHE)
+    import litellm
+    from minisweagent.exceptions import Submitted
+    work = Path(tempfile.mkdtemp(prefix="robotgen-integration-only-"))
+    out_root = ROOT / "outputs" / "pilot_20260923" / run_id
+    out_root.mkdir(parents=True, exist_ok=True)
+    first = out_root / "first"
+    final = out_root / "final"
+    first.mkdir(exist_ok=True); final.mkdir(exist_ok=True)
+    image = KIT / "inputs" / "assets" / "reference.png"
+    image_uri = "data:image/png;base64," + base64.b64encode(image.read_bytes()).decode("ascii")
+    task_text = ((KIT / "inputs" / "PROMPT.md").read_text(encoding="utf-8") + "\n\n" +
+                 (KIT / "inputs" / "TASK_SPEC.md").read_text(encoding="utf-8") + "\n\n" +
+                 (KIT / "inputs" / "SUBMISSION_SPEC.md").read_text(encoding="utf-8") +
+                 "\n\nReference image:\n<MSWEA_MULTIMODAL_CONTENT><CONTENT_TYPE>image_url</CONTENT_TYPE>" + image_uri + "</MSWEA_MULTIMODAL_CONTENT>")
+    model_kwargs = {"api_base": raw["base_url"].rstrip("/") + raw.get("api_path", "/v1/chat/completions").rsplit("/chat/completions", 1)[0], "api_key": key, "timeout": request.get("timeout_s", 600), "max_retries": 0, "num_retries": 0, "stream": False}
+    model = LitellmTextbasedModel(model_name="openai/" + str(raw["model"]), multimodal_regex=r"(?s)<MSWEA_MULTIMODAL_CONTENT><CONTENT_TYPE>(.+?)</CONTENT_TYPE>(.+?)</MSWEA_MULTIMODAL_CONTENT>", cost_tracking="ignore_errors", model_kwargs=model_kwargs)
+    profile_calls = {"n": 0}
+    import sys as _sys
+    previous_profile = _sys.getprofile()
+    class IsolatedEnvironment:
+        def __init__(self): self.launches = []
+        def execute(self, action, cwd="", timeout=None):
+            command = action.get("command", "")
+            self.launches.append(command)
+            child = execute_command(command, kit=KIT, writable_output=work, seconds=min(timeout or 30, 30))
+            output = {"output": child.stdout, "returncode": child.returncode, "exception_info": "" if child.returncode == 0 else "isolated command failed"}
+            if len(self.launches) == 1:
+                shutil.copytree(work, first, dirs_exist_ok=True)
+            return output
+        def get_template_vars(self, **kwargs): return kwargs
+        def serialize(self): return {"info":{"config":{"environment_type":"isolated_pilot_environment","credential_mount":False}}}
+    env = IsolatedEnvironment()
+    agent = DefaultAgent(model=model, env=env, system_template="RobotGen integration-only. " + SYSTEM_PROMPT, instance_template="{{task}}", step_limit=20, max_consecutive_format_errors=2, cost_limit=1.0, output_path=None)
+    def observe(frame, event, arg):
+        if event == "call" and frame.f_code is LitellmTextbasedModel._query.__code__: profile_calls["n"] += 1
+    state = {"run_id":run_id,"mode":"INTEGRATION_ONLY","route_model":raw["model"],"backend_identity":"not_confirmed","started_at":stamp(),"classification":"RUNNING","stage":"agent_run","model_query_calls":0,"real_shell_launches":0,"fixture_calls":0,"real_llm_api_calls":None,"real_llm_api_calls_source":"not_observed","first_snapshot":str(first),"final_snapshot":str(final),"image_bound":True,"provider_retries":0}
+    _sys.setprofile(observe)
+    try:
+        result = agent.run(task_text)
+        shutil.copytree(work, final, dirs_exist_ok=True)
+        state.update({"classification":"PASS" if result.get("exit_status") == "Submitted" else "FAILED","exit_code":0 if result.get("exit_status") == "Submitted" else 1,"stage":"complete","model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"assistant_action_observations":sanitize([{"role":m.get("role"),"content":m.get("content"),"actions":m.get("extra",{}).get("actions"),"returncode":m.get("extra",{}).get("returncode")} for m in agent.messages], [key]),"final_snapshot_files":sorted(p.name for p in final.iterdir())})
+    except Exception as error:
+        state.update({"classification":"TIMEOUT" if type(error).__name__ == "TimeoutExpired" else "FAILED","exit_code":124 if type(error).__name__ == "TimeoutExpired" else 1,"stage":"agent_run","safe_exception_class":type(error).__name__,"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches)})
+    finally:
+        _sys.setprofile(previous_profile)
+    write_json(evidence_path, state)
+    print(json.dumps({k:state.get(k) for k in ("run_id","classification","exit_code","model_query_calls","real_shell_launches","exit_status")}))
+    return state["exit_code"]
 
 
 def _fixture_files(work):
@@ -282,12 +358,15 @@ def main():
     sub.add_parser("preflight")
     run_parser = sub.add_parser("run")
     run_parser.add_argument("--slot", choices=("model_A", "model_B", "model_C"))
+    run_parser.add_argument("--config", type=Path)
     run_parser.add_argument("--offline-integration", action="store_true")
+    run_parser.add_argument("--integration-only-config", type=Path)
     args = parser.parse_args()
     if args.command == "preflight": return preflight()
     if args.offline_integration: return run_offline_integration(CACHE)
+    if args.integration_only_config: return run_real_integration(args.integration_only_config)
     if not args.slot: parser.error("run requires --slot or --offline-integration")
-    return run(args.slot)
+    return run(args.slot, args.config)
 
 
 if __name__ == "__main__":

@@ -40,3 +40,22 @@ def execute_python(source, *, kit, submission=None, writable_output=None, second
     # stuck WSL launch for these fixed checks. No generated commands are accepted.
     return subprocess.run(command, env=child_environment(), capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=seconds + 20)
+
+
+def execute_command(command_text, *, kit, writable_output, seconds=30):
+    """Execute one model action inside the no-network, no-credential namespace."""
+    if not isinstance(command_text, str) or not command_text.strip():
+        raise ValueError("empty action")
+    executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
+    limits = "ulimit -t 30 -f 10240 -n 128 -u 32; "
+    inner = ["/usr/bin/timeout", "--kill-after=2", str(seconds),
+             "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--new-session",
+             "--ro-bind", "/usr", "/usr", "--symlink", "usr/bin", "/bin",
+             "--symlink", "usr/lib", "/lib", "--symlink", "usr/lib64", "/lib64",
+             "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp", "--clearenv",
+             "--setenv", "PATH", "/usr/bin", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
+             "--ro-bind", linux_path(kit), "/kit", "--bind", linux_path(writable_output), "/work",
+             "--chdir", "/work", "/bin/sh", "-lc", limits + "exec /bin/sh -lc " + shlex.quote(command_text)]
+    cmd = [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
+    return subprocess.run(cmd, env=child_environment(), capture_output=True, text=True,
+                          encoding="utf-8", errors="replace", timeout=seconds + 20)

@@ -1,0 +1,30 @@
+{
+  "execution_baseline": "9d9d83960f6a8d557e10d48c6135134d8e2dab82",
+  "run_id": "continuation_20260922_v2",
+  "implementation": {
+    "real_agent_entrypoint": "model_comparison/tools/pilot_run.py run --integration-only-config <temporary-config>",
+    "agent": "pinned DefaultAgent + LitellmTextbasedModel",
+    "action_transport": "literal mswea_bash_command",
+    "environment": "WSL Ubuntu-24.04 bubblewrap, cleared environment, no credential mount, no network, writable /work",
+    "image_binding": "reference.png data:image/png URI in the frozen task message",
+    "query_limit": 20,
+    "provider_retries": 0,
+    "wall_time_s": 1200,
+    "status": "IMPLEMENTED_NOT_LIVE_EXECUTED"
+  },
+  "evaluation": {
+    "new_evaluation_run": "offline_integration_eval_20260922_v2",
+    "source_artifact": "outputs/pilot_20260923/offline_integration_20260922_v4/final",
+    "fixture_execution_repeated": false,
+    "rebuild_command": "manifest rebuild_command, pilot_rebuild mapped to python3 rebuild.py inside sandbox",
+    "rebuild_os_exit_code": 0,
+    "step_kernel_readback": "NA / ADAPTER_UNSUPPORTED; no OCP or cadquery installed",
+    "stl_measurement": "observed per manifest parts; positive proxy volume and 10x10x10 mm envelope for fixture",
+    "urdf_mjcf_parse": "PASS",
+    "dynamics_load": "NA / ADAPTER_UNSUPPORTED",
+    "joint_tree_actuator_contract": "FAIL / THRESHOLD for one-joint synthetic fixture; no false PASS",
+    "negative_checks": ["invalid STL FAIL", "missing mesh reference FAIL", "path traversal rejected"]
+  },
+  "admission": {"previous_three_requests": 3, "new_requests": 0, "old_http_error_body": "not_observed", "gpt_5_6_integration_only": "previously used; no repeat authorized"},
+  "status": "PARTIAL_EXTERNAL_MODEL_BLOCKED"
+}
