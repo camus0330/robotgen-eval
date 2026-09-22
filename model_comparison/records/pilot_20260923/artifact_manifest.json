@@ -112,9 +112,41 @@
       "contains_credentials": false,
       "size": 2714,
       "sha256": "a2bb7378264e5e90a4ba80ddeda5dd975a5d916f80c12556c17e17446262a490"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/real_integration_20260923_v2.json",
+      "kind": "real_integration_attempt_record",
+      "status": "tracked",
+      "contains_credentials": false,
+      "size": 1482,
+      "sha256": "b242b92241dcc43650fd69e248f0a0abdfbb8584222bec21d4d9a7c536db992b"
+    },
+    {
+      "path": "results/pilot_20260923/integration_only_20260923_v2/run.json",
+      "kind": "real_integration_safe_evidence",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 950,
+      "sha256": "53f20525c0265c31f6293a61ffcfb516c2a01eadb001bc025e2562cc36fa85e8"
+    },
+    {
+      "path": "results/pilot_20260923/integration_only_eval_20260923_v1/evaluation.json",
+      "kind": "real_integration_independent_evaluation",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 836,
+      "sha256": "1c847c2970c77b5f2147c0454134db5824c9cefd211b77e322ffb20716af6b4f"
+    },
+    {
+      "path": "results/pilot_20260923/integration_only_eval_20260923_v1/metrics.json",
+      "kind": "real_integration_metric_evidence",
+      "status": "ignored",
+      "contains_credentials": false,
+      "size": 7135,
+      "sha256": "50ee22121a47c81bd45742ee5d3c84579aa049d0373f3d57e16aca644e74b5e6"
     }
   ],
   "robot_artifacts": [],
   "note": "No real model design was produced; the offline integration fixture is validation-only and is not represented as a model result.",
-  "updated_at": "2026-09-22T15:53:00Z"
+  "updated_at": "2026-09-22T16:20:00Z"
 }

@@ -17,7 +17,7 @@ VERSION = "pilot-intake-20260923.1"
 ENGINEERING = ("clean_rebuild", "step_kernel_readback", "solid_validity_volume_count",
                "all_printed_parts_envelope", "mesh_reference_closure", "urdf_mjcf_load",
                "joint_tree_actuator_contract", "dynamics_load", "swing_replay", "wave_replay", "robustness")
-INTEGRATION_RUN = "offline_integration_eval_20260922_v2"
+INTEGRATION_RUN = "offline_integration_eval_20260922_v3"
 
 
 def intake(submission):
@@ -75,20 +75,28 @@ def _run_rebuild(submission):
         raise ValueError("manifest rebuild_command is missing or malformed")
     if command == ["pilot_rebuild"]:
         command = ["python3", "rebuild.py"]
+    (workspace / "rebuild.marker").unlink(missing_ok=True)
+    before = {p.relative_to(workspace).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+              for p in workspace.rglob("*") if p.is_file() and not p.is_symlink()}
     child = execute_command(" ".join(shlex.quote(item) for item in command),
                             kit=KIT, writable_output=workspace, seconds=30)
-    return workspace, child
+    after = {p.relative_to(workspace).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+             for p in workspace.rglob("*") if p.is_file() and not p.is_symlink()}
+    delta = sorted(path for path, value in after.items() if before.get(path) != value or path not in before)
+    return workspace, child, delta
 
 
 def _structure_metrics(submission):
     rows = []
-    kernel_name = next((name for name in ("cadquery", "OCP") if importlib.util.find_spec(name)), None)
-    step_result = None
-    if kernel_name == "cadquery":
-        probe = execute_python("import cadquery as cq; s=cq.importers.importStep('/submission/assembly.step'); solids=s.solids().vals(); print({'solids':len(solids),'valid':all(x.isValid() for x in solids),'volume':sum(x.Volume() for x in solids)})", kit=KIT, submission=submission, seconds=30)
-        step_result = {"kernel":"cadquery", "exit_code":probe.returncode, "stdout_sha256":hashlib.sha256(probe.stdout.encode()).hexdigest(), "readback_pass":probe.returncode == 0}
-    elif kernel_name == "OCP":
-        step_result = {"kernel":"OCP", "readback_pass":False, "failure":"adapter not implemented"}
+    probe = execute_python("import json;\ntry:\n import cadquery as cq\n s=cq.importers.importStep('/submission/assembly.step'); solids=s.solids().vals(); print(json.dumps({'kernel':'cadquery','solids':len(solids),'valid':all(x.isValid() for x in solids),'volume':sum(x.Volume() for x in solids)}))\nexcept ModuleNotFoundError:\n print(json.dumps({'kernel':None,'status':'not_installed'}))\nexcept Exception as e:\n print(json.dumps({'kernel':'cadquery','status':'readback_error','error_class':type(e).__name__}))", kit=KIT, submission=submission, seconds=30)
+    step_result = {"exit_code":probe.returncode, "stdout_sha256":hashlib.sha256(probe.stdout.encode()).hexdigest(), "readback_pass":False, "result":"not_observed"}
+    if probe.returncode == 0:
+        try:
+            decoded = json.loads(probe.stdout.strip().splitlines()[-1])
+            step_result.update(decoded)
+            step_result["readback_pass"] = bool(decoded.get("kernel") and decoded.get("valid") and decoded.get("solids", 0) > 0 and decoded.get("volume", 0) > 0)
+        except (ValueError, IndexError):
+            step_result["result"] = "malformed_probe_output"
     rows.append(("step_kernel_readback", step_result, "bool", "PASS" if step_result and step_result.get("readback_pass") else "NA", None if step_result and step_result.get("readback_pass") else "ADAPTER_UNSUPPORTED"))
     manifest = json.loads((submission / "design_manifest.json").read_text(encoding="utf-8"))
     parts = []
@@ -96,8 +104,9 @@ def _structure_metrics(submission):
         measured = _stl_measure(submission / part["stl"])
         parts.append({"id":part.get("id"), "stl":part.get("stl"), "measurement":measured})
     valid_parts = [p for p in parts if p["measurement"] and p["measurement"]["absolute_volume_mm3"] > 0]
-    solid_status = "PASS" if parts and len(valid_parts) == len(parts) else "FAIL"
-    rows.append(("solid_validity_volume_count", {"parts":parts,"valid_part_count":len(valid_parts)}, "mm3", solid_status, None if solid_status == "PASS" else "THRESHOLD"))
+    solid_status = "NA" if parts and len(valid_parts) == len(parts) else "FAIL"
+    solid_failure = "ADAPTER_UNSUPPORTED" if solid_status == "NA" else "THRESHOLD"
+    rows.append(("solid_validity_volume_count", {"parts":parts,"valid_part_count":len(valid_parts),"measurement_kind":"proxy_mesh_measurement","solid_validity_checked":False}, "mm3", solid_status, solid_failure))
     sizes = [p["measurement"]["bbox_mm"]["size"] for p in valid_parts]
     envelope_status = "PASS" if sizes and all(all(x <= y for x, y in zip(size, (220, 220, 250))) for size in sizes) else "FAIL"
     rows.append(("all_printed_parts_envelope", {"part_count":len(parts), "sizes_mm":sizes, "limits_mm":[220,220,250]}, "mm", envelope_status, None if envelope_status == "PASS" else "THRESHOLD"))
@@ -119,23 +128,24 @@ def _structure_metrics(submission):
     return rows
 
 
-def evaluate_integration(submission):
+def evaluate_integration(submission, run_id=INTEGRATION_RUN, mode="OFFLINE_INTEGRATION"):
     submission = Path(submission).resolve()
-    record_dir = RESULTS / INTEGRATION_RUN
+    record_dir = RESULTS / run_id
     record_dir.mkdir(parents=True, exist_ok=True)
     intake_result = intake(submission)
     evidence_file = record_dir / "evaluation.json"
     evaluator_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    evidence = {"run_id": INTEGRATION_RUN, "mode": "OFFLINE_INTEGRATION", "submission": str(submission),
+    evidence = {"run_id": run_id, "mode": mode, "submission": str(submission),
                 "intake": intake_result, "rebuild_attempted": False, "rebuild_os_exit_code": None,
                 "engineering_evaluation": "NOT_RUN", "evaluator_hash": evaluator_hash}
     metrics = []
     if intake_result.get("intake_status") == "FILE_CONTRACT_ACCEPTED":
-        workspace, child = _run_rebuild(submission)
+        workspace, child, output_delta = _run_rebuild(submission)
         evidence.update({"rebuild_attempted": True, "rebuild_os_exit_code": child.returncode,
                          "rebuild_stdout_sha256": hashlib.sha256(child.stdout.encode()).hexdigest(),
-                         "rebuild_stderr_sha256": hashlib.sha256(child.stderr.encode()).hexdigest()})
-        passed = child.returncode == 0 and (workspace / "rebuild.marker").is_file()
+                         "rebuild_stderr_sha256": hashlib.sha256(child.stderr.encode()).hexdigest(),
+                         "rebuild_output_delta": output_delta})
+        passed = child.returncode == 0
         metrics.append(_metric("clean_rebuild", child.returncode, "exit_code", "PASS" if passed else "FAIL", None if passed else "EVALUATOR_ERROR", "evaluation.json", "pending"))
         metrics.extend(_metric(*row, "evaluation.json", "pending") for row in _structure_metrics(submission))
         evidence["engineering_evaluation"] = "PARTIAL_STRUCTURE_ONLY"
@@ -148,9 +158,9 @@ def evaluate_integration(submission):
     for row in metrics:
         row["evidence_path"] = evidence_file.relative_to(ROOT).as_posix()
         row["evidence_hash"] = evidence_hash
-    result = {"run_id": INTEGRATION_RUN, "mode": "OFFLINE_INTEGRATION", "metrics": metrics, "evidence": evidence}
+    result = {"run_id": run_id, "mode": mode, "metrics": metrics, "evidence": evidence}
     write_json(record_dir / "metrics.json", result)
-    print(json.dumps({"run_id": INTEGRATION_RUN, "intake_status": intake_result.get("intake_status"), "rebuild_exit_code": evidence["rebuild_os_exit_code"], "engineering_evaluation": evidence["engineering_evaluation"]}))
+    print(json.dumps({"run_id": run_id, "intake_status": intake_result.get("intake_status"), "rebuild_exit_code": evidence["rebuild_os_exit_code"], "engineering_evaluation": evidence["engineering_evaluation"]}))
     return 0 if evidence["engineering_evaluation"] == "PARTIAL_STRUCTURE_ONLY" else 2
 
 
@@ -190,11 +200,13 @@ def main():
     parser.add_argument("--slot", choices=("model_A", "model_B", "model_C"))
     parser.add_argument("--submission", type=Path)
     parser.add_argument("--integration", action="store_true")
+    parser.add_argument("--run-id")
+    parser.add_argument("--mode", default="OFFLINE_INTEGRATION")
     args = parser.parse_args()
     if args.integration:
         if args.submission is None:
             parser.error("--integration requires --submission")
-        raise SystemExit(evaluate_integration(args.submission))
+        raise SystemExit(evaluate_integration(args.submission, run_id=args.run_id or INTEGRATION_RUN, mode=args.mode))
     if args.slot is None:
         parser.error("--slot is required unless --integration is used")
     result = evaluate(args.slot, args.submission)

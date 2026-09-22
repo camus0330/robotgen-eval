@@ -48,6 +48,23 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def snapshot_digest(path):
+    path = Path(path)
+    if not path.is_dir():
+        return None
+    digestor = hashlib.sha256()
+    files = []
+    for item in sorted(path.rglob("*")):
+        if item.is_symlink():
+            raise ValueError("snapshot contains symlink")
+        if item.is_file():
+            rel = item.relative_to(path).as_posix()
+            data = item.read_bytes()
+            digestor.update(rel.encode() + b"\0" + data)
+            files.append({"path":rel,"size":len(data),"sha256":hashlib.sha256(data).hexdigest()})
+    return {"sha256":digestor.hexdigest(),"files":files}
+
+
 def git_blob(relative):
     return subprocess.run(["git", "show", f"{BASELINE}:{relative}"], cwd=ROOT,
                           check=True, capture_output=True).stdout
@@ -133,15 +150,46 @@ def run(slot, config_path=None):
 
 
 def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1") -> int:
+    """Parent lifecycle: one bounded worker, with a durable pre-request placeholder."""
+    evidence_path = RESULTS / run_id / "run.json"
+    if evidence_path.exists():
+        raise ValueError("INTEGRATION_ONLY attempt already recorded; refusing repeat")
+    write_json(evidence_path, {"run_id":run_id,"mode":"INTEGRATION_ONLY","classification":"RUNNING","stage":"startup","generation_attempt_started":False,"model_query_calls":0,"real_shell_launches":0,"started_at":stamp(),"provider_retries":0})
+    import multiprocessing
+    worker = multiprocessing.get_context("spawn").Process(target=_safe_real_attempt, args=(str(config_path), run_id))
+    worker.start()
+    worker.join(1200)
+    if worker.is_alive():
+        worker.terminate(); worker.join(30)
+        result = json.loads(evidence_path.read_text(encoding="utf-8"))
+        result.update({"classification":"TIMEOUT","exit_code":124,"stage":"host_attempt_timeout","ended_at":stamp(),"worker_exit_code":worker.exitcode})
+        write_json(evidence_path, result); print(json.dumps({k:result.get(k) for k in ("run_id","classification","exit_code","model_query_calls","real_shell_launches")})); return 124
+    result = json.loads(evidence_path.read_text(encoding="utf-8"))
+    if result.get("classification") == "RUNNING":
+        result.update({"classification":"INFRASTRUCTURE_FAILED","exit_code":worker.exitcode or 1,"stage":"worker_exit","ended_at":stamp()})
+        write_json(evidence_path, result)
+    print(json.dumps({k:result.get(k) for k in ("run_id","classification","exit_code","model_query_calls","real_shell_launches","exit_status")}))
+    return int(result.get("exit_code", worker.exitcode or 1))
+
+
+def _safe_real_attempt(config_path: str, run_id: str) -> None:
+    try:
+        _run_real_attempt(config_path, run_id)
+    except BaseException as error:
+        evidence_path = RESULTS / run_id / "run.json"
+        result = json.loads(evidence_path.read_text(encoding="utf-8")) if evidence_path.exists() else {"run_id":run_id}
+        result.update({"classification":"INFRASTRUCTURE_FAILED","exit_code":1,"stage":"worker_exception","safe_exception_class":type(error).__name__,"ended_at":stamp()})
+        write_json(evidence_path, result)
+
+
+def _run_real_attempt(config_path: str, run_id: str) -> None:
     """Run one explicitly requested integration attempt through the real Agent.
 
     This path is reachable only with a caller-supplied, validated temporary config;
     it never maps the route to a three-model slot and never enters the model table.
     """
     evidence_path = RESULTS / run_id / "run.json"
-    if evidence_path.exists():
-        raise ValueError("INTEGRATION_ONLY attempt already recorded; refusing repeat")
-    raw = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    raw = json.loads(Path(config_path).read_text(encoding="utf-8-sig"))
     if raw.get("provider") != "smart_agi_gateway" or not raw.get("base_url", "").startswith("https://"):
         raise ValueError("config is not the reviewed HTTPS gateway shape")
     request = raw.get("request", {})
@@ -163,7 +211,7 @@ def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1
     out_root.mkdir(parents=True, exist_ok=True)
     first = out_root / "first"
     final = out_root / "final"
-    first.mkdir(exist_ok=True); final.mkdir(exist_ok=True)
+    final.mkdir(exist_ok=True)
     image = KIT / "inputs" / "assets" / "reference.png"
     image_uri = "data:image/png;base64," + base64.b64encode(image.read_bytes()).decode("ascii")
     task_text = ((KIT / "inputs" / "PROMPT.md").read_text(encoding="utf-8") + "\n\n" +
@@ -182,8 +230,12 @@ def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1
             self.launches.append(command)
             child = execute_command(command, kit=KIT, writable_output=work, seconds=min(timeout or 30, 30))
             output = {"output": child.stdout, "returncode": child.returncode, "exception_info": "" if child.returncode == 0 else "isolated command failed"}
-            if len(self.launches) == 1:
+            if not first.exists() and any((work / name).is_file() for name in ("submission.json", "design_manifest.json", "README.md", "readme.md")):
+                first.mkdir(exist_ok=True)
                 shutil.copytree(work, first, dirs_exist_ok=True)
+            lines = output["output"].lstrip().splitlines(keepends=True)
+            if output["returncode"] == 0 and lines and lines[0].strip() == "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT":
+                raise Submitted({"role":"exit","content":"".join(lines[1:]),"extra":{"exit_status":"Submitted","submission":"".join(lines[1:])}})
             return output
         def get_template_vars(self, **kwargs): return kwargs
         def serialize(self): return {"info":{"config":{"environment_type":"isolated_pilot_environment","credential_mount":False}}}
@@ -191,14 +243,15 @@ def run_real_integration(config_path: Path, run_id="integration_only_20260922_v1
     agent = DefaultAgent(model=model, env=env, system_template="RobotGen integration-only. " + SYSTEM_PROMPT, instance_template="{{task}}", step_limit=20, max_consecutive_format_errors=2, cost_limit=1.0, output_path=None)
     def observe(frame, event, arg):
         if event == "call" and frame.f_code is LitellmTextbasedModel._query.__code__: profile_calls["n"] += 1
-    state = {"run_id":run_id,"mode":"INTEGRATION_ONLY","route_model":raw["model"],"backend_identity":"not_confirmed","started_at":stamp(),"classification":"RUNNING","stage":"agent_run","model_query_calls":0,"real_shell_launches":0,"fixture_calls":0,"real_llm_api_calls":None,"real_llm_api_calls_source":"not_observed","first_snapshot":str(first),"final_snapshot":str(final),"image_bound":True,"provider_retries":0}
+    state = {"run_id":run_id,"mode":"INTEGRATION_ONLY","route_model":raw["model"],"backend_identity":"not_confirmed","started_at":stamp(),"classification":"RUNNING","stage":"agent_run","generation_attempt_started":True,"model_query_calls":0,"real_shell_launches":0,"fixture_calls":0,"real_llm_api_calls":None,"real_llm_api_calls_source":"not_observed","first_snapshot":None,"final_snapshot":str(final),"image_bound":True,"provider_retries":0}
     _sys.setprofile(observe)
     try:
         result = agent.run(task_text)
         shutil.copytree(work, final, dirs_exist_ok=True)
-        state.update({"classification":"PASS" if result.get("exit_status") == "Submitted" else "FAILED","exit_code":0 if result.get("exit_status") == "Submitted" else 1,"stage":"complete","model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"assistant_action_observations":sanitize([{"role":m.get("role"),"content":m.get("content"),"actions":m.get("extra",{}).get("actions"),"returncode":m.get("extra",{}).get("returncode")} for m in agent.messages], [key]),"final_snapshot_files":sorted(p.name for p in final.iterdir())})
+        first_snapshot = first if first.exists() else None
+        state.update({"classification":"PASS" if result.get("exit_status") == "Submitted" else "FAILED","exit_code":0 if result.get("exit_status") == "Submitted" else 1,"stage":"complete","ended_at":stamp(),"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"exit_status":result.get("exit_status"),"submission":result.get("submission"),"first_snapshot":str(first_snapshot) if first_snapshot else None,"first_snapshot_digest":snapshot_digest(first_snapshot) if first_snapshot else None,"final_snapshot_digest":snapshot_digest(final),"assistant_action_observations":sanitize([{"role":m.get("role"),"content":m.get("content"),"actions":m.get("extra",{}).get("actions"),"returncode":m.get("extra",{}).get("returncode")} for m in agent.messages], [key]),"final_snapshot_files":sorted(p.name for p in final.iterdir())})
     except Exception as error:
-        state.update({"classification":"TIMEOUT" if type(error).__name__ == "TimeoutExpired" else "FAILED","exit_code":124 if type(error).__name__ == "TimeoutExpired" else 1,"stage":"agent_run","safe_exception_class":type(error).__name__,"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches)})
+        state.update({"classification":"TIMEOUT" if type(error).__name__ == "TimeoutExpired" else "FAILED","exit_code":124 if type(error).__name__ == "TimeoutExpired" else 1,"stage":"agent_run","ended_at":stamp(),"safe_exception_class":type(error).__name__,"model_query_calls":profile_calls["n"],"real_shell_launches":len(env.launches),"first_snapshot":str(first) if first.exists() else None,"first_snapshot_digest":snapshot_digest(first) if first.exists() else None,"final_snapshot_digest":snapshot_digest(final)})
     finally:
         _sys.setprofile(previous_profile)
     write_json(evidence_path, state)

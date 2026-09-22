@@ -1,0 +1,36 @@
+{
+  "execution_baseline": "6204f7e07c71a2e3c3297ddde30a9106b6e38d37",
+  "run_id": "integration_only_20260923_v2",
+  "mode": "INTEGRATION_ONLY",
+  "route_model": "gpt-5.6-sol",
+  "backend_identity": "not_confirmed",
+  "config_source": "reviewed temporary gateway config; inline key empty; SMART_AGI_API_KEY env only",
+  "attempt": {
+    "command": "python -B -u -c \"import sys;sys.path.insert(0,\\\"model_comparison/tools\\\");from pilot_run import run_real_integration;raise SystemExit(run_real_integration(config,run_id=integration_only_20260923_v2))\"",
+    "provider_retries": 0,
+    "model_query_calls": 1,
+    "real_shell_launches": 0,
+    "fixture_calls": 0,
+    "generation_attempt_started": true,
+    "classification": "FAILED",
+    "stage": "agent_run",
+    "safe_exception_class": "Timeout",
+    "exit_code": 1,
+    "submitted": false,
+    "first_snapshot": null,
+    "final_snapshot_files": [],
+    "real_llm_api_calls": null,
+    "real_llm_api_calls_source": "not_observed"
+  },
+  "independent_evaluation": {
+    "run_id": "integration_only_eval_20260923_v1",
+    "intake_status": "INVALID",
+    "engineering_evaluation": "NOT_RUN",
+    "rebuild_attempted": false,
+    "rebuild_os_exit_code": null,
+    "failure": "Missing or empty submission.json",
+    "evidence": "results/pilot_20260923/integration_only_eval_20260923_v1/evaluation.json",
+    "os_exit_code": 2
+  },
+  "decision": "No retry or fallback; no robot artifact or engineering score claimed."
+}

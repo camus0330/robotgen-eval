@@ -67,8 +67,34 @@ The offline run used only a completion/cost fixture and produced no real LLM API
 
 The real generation branch is now reachable at `pilot_run.py run --integration-only-config`. It validates the temporary HTTPS gateway configuration, reads only its selected environment credential, binds the frozen task files and reference PNG as an image data URI, uses the pinned `DefaultAgent`/`LitellmTextbasedModel`, counts queries, and executes model actions through the isolated command environment. The command environment has no credential mount, no external network, a writable `/work` output mount, timeout and shell resource limits, and returns the same observation to the Agent before its next action. It is fail-closed when no admitted candidate is present.
 
-The previously authorized gpt-5.6-sol integration-only attempt was already used in the historical live E2E records, so this continuation did not issue another real request. The three national-model admission attempts were not repeated. The saved 404 bodies do not exist; their detailed reason remains `not_observed`.
+The historical gpt-5.6-sol live E2E records were echo/probe activity only and did not consume a robot-generation attempt. Under the current execution baseline, one explicitly authorized robot attempt was therefore run as `integration_only_20260923_v2`. It made one client model query, launched zero shell actions, and ended with a safe `Timeout` before a submission was produced. Provider retries were zero; no retry, fallback route, or second live attempt was made. The three national-model admission attempts were not repeated. The saved 404 bodies do not exist; their detailed reason remains `not_observed`.
 
 The updated preflight was run once after this implementation and returned exit `2` with `ACCESS_BLOCKED`, provenance PASS, cache PASS, and `generation_ready=false` because no admission record contains a successful completion. No real model generation was started.
 
-The evaluator now executes the manifest's declared rebuild command in the isolated workspace, measures every manifest-listed STL part, performs actual STEP-kernel probing when a kernel is installed (otherwise records `NA/ADAPTER_UNSUPPORTED`), separates XML parsing from dynamics loading, and requires the full eight-role/joint contract before reporting PASS. The new evaluation run is `offline_integration_eval_20260922_v2`; it does not rerun or overwrite the historical fixture execution. It recorded rebuild exit `0`, positive proxy STL volume and envelope measurements, XML parse PASS, dynamics/STEP kernel NA, and the synthetic one-joint contract as FAIL rather than silently accepting it.
+The evaluator now executes the manifest's declared rebuild command in the isolated workspace, measures every manifest-listed STL part, performs actual STEP-kernel probing inside the WSL sandbox (otherwise records `NA/ADAPTER_UNSUPPORTED`), separates XML parsing from dynamics loading, and requires the full eight-role/joint contract before reporting PASS. The new evaluation run is `offline_integration_eval_20260922_v3`; it does not rerun or overwrite the historical fixture execution. It recorded rebuild exit `0`, positive proxy STL envelope measurements with solid validity `NA`, XML parse PASS, dynamics/STEP kernel NA, and the synthetic one-joint contract as FAIL rather than silently accepting it.
+
+
+## Real integration-only robot attempt (execution baseline `6204f7e07c71a2e3c3297ddde30a9106b6e38d37`)
+
+The executable live path was invoked once with the reviewed temporary Smart AGI configuration and the pinned interpreter. The recorded interval was `2026-09-23 00:15:12` to `00:16:45` Asia/Shanghai (`2026-09-22T16:15:12Z` to `2026-09-22T16:16:45Z`). The route was `gpt-5.6-sol`; backend identity was not confirmed. The task included the frozen text inputs and the reference PNG data URI. No formal `model_A` configuration or real key file was read. The child environment retained no credential mount and used the existing network-deny isolated action executor.
+
+```text
+python -B -u -c "import sys;sys.path.insert(0, 'model_comparison/tools');from pilot_run import run_real_integration;raise SystemExit(run_real_integration(<temporary-config>, run_id='integration_only_20260923_v2'))"
+OS exit: 1
+provider retries: 0
+model_query_calls: 1
+real_shell_launches: 0
+fixture_calls: 0
+classification: FAILED
+stage: agent_run
+safe_exception_class: Timeout
+Submitted: false
+real_llm_api_calls: null (source: not_observed)
+final snapshot: empty (0 files)
+```
+
+The safe evidence is `results/pilot_20260923/integration_only_20260923_v2/run.json`; it contains no raw SDK response, credential, or traceback. The call was a real route attempt, but it did not reach an action or native submission. No retry, format recovery, fallback route, `/v1/models` request, or availability probe followed it.
+
+The empty final directory was then evaluated independently, without rerunning generation, as `integration_only_eval_20260923_v1` (OS exit `2`). Intake was `INVALID` because `submission.json` was missing or empty; `rebuild_attempted=false`, `rebuild_os_exit_code=null`, and all engineering metrics were `NOT_RUN` with `FILE_CONTRACT`. Consequently there is no design artifact, no independent geometry/dynamics score, and no three-model result row.
+
+This outcome is an external model/gateway timeout, not a fixture endpoint failure. The offline fixture remains separate validation evidence only. The three-model delivery therefore remains `PARTIAL`; no additional live work is performed in this run.
