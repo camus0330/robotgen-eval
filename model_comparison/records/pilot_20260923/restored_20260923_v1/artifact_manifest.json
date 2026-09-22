@@ -1,0 +1,146 @@
+{
+  "batch_id": "restored_20260923_v1",
+  "artifacts": [
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/admission.json",
+      "size": 12613,
+      "sha256": "a3709e862d4503c2993f6173b876784fd98b45972c6c87b8bc05b5b81be6323e"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/admission_diagnostics.json",
+      "size": 7686,
+      "sha256": "758554e8941c22faf8143612300549f2842718204c7c09b201f725b845cac465"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/admission_v2.json",
+      "size": 15871,
+      "sha256": "6a96564f23c349ff8b3a3dd8ded3ae7d5c2d78d483f1fdc8ab687b91d3700a67"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/metrics.json",
+      "size": 4081,
+      "sha256": "225ac503cf9432c435fc2c18f0644ab229d5c34c150c718e8cbe32f01dec5152"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/NEXT_ACTION.md",
+      "size": 3417,
+      "sha256": "02180c5195cba35d8422d7ab8ef4e835f22229745f233d3de9c5889e88d2cabb"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/plan.json",
+      "size": 5575,
+      "sha256": "7712fe884241717f18d975f9f93624e73e3ffbff53ee10e5f73fdf55c2636484"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/plan_revision_2.json",
+      "size": 6046,
+      "sha256": "eec9205e721223ca8d8143b8cd70d4b2144608605d27f30588f81db8331b08a6"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/PROMPT_ADDENDUM.md",
+      "size": 3964,
+      "sha256": "860e2e99396a0576e9906989b2c15cf0f9d30730b113008b07b9b92df29bf6e8"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/results.csv",
+      "size": 1415,
+      "sha256": "09440549b172faa027d7c717624f6bacee0721b3f2bc40b3dcf7a29011be05e8"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/deepseek-v4-pro/result.json",
+      "size": 816,
+      "sha256": "e15de65e7deaf761d691407ee616764e2c2c7f1688c8de0e6e935087b1ec03f1"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/deepseek-v4.1-flash/result.json",
+      "size": 819,
+      "sha256": "dc0b42e28986449aac665c82965a71ff2b0e9100c44e61c898e71a09ee957d20"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/glm-5.3/result.json",
+      "size": 807,
+      "sha256": "e13fe59297ed71a0874d5fc7474599a6a61d0ef75bc82dfa28dfd7cacea46434"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/glm-5.3-flash/result.json",
+      "size": 814,
+      "sha256": "abe1a70b9032f75c45560a532747125a7b48f983eea1d972d3af2f38bed909f3"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/kimi-k2.7/result.json",
+      "size": 809,
+      "sha256": "68a0b39e4415aa32173d2f15d08d1a44e007418755abc6812d40aa464051b02e"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission/kimi-k3/result.json",
+      "size": 808,
+      "sha256": "abcbee96d62493acd2135f306785e0640f6df462169fbab40fc1b493239a89c5"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/deepseek-v4-pro/result.json",
+      "size": 1291,
+      "sha256": "857440ae985cb6ea262973c86f14056af97dff666c58caeba20f4a588051ea9f"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/deepseek-v4.1-flash/result.json",
+      "size": 1300,
+      "sha256": "af4d522be039e44160df3457a02012db9eb032e9266925008bee6fed96ac2310"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/glm-5.3/result.json",
+      "size": 1276,
+      "sha256": "f608ee10573a5720a96d32f4232310a7e7d356d5d0acce41c5a2a4ebc6beaaf1"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/glm-5.3-flash/result.json",
+      "size": 1287,
+      "sha256": "dc10b8737e6cdbad4a9f6f372360e946af9262fe39efc5623511330b552a9496"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/kimi-k2.7/result.json",
+      "size": 1280,
+      "sha256": "ddee3f37823a232b006c177481469c59a9abc591691d7c105c6b88ec38c31e2c"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/admission_v2/kimi-k3/result.json",
+      "size": 1277,
+      "sha256": "0c751073425090bcebae4211a663ac95cf9a2c4f92a8938d0958508b84df35fe"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/cad_import_check.json",
+      "size": 2538,
+      "sha256": "eb1d9cfbf163d72bff954dcd969cb484f06843c7a6a0828ad08c8f289680667a"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/directed_tests.json",
+      "size": 401,
+      "sha256": "a94eabb5e48bf857a98a431691717c97c0298f147e06be5f78480ac31b64f699"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/directed_tests.log",
+      "size": 1514,
+      "sha256": "af218187f0fd10928938c8b2de755a59e61c56274a10735254fcda59935bf83a"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/execution_commands.json",
+      "size": 2435,
+      "sha256": "44f63166f364b6a27b2faf6ea965b61ceec1874c2f31d8ddc6bdcac8a694f899"
+    },
+    {
+      "path": "results/pilot_20260923/restored_20260923_v1/preflight.json",
+      "size": 414,
+      "sha256": "c09e701e514d7e136c1dd4b183ae4321860f06ff02df4dd5964771233160b184"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/SUPPORT_DIAGNOSTIC.md",
+      "size": 799,
+      "sha256": "e3cf5714bef44fb3ccd8caeda73c27ef02cee61c8c04174be15a14a1ec5230d3"
+    },
+    {
+      "path": "model_comparison/records/pilot_20260923/restored_20260923_v1/closure.json",
+      "size": 1276,
+      "sha256": "76b75a9385ec60b6273350f90de47b42db5e0c91236c6ba6ffd6ae432c996da0"
+    }
+  ],
+  "time": "2026-09-22T18:23:18.356267+00:00"
+}

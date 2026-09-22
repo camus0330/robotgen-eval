@@ -167,3 +167,70 @@ SHA-256:
 - `cube.stl`: `d10f1b3ac9bac4e0c5825a58515cb9a030577927be3d309bc12e067de97a6b06`
 
 Remaining: no actual robot design was supplied by the earlier timed-out model attempt, so no real-model robot CAD acceptance or three-model result can be claimed. Full joint/actuator, dynamics, motion and robustness checks remain NA. This newly generated cube is only CAD-environment acceptance evidence, never a three-model result. No formal configuration, input source, upstream code, benchmark threshold, system proxy or credential store was modified.
+
+
+## Restored gateway batch `restored_20260923_v1` ? actual new requests
+
+STATUS: PARTIAL ? current account-group route rejection after six new admission queries.
+
+Execution baseline `1acfc0823bc35007adbe4a0131e2958885070289`, branch `deadline/three-model-pilot-20260923`. At start, local/fetched remote matched and the worktree was clean. The customer-support statements (????????, ???????, ???????, ?????????) are recorded as `source=user_provided_support_screenshot`. No original screenshot file was supplied, so no screenshot path/hash is claimed. The support statement is distinct from the actual account-specific observations below.
+
+### Frozen conditions and local wiring
+
+The shared addendum, original per-file input hashes, endpoint, candidates, selection policy, interpreter and code hashes are recorded under `records/pilot_20260923/restored_20260923_v1/`. `plan.json` preserves the initial freeze; the active execution plan is **`plan_revision_2.json`**. It retains the identical public prompt, runtime, model selection policy and budgets; only pre-request config serialization was corrected. `PROMPT_ADDENDUM.md` documents the common CadQuery-version override and source/output rebuild contract without changing original inputs or providing a robot design.
+
+Common generation conditions: `PILOT_RESTORED`, 3600 seconds / 48 queries per selected model, provider retries 0, native maximum 2 consecutive format errors, cost_limit 1.0 (library estimate guard, not a billing guarantee), human design edits 0, no operator design feedback, serial order A ? B ? C. All six candidate IDs were fixed before any possible generation result. Admission uses the same pinned `LitellmTextbasedModel`, native text parser and reference PNG expansion, 600-second request timeout and no artificial max_tokens cap. No gpt alias, `/v1/models`, availability probe or old fixture was invoked.
+
+The generation `execute_command(cad=True)` path was checked once with a CAD import, without making a cube: OS exit **0**, actual `/cad/bin/python`, Python 3.12.3, CadQuery 2.6.1, cadquery-ocp 7.8.1.1.post1. The existing CAD venv is read-only, `/kit/inputs` read-only, `/work` model-specific, HOME `/tmp`, no credential or external network in the tool namespace. The source-rebuild evaluator remains `pilot-cad-20260923.2` and receives the actual rebuilt snapshots when a real submission exists.
+
+A local startup error preceded the actual admission batch: the evidence sanitizer removed mandatory empty `api_key` and `request` fields while writing temporary configurations. All six of those startup records had **0 client queries** and failed before credential/network use. They remain in `admission.json`; their generic initial `ENDPOINT_FAILED` label is a local pre-request serialization failure, not a gateway response. Configuration writing was separated from evidence sanitization, a file round-trip regression was added, and the corrected plan/admission were saved separately. No real request was repeated by this correction.
+
+### New admission observations
+
+Actual new requests ran from **2026-09-23 02:20:25 to 02:21:02 +08:00** (2026-09-22 18:20:25?18:21:02 UTC). Three preferred IDs were tried first, followed by one predeclared backup for each family. Each worker made exactly one client query, each returned actual OS exit **2**, and the batch returned OS exit **2**. Total new client queries **6**, provider retries **0**, shell launches in admission **0**.
+
+| Slot/family | Preferred | Result | Backup | Result | Selected |
+|---|---|---|---|---|---|
+| model_A / DeepSeek | deepseek-v4-pro | HTTP 404 | deepseek-v4.1-flash | HTTP 404 | none |
+| model_B / Kimi | kimi-k3 | HTTP 404 | kimi-k2.7 | HTTP 404 | none |
+| model_C / GLM | glm-5.3 | HTTP 404 | glm-5.3-flash | HTTP 404 | none |
+
+For each exact ID, the current response said: `Model "<ID>" is not supported by any configured account in this group`. The full length-bounded, key-sanitized message is preserved in `admission_v2.json` and `admission_diagnostics.json`. This establishes current account-group route rejection; it does not establish that the IDs do not exist globally. Old 404 error bodies remain not_observed and were not backfilled.
+
+All six actual final LiteLLM completion-message structures contained the PNG `image_url` content item (read-only profile observation). No nonempty completion arrived, so the parser was not invoked and image acceptance by a completing model remains `not_observed`. `returned_model`, finish_reason, usage, request ID, server error.type/code and billing are also `not_observed` where the client did not expose them. No raw header, SDK dump or hidden-reasoning field was persisted. Route identities remain only `gateway_declared`, independent backend attestation `not_observed`.
+
+### Actual commands and exit codes
+
+Working directory: `D:\Robotics Engineer\SEALab\robotgen-eval-swe`.
+
+```powershell
+$py = 'C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe'
+$plan = 'D:\Robotics Engineer\SEALab\robotgen-eval-swe\model_comparison\records\pilot_20260923\restored_20260923_v1\plan_revision_2.json'
+$admission = 'D:\Robotics Engineer\SEALab\robotgen-eval-swe\model_comparison\records\pilot_20260923\restored_20260923_v1\admission_v2.json'
+& $py -B -u model_comparison/tools/pilot_restored.py prepare
+# OS exit 0; one no-model CAD import check
+& $py -B -u model_comparison/tools/pilot_restored.py admission --plan 'D:\Robotics Engineer\SEALab\robotgen-eval-swe\model_comparison\records\pilot_20260923\restored_20260923_v1\plan.json'
+# OS exit 2; local startup/config failure, 0 actual queries, retained separately
+& $py -B -u model_comparison/tools/pilot_restored.py admission --plan $plan --admission $admission
+# OS exit 2; six actual new queries, six HTTP 404 account-group rejections
+& $py -B -u model_comparison/tools/pilot_restored.py preflight --plan $plan --admission $admission
+# OS exit 2; ACCESS_BLOCKED from new evidence, not from old admission state
+& $py -B -m unittest discover -s model_comparison/tests -p 'test_pilot_restored.py' -v
+# OS exit 0; final 5 directed tests, no real queries
+& $py -B -u model_comparison/tools/pilot_restored.py summary --plan $plan --admission $admission
+# OS exit 0; three explicit NOT_STARTED rows, no invented engineering results
+```
+
+The directed checks cover exact endpoint/model/config round-trip validation before credential access, preferred/backup selection, rejection of old-batch evidence, query budget clipping, common contract text, actual pinned image-message expansion, diagnostic redaction, and READY?exit 0 / ACCESS_BLOCKED?exit 2 preflight behavior using isolated pure test admission data. Full original 14-test CAD acceptance was reused; no old echo, old fixture or cube was regenerated. Generation and CAD-evaluation commands were **NOT RUN** because no model was admitted; their live behavior is not claimed as newly exercised in this batch.
+
+### Three-model outcomes and stopping reason
+
+| Slot | Admission | Robot generation | Generation queries | Generation OS exit | Robot files | File contract / rebuild / STEP / envelopes / XML |
+|---|---|---|---:|---|---:|---|
+| model_A | NOT_ADMITTED | NOT_STARTED | 0 | null (not launched) | 0 | NOT_RUN |
+| model_B | NOT_ADMITTED | NOT_STARTED | 0 | null (not launched) | 0 | NOT_RUN |
+| model_C | NOT_ADMITTED | NOT_STARTED | 0 | null (not launched) | 0 | NOT_RUN |
+
+The new six requests provide an external account-group blocker. There is no remaining admitted model to run; no loop, extra diagnostic request or unauthorized route was attempted. All local wiring, shared condition freezing, targeted validation, safe diagnostics and result files that do not depend on account access are complete. The failure is not attributed to old quotas, old plans, expired baselines or the prior gpt timeout. No robot design is available for independent rebuild in this batch. Full topology/actuator, dynamics, motion and robustness remain NA; no subset score or model ranking is produced.
+
+The complete new batch record contains `plan.json`, `plan_revision_2.json`, `PROMPT_ADDENDUM.md`, both admission records, normalized diagnostics, `results.csv`, `metrics.json`, `artifact_manifest.json`, and `NEXT_ACTION.md`. The latter includes a ready-to-forward, sanitized customer-support diagnostic. Runtime evidence and exact subprocess argv/OS exits remain under `results/pilot_20260923/restored_20260923_v1/`. The new artifact manifest binds these files by actual SHA-256; there are no new robot artifact links.

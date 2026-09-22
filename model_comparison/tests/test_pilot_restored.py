@@ -6,12 +6,31 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"tools"))
 import pilot_restored as p
 
 
 class RestoredWiring(unittest.TestCase):
+    def test_new_preflight_exit_agrees_with_admission(self):
+        plan={"batch_id":p.BATCH,"candidates":{k:list(v) for k,v in p.CANDIDATES.items()}}
+        with tempfile.TemporaryDirectory(dir=p.RUNTIME) as directory:
+            root=Path(directory)
+            plan_path=root/"plan.json";plan_path.write_text(json.dumps(plan))
+            admission_path=root/"admission.json"
+            case={"request_model_id":"kimi-k3","classification":"ADMITTED","parser_pass":True,
+                  "nonempty_completion":True,"image_url_in_completion_messages":True,"child_os_exit_code":0}
+            admission={"batch_id":p.BATCH,"plan_sha256":p.sha(plan_path),"cases":[case]}
+            admission_path.write_text(json.dumps(admission))
+            with patch.object(p,"verify_plan",return_value=plan),patch.object(p,"RUNTIME",root):
+                self.assertEqual(p.preflight_batch(plan_path,admission_path),0)
+                self.assertEqual(p.read(root/"preflight.json")["classification"],"READY")
+                admission["cases"]=[]
+                admission_path.write_text(json.dumps(admission))
+                self.assertEqual(p.preflight_batch(plan_path,admission_path),2)
+                self.assertEqual(p.read(root/"preflight.json")["classification"],"ACCESS_BLOCKED")
+
     def test_preferred_backup_binding_and_no_old_batch(self):
         plan={"batch_id":p.BATCH,"candidates":{k:list(v) for k,v in p.CANDIDATES.items()}}
         good={"request_model_id":"deepseek-v4-pro","classification":"ADMITTED","parser_pass":True,
