@@ -1,4 +1,4 @@
-IMPLEMENTATION: PASS
+IMPLEMENTATION: PASS (final repair)
 OFFLINE_SELF_TEST: PASS (exit code 0)
 REAL GATEWAY E2E: NOT RUN
 
@@ -98,3 +98,51 @@ The run was offline only: **REAL GATEWAY E2E: NOT RUN** and real LLM API calls
 were `0`. The formal `api_config.json` and real API key were not read, modified,
 or staged. Live endpoint behavior, real model output stability, and endpoint
 failure counts remain skipped by design.
+
+## Final repair: failure evidence and credential-injection checks
+
+Repair baseline: `198468f587afd1ad363f962e25f7c3657a8f728c`
+Interpreter: Python `3.13.13` from the reviewed venv
+Dependencies: `mini-swe-agent 2.4.6`, upstream SHA
+`04d809ceab9df28f9adaed044884180159172930`, `litellm 1.102.0`,
+`tiktoken 0.14.0`
+Prepared cache:
+`C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-_683fx7j`
+Cache SHA-256:
+`223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`
+
+The exact final validation commands and exit codes were:
+
+```powershell
+& $py -B -u model_comparison/spikes/mini_swe_gateway_probe.py --audit-self-test
+# exit 0
+& $py -B -u model_comparison/spikes/mini_swe_offline_import_preflight.py
+# exit 0; cache path above came from this run
+& $py -B -u model_comparison/spikes/mini_swe_gateway_agent_e2e.py `
+  --self-test --cache C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-_683fx7j
+# exit 0
+```
+
+The self-test dispatches each audited integration case in its own child
+process. The measured cases were:
+
+| Case | Query calls | Shell launches | Classification | Evidence |
+|---|---:|---:|---|---|
+| success | 2 | 2 | `PASS` | native `Submitted` |
+| first format error | 1 | 0 | `FORMAT_MISMATCH` | `FormatMismatch` |
+| second completion endpoint fixture failure | 2 | 1 | `ENDPOINT_FAILED` | `EndpointFailed` |
+| first command boundary rejection | 1 | 0 | `ENVIRONMENT_BLOCKED` | `BoundaryAbort` |
+
+The aggregate was fixture calls `6`, cost-fixture calls `5`, model query calls
+`6`, real shell launches `3`, gateway queries `0`, and real LLM API calls `0`.
+Each child emitted its own allowlisted evidence, including stage, agent calls,
+query count, shell count, network target lists, IPC target list, observed native
+tools state, and safe exception class. No count was padded after a failure.
+
+The separate synthetic-injection process wrote the synthetic credential to
+stdout, stderr, logging, an ordinary exception message, and a `BoundaryAbort`
+message. The captured buffers positively contained the injections, while the
+final child stdout/stderr and parent summary were clean. Logging state, stdout,
+stderr, and profile state were restored; raw capture buffers and traceback data
+were discarded. The formal configuration, real key, live route, and real
+gateway remain unread and unexecuted.

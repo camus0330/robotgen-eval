@@ -21,6 +21,7 @@ import os
 from pathlib import Path
 import re
 import socket
+import subprocess
 import sys
 import tempfile
 import shutil
@@ -79,6 +80,51 @@ class FormatMismatch(RuntimeFailure):
 
 class EndpointFailed(RuntimeFailure):
     pass
+
+
+class SyntheticEndpointFailure(Exception):
+    """Offline-only completion failure used to exercise endpoint diagnostics."""
+
+
+def new_run_state(case: str, mode: str = "offline") -> dict[str, Any]:
+    return {
+        "classification": "RUNNING",
+        "exit_code": None,
+        "stage": "startup",
+        "case": case,
+        "mode": mode,
+        "agent_calls": 0,
+        "model_query_calls": 0,
+        "real_shell_launches": 0,
+        "gateway_network_targets": [],
+        "unrelated_network_attempts": [],
+        "local_runtime_ipc_targets": [],
+        "native_tools_observed": {"observed": False, "present": "not_observed"},
+        "safe_exception_class": None,
+        "fixture_calls": 0,
+        "cost_fixture_calls": 0,
+        "real_llm_api_calls": 0,
+        "_controller": None,
+        "_agent": None,
+        "_work_directory": None,
+    }
+
+
+def build_run_evidence(state: dict[str, Any]) -> dict[str, Any]:
+    controller = state.get("_controller")
+    agent = state.get("_agent")
+    if controller is not None:
+        state["real_shell_launches"] = len(controller.launches)
+        state["gateway_network_targets"] = list(controller.gateway_network_targets)
+        state["unrelated_network_attempts"] = list(controller.unrelated_network_attempts)
+        state["local_runtime_ipc_targets"] = list(controller.local_runtime_ipc_targets)
+    if agent is not None:
+        state["agent_calls"] = int(getattr(agent, "n_calls", 0))
+    result = {
+        key: value for key, value in state.items() if not key.startswith("_")
+    }
+    result["work_directory"] = state.get("_work_directory")
+    return result
 
 
 def require(condition: bool, message: str) -> None:
@@ -316,15 +362,19 @@ def fixed_prompt() -> str:
 
 
 def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
-              key: str | None, secrets: list[str]) -> dict[str, Any]:
+              key: str | None, secrets: list[str], state: dict[str, Any],
+              scenario: str = "success") -> dict[str, Any]:
+    state["stage"] = "workspace"
     work = Path(tempfile.mkdtemp(prefix="robotgen-gateway-agent-e2e-"))
     global_config = work / "global-config"
     global_config.mkdir()
     os.environ["MSWEA_GLOBAL_CONFIG_DIR"] = str(global_config)
+    state["_work_directory"] = str(work)
     base_url = "gateway.invalid"
     port = 443
     model_kwargs: dict[str, Any] = {}
     model_name = "offline/gateway-agent-e2e"
+    state["stage"] = "config"
     if mode == "live":
         runtime_require(config is not None and key is not None, "live model inputs are incomplete")
         base_url = urlsplit(config["base_url"]).hostname or ""
@@ -354,9 +404,12 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
             "stream": False,
         }
 
+    state["stage"] = "audit"
     controller = BoundaryController(work, base_url, port, secrets)
+    state["_controller"] = controller
     sys.addaudithook(controller.audit)
     # Imports happen only after the fail-closed audit hook is installed.
+    state["stage"] = "imports"
     import litellm
     DefaultAgent, LocalEnvironment, LitellmTextbasedModel = import_upstream(cache)
     from minisweagent.exceptions import FormatError
@@ -370,6 +423,7 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
     litellm.suppress_debug_info = True
     litellm.num_retries = 0
     litellm.num_retries_per_request = 0
+    state["stage"] = "model"
     model = LitellmTextbasedModel(
         model_name=model_name,
         cost_tracking="ignore_errors",
@@ -387,6 +441,7 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
         cost_limit=1.0,
         output_path=None,
     )
+    state["_agent"] = agent
     evidence: dict[str, Any] = {
         "work_directory_is_temp": str(work).lower().startswith(str(Path(tempfile.gettempdir())).lower())
     }
@@ -395,43 +450,76 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
     def observe_query(frame: Any, event: str, value: Any) -> None:
         if event == "call" and frame.f_code is LitellmTextbasedModel._query.__code__:
             query_observation["calls"] += 1
+            state["model_query_calls"] = query_observation["calls"]
 
     previous_profile = sys.getprofile()
     sys.setprofile(observe_query)
     try:
+        state["stage"] = "agent_run"
         if mode == "offline":
             responses = [
                 fixture_response(f"First execute the marker.\n\n```mswea_bash_command\n{FIRST_COMMAND}\n```"),
                 fixture_response(f"Now submit.\n\n```mswea_bash_command\n{SUBMIT_COMMAND}\n```"),
             ]
+            if scenario == "format_error":
+                responses[0] = fixture_response("This response intentionally has no action block.")
+            elif scenario == "boundary_rejection":
+                responses[0] = fixture_response(
+                    "Attempt the first action.\n\n```mswea_bash_command\n"
+                    "echo unauthorized_robotgen_command\n```"
+                )
             calls: list[dict[str, Any]] = []
 
             def completion_fixture(*positional: Any, **kwargs: Any):
                 runtime_require(not positional, "unexpected positional completion arguments")
                 calls.append(deepcopy(kwargs))
+                state["fixture_calls"] = len(calls)
+                state["native_tools_observed"] = {
+                    "observed": True,
+                    "present": any("tools" in call for call in calls),
+                }
+                state["completion_kwargs_observed"] = True
                 runtime_require(len(calls) <= 2, "fixture completion called more than twice")
+                if scenario == "endpoint_failure" and len(calls) == 2:
+                    raise SyntheticEndpointFailure("synthetic endpoint failure")
                 return responses[len(calls) - 1]
+
+            def cost_fixture(*args: Any, **kwargs: Any) -> float:
+                state["cost_fixture_calls"] += 1
+                return 0.0
 
             try:
                 with patch("litellm.completion", side_effect=completion_fixture) as completion, \
-                        patch("litellm.cost_calculator.completion_cost", return_value=0.0) as cost_fixture:
+                        patch("litellm.cost_calculator.completion_cost", side_effect=cost_fixture) as cost_mock:
                     result = agent.run("Run the fixed marker and submit the result.")
             except FormatError:
                 raise FormatMismatch("upstream format error") from None
-            runtime_require(completion.call_count == 2 and cost_fixture.call_count == 2,
+            except SyntheticEndpointFailure:
+                raise EndpointFailed("SyntheticEndpointFailure") from None
+            if scenario == "format_error":
+                runtime_require(completion.call_count == 1 and cost_mock.call_count == 1,
+                                "format-error fixture call count mismatch")
+                state["fixture_status"] = "OFFLINE_SELF_TEST"
+                state["native_tools_observed"] = {
+                    "observed": True,
+                    "present": any("tools" in call for call in calls),
+                }
+                state["completion_kwargs_observed"] = True
+                # The upstream agent records RepeatedFormatError; preserve
+                # FORMAT_MISMATCH before shell assertions.
+                raise FormatMismatch("repeated upstream format error")
+            runtime_require(completion.call_count == 2 and cost_mock.call_count == 2,
                             "offline fixture call count mismatch")
             runtime_require(all("tools" not in call for call in calls), "native tools were passed")
             runtime_require(any(m.get("role") == "user" and m.get("content") == agent.messages[3]["content"]
                                 for m in calls[1]["messages"]),
                             "first observation did not enter second call")
-            evidence["fixture_calls"] = len(calls)
-            evidence["cost_fixture_calls"] = cost_fixture.call_count
-            evidence["fixture_status"] = "OFFLINE_SELF_TEST"
-            evidence["native_tools_observed"] = {
+            state["fixture_status"] = "OFFLINE_SELF_TEST"
+            state["native_tools_observed"] = {
                 "observed": True,
                 "present": any("tools" in call for call in calls),
             }
-            evidence["completion_kwargs_observed"] = True
+            state["completion_kwargs_observed"] = True
         else:
             try:
                 result = agent.run("Run the fixed gateway marker and submit the result.")
@@ -441,11 +529,11 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
                 raise FormatMismatch("upstream format error") from None
             except Exception as error:
                 raise EndpointFailed(type(error).__name__) from None
-            evidence["native_tools_observed"] = {
+            state["native_tools_observed"] = {
                 "observed": False,
                 "present": "not_observed",
             }
-            evidence["completion_kwargs_observed"] = False
+            state["completion_kwargs_observed"] = False
     finally:
         sys.setprofile(previous_profile)
     if getattr(agent, "n_consecutive_format_errors", 0):
@@ -471,19 +559,10 @@ def run_agent(*, mode: str, cache: Path, config: dict[str, Any] | None,
                     "native submit result mismatch")
     runtime_require(agent.config.output_path is None, "trajectory persistence must be disabled")
     runtime_require(not controller.failed, "boundary was rejected")
-    evidence.update({
-        "real_shell_launches": len(controller.launches),
-        "model_query_calls": query_observation["calls"],
-        "gateway_queries": query_observation["calls"] if mode == "live" else 0,
-        "exit_status": result["exit_status"],
-        "submission": result["submission"],
-        "agent_calls": agent.n_calls,
-        "forbidden_accesses": controller.unrelated_network_attempts,
-        "local_runtime_ipc": controller.local_runtime_ipc_targets,
-        "gateway_network_targets": controller.gateway_network_targets,
-        "work_directory": str(work),
-    })
-    return evidence
+    state["gateway_queries"] = query_observation["calls"] if mode == "live" else 0
+    state["exit_status"] = result["exit_status"]
+    state["submission"] = result["submission"]
+    return build_run_evidence(state)
 
 
 def validate_live_config(path: Path) -> dict[str, Any]:
@@ -536,7 +615,8 @@ def validate_live_config(path: Path) -> dict[str, Any]:
     return raw
 
 
-def quiet_call(function: Any, *args: Any, **kwargs: Any) -> tuple[Any, str]:
+def quiet_call(function: Any, *args: Any, capture_sink: dict[str, str] | None = None,
+               **kwargs: Any) -> tuple[Any, str]:
     """Run upstream while discarding all stdout/stderr and logging output."""
     capture = io.StringIO()
     previous_disable = logging.root.manager.disable
@@ -544,8 +624,13 @@ def quiet_call(function: Any, *args: Any, **kwargs: Any) -> tuple[Any, str]:
     try:
         with redirect_stdout(capture), redirect_stderr(capture):
             result = function(*args, **kwargs)
-        return result, capture.getvalue()
+        captured = capture.getvalue()
+        if capture_sink is not None:
+            capture_sink["text"] = captured
+        return result, captured
     finally:
+        if capture_sink is not None and "text" not in capture_sink:
+            capture_sink["text"] = capture.getvalue()
         capture.close()
         logging.disable(previous_disable)
 
@@ -686,72 +771,260 @@ def policy_unit_checks() -> dict[str, str]:
     return cases
 
 
-def run_self_test(cache: Path) -> int:
+def classify_failure(error: BaseException) -> tuple[str, int]:
+    if isinstance(error, ConfigBlocked):
+        return "CONFIG_BLOCKED", EXIT["CONFIG_BLOCKED"]
+    if isinstance(error, (EnvironmentBlocked, BoundaryAbort)):
+        return "ENVIRONMENT_BLOCKED", EXIT["ENVIRONMENT_BLOCKED"]
+    if isinstance(error, FormatMismatch):
+        return "FORMAT_MISMATCH", EXIT["FORMAT_MISMATCH"]
+    if isinstance(error, EndpointFailed):
+        return "ENDPOINT_FAILED", EXIT["ENDPOINT_FAILED"]
+    return "FAIL", EXIT["FAIL"]
+
+
+def run_offline_case(cache: Path, case: str) -> int:
     secrets = [SYNTHETIC_CREDENTIAL]
+    state = new_run_state(case)
+    capture_sink: dict[str, str] = {}
+    profile_before = sys.getprofile()
+    try:
+        scrub_environment()
+        state["stage"] = "provenance"
+        state["startup_provenance"] = provenance()
+        state["cache_sha256"] = check_cache(cache)
+        state["stage"] = "audit_unit"
+        state["rejection_cases"] = policy_unit_checks()
+        state["synthetic_config_rejection_cases"] = synthetic_config_checks()
+        quiet_call(
+            run_agent, mode="offline", cache=cache, config=None,
+            key=SYNTHETIC_CREDENTIAL, secrets=secrets, state=state,
+            scenario=case, capture_sink=capture_sink,
+        )
+        state["classification"] = "PASS"
+        state["exit_code"] = 0
+    except BaseException as error:
+        state["classification"], state["exit_code"] = classify_failure(error)
+        state["safe_exception_class"] = type(error).__name__
+    state["profile_restored"] = sys.getprofile() is profile_before
+    state["cleanup_stage"] = "cleanup"
+    if state["classification"] == "PASS":
+        state["stage"] = "complete"
+    evidence = build_run_evidence(state)
+    captured = capture_sink.get("text", "")
+    generated_files = files_under(evidence["work_directory"]) if evidence.get("work_directory") else []
+    evidence["credential_leak_check"] = (
+        SYNTHETIC_CREDENTIAL not in captured
+        and SYNTHETIC_CREDENTIAL not in json.dumps(evidence)
+        and all(SYNTHETIC_CREDENTIAL not in content for content in generated_files)
+    )
+    runtime_require(evidence["credential_leak_check"], "synthetic credential leaked into output or temp files")
+    print(json.dumps(sanitize(evidence, secrets), ensure_ascii=True, indent=2))
+    print(f"FINAL: {evidence['classification']}")
+    return int(evidence["exit_code"])
+
+
+def parse_case_output(stdout: str) -> dict[str, Any] | None:
+    payload = stdout.split("\nFINAL:", 1)[0].strip()
+    try:
+        value = json.loads(payload)
+    except json.JSONDecodeError:
+        return None
+    return value if isinstance(value, dict) else None
+
+
+def run_case_process(cache: Path, case: str) -> dict[str, Any]:
+    command = [sys.executable, "-B", "-u", str(Path(__file__).resolve()),
+               "--self-test", "--self-test-case", case, "--cache", str(cache.resolve())]
+    clean_env = dict(os.environ)
+    result = subprocess.run(command, capture_output=True, text=True, env=clean_env)
+    summary = parse_case_output(result.stdout)
+    if summary is None:
+        return {
+            "case": case, "classification": "ENVIRONMENT_BLOCKED",
+            "exit_code": EXIT["ENVIRONMENT_BLOCKED"], "stage": "child_dispatch",
+            "agent_calls": 0, "model_query_calls": 0, "real_shell_launches": 0,
+            "gateway_network_targets": [], "unrelated_network_attempts": [],
+            "local_runtime_ipc_targets": [], "native_tools_observed": {
+                "observed": False, "present": "not_observed",
+            }, "safe_exception_class": "ChildNoSummary",
+            "child_stdout_clean": SYNTHETIC_CREDENTIAL not in result.stdout,
+            "child_stderr_clean": SYNTHETIC_CREDENTIAL not in result.stderr,
+        }
+    summary["child_exit_code"] = result.returncode
+    summary["child_stdout_clean"] = SYNTHETIC_CREDENTIAL not in result.stdout
+    summary["child_stderr_clean"] = SYNTHETIC_CREDENTIAL not in result.stderr
+    return summary
+
+
+def run_credential_injection_test() -> int:
+    secret = SYNTHETIC_CREDENTIAL
+    previous_disable = logging.root.manager.disable
+    previous_profile = sys.getprofile()
+    logger = logging.getLogger("robotgen.synthetic-injection")
+    captured_cases: dict[str, str] = {}
+    injected = {"stdout": False, "stderr": False, "logging": False,
+                "ordinary_exception": False, "boundary_abort": False}
+
+    def profile(frame: Any, event: str, arg: Any) -> None:
+        return None
+
+    def inject() -> None:
+        print(secret)
+        print(secret, file=sys.stderr)
+        handler = logging.StreamHandler(sys.stderr)
+        logger.addHandler(handler)
+        try:
+            logging.disable(logging.NOTSET)
+            logger.warning(secret)
+        finally:
+            logger.removeHandler(handler)
+            handler.close()
+        raise RuntimeError(f"ordinary synthetic exception: {secret}")
+
+    def inject_boundary() -> None:
+        print(secret)
+        print(secret, file=sys.stderr)
+        raise BoundaryAbort(f"boundary synthetic exception: {secret}")
+
+    sys.setprofile(profile)
+    try:
+        for name, function, exception_type in (
+            ("ordinary", inject, RuntimeError),
+            ("boundary", inject_boundary, BoundaryAbort),
+        ):
+            sink: dict[str, str] = {}
+            try:
+                quiet_call(function, capture_sink=sink)
+            except exception_type as error:
+                injected["ordinary_exception" if name == "ordinary" else "boundary_abort"] = secret in str(error)
+            captured = sink.get("text", "")
+            captured_cases[name] = captured
+            injected["stdout"] = injected["stdout"] or captured.count(secret) >= 1
+            injected["stderr"] = injected["stderr"] or captured.count(secret) >= 2
+            injected["logging"] = injected["logging"] or (name == "ordinary" and captured.count(secret) >= 3)
+            sink.clear()
+            del captured
+    finally:
+        sys.setprofile(previous_profile)
+    injected["streams_restored"] = sys.getprofile() is previous_profile
+    injected["logging_restored"] = logging.root.manager.disable == previous_disable
+    injected["captured_secret_expected"] = all(secret in value for value in captured_cases.values())
+    # Captured buffers are deliberately discarded after positive injection checks.
+    captured_cases.clear()
+    runtime_require(all(injected.values()), "synthetic injection cleanup test failed")
+    output = {
+        "classification": "SYNTHETIC_INJECTION_PASS",
+        "injection_checks": injected,
+        "external_output_clean": True,
+        "raw_capture_persisted": False,
+    }
+    print(json.dumps(output, ensure_ascii=True, indent=2))
+    print("FINAL: SYNTHETIC_INJECTION_PASS")
+    return 0
+
+
+def run_injection_process() -> dict[str, Any]:
+    command = [sys.executable, "-B", "-u", str(Path(__file__).resolve()),
+               "--credential-injection-test"]
+    result = subprocess.run(command, capture_output=True, text=True, env=dict(os.environ))
+    summary = parse_case_output(result.stdout)
+    clean = (SYNTHETIC_CREDENTIAL not in result.stdout
+             and SYNTHETIC_CREDENTIAL not in result.stderr)
+    if summary is None:
+        return {
+            "classification": "ENVIRONMENT_BLOCKED",
+            "safe_exception_class": "InjectionChildNoSummary",
+            "child_exit_code": result.returncode,
+            "external_output_clean": clean,
+        }
+    summary["child_exit_code"] = result.returncode
+    summary["external_output_clean"] = clean
+    return summary
+
+
+def run_self_test(cache: Path) -> int:
     scrub_environment()
     provenance_info = provenance()
     digest = check_cache(cache)
-    # Avoid probing the host through a helper process before the process audit
-    # boundary is installed.
-    platform_value = sys.platform
-    rejection_cases = policy_unit_checks()
-    config_rejection_cases = synthetic_config_checks()
-    # The audit hook is installed inside run_agent and cannot be removed.
-    evidence, captured = quiet_call(
-        run_agent, mode="offline", cache=cache, config=None,
-        key=SYNTHETIC_CREDENTIAL, secrets=secrets,
-    )
-    generated_files = files_under(evidence["work_directory"])
-    evidence["rejection_cases"] = rejection_cases
-    evidence["synthetic_config_rejection_cases"] = config_rejection_cases
-    evidence["startup_provenance"] = provenance_info
+    cases = ("success", "format_error", "endpoint_failure", "boundary_rejection")
+    case_results = [run_case_process(cache, case) for case in cases]
+    injection = run_injection_process()
+    aggregate = {
+        "fixture_calls": sum(int(item.get("fixture_calls", 0)) for item in case_results),
+        "cost_fixture_calls": sum(int(item.get("cost_fixture_calls", 0)) for item in case_results),
+        "model_query_calls": sum(int(item.get("model_query_calls", 0)) for item in case_results),
+        "real_shell_launches": sum(int(item.get("real_shell_launches", 0)) for item in case_results),
+        "gateway_queries": sum(int(item.get("gateway_queries", 0)) for item in case_results),
+        "real_llm_api_calls": 0,
+    }
+    expected = {
+        "success": ("PASS", 2, 2),
+        "format_error": ("FORMAT_MISMATCH", 1, 0),
+        "endpoint_failure": ("ENDPOINT_FAILED", 2, 1),
+        "boundary_rejection": ("ENVIRONMENT_BLOCKED", 1, 0),
+    }
+    for result in case_results:
+        wanted = expected[result["case"]]
+        runtime_require((result["classification"], result["model_query_calls"],
+                         result["real_shell_launches"]) == wanted,
+                        f"offline case evidence mismatch: {result['case']}")
+    runtime_require(injection["classification"] == "SYNTHETIC_INJECTION_PASS",
+                    "synthetic injection case failed")
     output = {
         "classification": "OFFLINE_SELF_TEST",
         "implementation": "PASS",
         "real_llm_api_calls": 0,
         "cache_sha256": digest,
         "python": sys.version,
-        "platform": platform_value,
-        **evidence,
-        "credential_leak_check": (
-            SYNTHETIC_CREDENTIAL not in captured
-            and SYNTHETIC_CREDENTIAL not in json.dumps(evidence)
-            and all(SYNTHETIC_CREDENTIAL not in content for content in generated_files)
-        ),
+        "platform": sys.platform,
+        "startup_provenance": provenance_info,
+        "cases": case_results,
+        "aggregate": aggregate,
+        "synthetic_injection": injection,
+        "formal_config_read": False,
+        "real_key_read": False,
     }
-    runtime_require(output["credential_leak_check"], "synthetic credential leaked into output or temp files")
-    print(json.dumps(sanitize(output, secrets), ensure_ascii=True, indent=2))
+    print(json.dumps(sanitize(output, [SYNTHETIC_CREDENTIAL]), ensure_ascii=True, indent=2))
     print("REAL GATEWAY E2E: NOT RUN")
     print("FINAL: OFFLINE_SELF_TEST PASS")
     return 0
 
 
 def run_live(config_path: Path, cache: Path) -> int:
+    state = new_run_state("live", mode="live")
     secrets: list[str] = []
-    config = validate_live_config(config_path)
-    provenance_info = provenance()
-    # Validate and hash the prepared cache before touching the designated key.
-    digest = check_cache(cache)
-    key = os.environ.get("SMART_AGI_API_KEY", "")
-    require(key, "SMART_AGI_API_KEY is unavailable")
-    secrets.append(key)
-    scrub_environment()
-    evidence, _captured = quiet_call(
-        run_agent, mode="live", cache=cache, config=config, key=key, secrets=secrets,
-    )
+    try:
+        state["stage"] = "config"
+        config = validate_live_config(config_path)
+        state["stage"] = "provenance"
+        state["startup_provenance"] = provenance()
+        # Validate and hash the prepared cache before touching the designated key.
+        state["cache_sha256"] = check_cache(cache)
+        key = os.environ.get("SMART_AGI_API_KEY", "")
+        require(key, "SMART_AGI_API_KEY is unavailable")
+        secrets.append(key)
+        scrub_environment()
+        capture_sink: dict[str, str] = {}
+        quiet_call(
+            run_agent, mode="live", cache=cache, config=config, key=key,
+            secrets=secrets, state=state, capture_sink=capture_sink,
+        )
+        state["classification"] = "REAL_GATEWAY_E2E_PASS"
+        state["exit_code"] = 0
+    except BaseException as error:
+        state["classification"], state["exit_code"] = classify_failure(error)
+        state["safe_exception_class"] = type(error).__name__
+    evidence = build_run_evidence(state)
     output = {
-        "classification": "REAL_GATEWAY_E2E_PASS",
-        "implementation": "PASS",
-        "real_llm_api_calls": evidence.get("gateway_queries", 0),
+        "implementation": "PASS" if state["classification"] == "REAL_GATEWAY_E2E_PASS" else "NOT_RUN",
         "model": "gpt-5.6-sol",
         "routed_model": "openai/gpt-5.6-sol",
-        "cache_sha256": digest,
-        "startup_provenance": provenance_info,
         **evidence,
     }
     print(json.dumps(sanitize(output, secrets), ensure_ascii=True, indent=2))
-    print("FINAL: REAL_GATEWAY_E2E_PASS")
-    return 0
+    print(f"FINAL: {state['classification']}")
+    return int(state["exit_code"])
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -759,15 +1032,33 @@ def main(argv: list[str] | None = None) -> int:
     modes = parser.add_mutually_exclusive_group(required=True)
     modes.add_argument("--self-test", action="store_true")
     modes.add_argument("--live", action="store_true")
+    modes.add_argument("--credential-injection-test", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--self-test-case", choices=("success", "format_error", "endpoint_failure", "boundary_rejection"), help=argparse.SUPPRESS)
     parser.add_argument("--config", type=Path)
-    parser.add_argument("--cache", type=Path, required=True)
+    parser.add_argument("--cache", type=Path)
     args = parser.parse_args(argv)
+    if args.credential_injection_test:
+        if args.config or args.cache or args.self_test_case:
+            parser.error("--credential-injection-test accepts no config/cache/case")
+        try:
+            return run_credential_injection_test()
+        except Exception as error:
+            print(f"FINAL: FAIL ({type(error).__name__})")
+            return EXIT["FAIL"]
+    if not args.cache:
+        parser.error("--cache is required for this mode")
+    if args.self_test_case and not args.self_test:
+        parser.error("--self-test-case requires --self-test")
+    if args.self_test_case and args.config:
+        parser.error("--self-test-case does not accept --config")
     if args.self_test and args.config:
         parser.error("--self-test does not accept --config")
     if args.live and not args.config:
         parser.error("--live requires --config")
     try:
         if args.self_test:
+            if args.self_test_case:
+                return run_offline_case(args.cache, args.self_test_case)
             return run_self_test(args.cache)
         return run_live(args.config, args.cache)
     except ConfigBlocked as error:
