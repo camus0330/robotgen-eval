@@ -1,0 +1,30 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "model_comparison/batches/native_cad_addendum_v1.md": "f4d134570758b2d49518b6d748efba8a76cc32c12b64be42d065ff33fc591f02",
+    "model_comparison/batches/ubuntu_execution_20260923_v1.spec.json": "58d1e9bb1d03c75f257cf15d5c8cf5906be8c23a86842f63d08f1e1d1e47564f",
+    "model_comparison/batches/ubuntu_execution_20260923_v2.spec.json": "942070b9a5894508b2c1973076df59054acec80d2641442b2162194762193f99",
+    "model_comparison/records/api_smoke_20260923_v1/smoke.py": "fd4bbd2a4adfda1ce59e3972641053a1f51eea78c9a3b8657cf96860bac49908",
+    "model_comparison/records/api_smoke_20260923_v1/test_smoke.py": "9a8fa1a0a9e6ccce1f072eaf1f2c04e10acb0008213e74fc62abdc9157a6760d",
+    "model_comparison/records/deepseek_image_20260923_v1/README.md": "0268dad1c8d9e6efb637de2c0e98d57095b2e49f2e62c5433a9a71425c9dbc6b",
+    "model_comparison/records/deepseek_image_20260923_v1/preparation.json": "b74b691d6675f0b0988172cfb380edb1acfb528a1c1a03866f1006d919e2ca87",
+    "model_comparison/records/deepseek_image_20260923_v1/test_smoke.txt": "c5ccdd5bf94f785d07a5e48fea04823d9a284cd7f30d0acc3fccab0511cdcd95",
+    "model_comparison/records/ubuntu_execution_20260923_v1/PROMPT_ADDENDUM.md": "f4d134570758b2d49518b6d748efba8a76cc32c12b64be42d065ff33fc591f02",
+    "model_comparison/records/ubuntu_execution_20260923_v1/README.md": "e4c8ef6f5c798aa1f32cf70c3ba247b97ad9cd66acfe54cfdb39ad4ec78e34c6",
+    "model_comparison/records/ubuntu_execution_20260923_v1/model_A.config.json": "86c7c5452d21f8386cfeb9b413c2ea8f8baccebf91ea4bb32605f3efbf8ab650",
+    "model_comparison/records/ubuntu_execution_20260923_v1/plan.json": "3cb40fd7a8ffe7612877f7685d06128495a03a78f4f428f9072ec92ff3c1d864",
+    "model_comparison/records/ubuntu_execution_20260923_v1/preflight_01.json": "872171b46aa62e675a41b2f60ad9415dba71a8819d62e2704be4c78b0af0d86a",
+    "model_comparison/records/ubuntu_execution_20260923_v2/PROMPT_ADDENDUM.md": "f4d134570758b2d49518b6d748efba8a76cc32c12b64be42d065ff33fc591f02",
+    "model_comparison/records/ubuntu_execution_20260923_v2/README.md": "60ea5b5b3992b3c57894184ba6ab3c437546efa58bd01ee7030f619658ee76ea",
+    "model_comparison/records/ubuntu_execution_20260923_v2/model_A.config.json": "86c7c5452d21f8386cfeb9b413c2ea8f8baccebf91ea4bb32605f3efbf8ab650",
+    "model_comparison/records/ubuntu_execution_20260923_v2/plan.json": "924d1d6881d7b7bcf0ebfffa319530c5c28b4760407301d080f10548fd74c38d",
+    "model_comparison/records/ubuntu_execution_20260923_v2/preflight_01.json": "024745324cac998bbc8476ddf3a732fee536b15001daab7ca44049d5290fa434",
+    "model_comparison/records/ubuntu_execution_20260923_v2/test_pilot_batch.txt": "0089327865ffa45de52f24dfcfb34fbbaf10bd30904d4aa6f6423602a8dba126",
+    "model_comparison/records/ubuntu_execution_20260923_v2/verification.json": "d15a9496145fa47f7cbf1f0fa00527c65702fc185517d918ab3bed97142f6391",
+    "model_comparison/tests/test_pilot_batch.py": "588204efa2ac40479a5aa788f08ae01c03d0ce863ae4d14ad0356ed8436145e4",
+    "model_comparison/tools/pilot_batch.py": "444635ae5cf53210aa93d52e9653151f0c4bc078770b3454d7654cbd2628bb43",
+    "model_comparison/tools/pilot_evaluate.py": "16e39c1dcc5b878c866ce20a5ef52c598af9d54b93200124178140c38c704a82",
+    "model_comparison/tools/pilot_restored.py": "c0415f8d92ffea7c1fdaa4e5dd32fd987a88824d9d31d71fe75fef3e8adbc814",
+    "model_comparison/tools/pilot_run.py": "7d9e863e77e5ba282d41ab5dd78d33ef12049bd5f369a4a1a9283e67c90c7006"
+  }
+}

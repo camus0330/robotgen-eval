@@ -4,6 +4,7 @@ import contextlib
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -26,6 +27,55 @@ def completion(text="OK", finish="stop"):
 
 
 class SmokeTests(unittest.TestCase):
+    def test_new_image_only_mode_never_enters_old_flow(self):
+        sent=[]
+        def handler(request):
+            sent.append(json.loads(request.content))
+            return httpx.Response(200,json=completion('synthetic image description'))
+        with tempfile.TemporaryDirectory() as directory:
+            transport=DefaultHttpxClient(transport=httpx.MockTransport(handler),follow_redirects=False)
+            with patch.object(smoke,'IMAGE_ONLY_BATCH',Path(directory)), \
+                 patch.object(smoke,'BATCH',smoke.BATCH), \
+                 patch.object(smoke,'DefaultHttpxClient',return_value=transport), \
+                 patch.object(smoke,'other_smoke_processes',return_value=[]), \
+                 patch.dict(os.environ,{'SMART_AGI_API_KEY':KEY}), \
+                 patch.object(smoke,'run_checks',side_effect=AssertionError('old flow forbidden')), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(smoke.main(['--image-only']),0)
+            self.assertEqual(len(sent),1)
+            self.assertEqual(sent[0]['model'],'deepseek-v4-pro')
+            self.assertEqual(sent[0]['max_tokens'],1024)
+            self.assertEqual(sent[0]['messages'][0]['content'][0]['text'],smoke.IMAGE_PROMPT)
+            record=json.loads((Path(directory)/'live/1_deepseek-v4-pro.json').read_text())
+            self.assertNotIn('exact_OK',record)
+            self.assertIsNone(record['answer_matches_image'])
+            self.assertEqual(json.loads((Path(directory)/'live/environment.json').read_text())['max_chat_requests'],1)
+
+    def test_image_cancellation_is_durable_without_replay(self):
+        sent=[]
+        def handler(request):
+            sent.append(True)
+            raise KeyboardInterrupt()
+        with tempfile.TemporaryDirectory() as directory:
+            transport=DefaultHttpxClient(transport=httpx.MockTransport(handler),follow_redirects=False)
+            with OpenAI(api_key=KEY,base_url=smoke.BASE_URL,max_retries=0,timeout=120.0,http_client=transport) as client, \
+                 contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaises(KeyboardInterrupt):smoke.run_image_only(client,KEY,Path(directory))
+            result=json.loads((Path(directory)/'1_deepseek-v4-pro.json').read_text())
+            self.assertEqual(result['outcome'],'INTERRUPTED_OUTCOME_UNKNOWN')
+            self.assertIsNone(result['http_status'])
+            self.assertEqual(len(sent),1)
+
+    def test_public_refusal_is_preserved_without_visual_pass(self):
+        response=completion(None)
+        response['choices'][0]['message']['refusal']='Synthetic image refusal'
+        status,files=self.exercise(lambda request:httpx.Response(200,json=response))
+        self.assertEqual(status,2)
+        record=files['1_glm-5.3.json']
+        self.assertEqual(record['refusal'],'Synthetic image refusal')
+        self.assertEqual(record['outcome'],'REFUSAL')
+        self.assertFalse(record['valid_completion'])
+
     def exercise(self, handler):
         with tempfile.TemporaryDirectory() as directory:
             run = Path(directory)

@@ -83,8 +83,9 @@ def checked_copy(path, content):
         stream.write(content)
 
 
-def bind_inputs():
+def bind_inputs(destination=None):
     """Bind exact baseline Git bytes, never normalize or refresh frozen originals."""
+    kit = Path(destination) if destination is not None else KIT
     manifest_bytes = git_blob("model_comparison/records/input_manifest.json")
     expected = json.loads(manifest_bytes)["files"]
     observed = []
@@ -93,13 +94,13 @@ def bind_inputs():
         content = git_blob("model_comparison/inputs/" + relative)
         if digest(content) != item["sha256"]:
             raise ValueError("Baseline input hash mismatch")
-        checked_copy(KIT / "inputs" / relative, content)
+        checked_copy(kit / "inputs" / relative, content)
         working = (ROOT / "model_comparison/inputs" / relative).read_bytes()
         observed.append({**item, "checkout_sha256": digest(working),
                          "checkout_exact": working == content,
                          "checkout_crlf_only": working.replace(b"\r\n", b"\n") == content})
-    checked_copy(KIT / "records/input_manifest.json", manifest_bytes)
-    checked_copy(KIT / "tools/experiment.py", git_blob("model_comparison/tools/experiment.py"))
+    checked_copy(kit / "records/input_manifest.json", manifest_bytes)
+    checked_copy(kit / "tools/experiment.py", git_blob("model_comparison/tools/experiment.py"))
     return observed
 
 
@@ -137,13 +138,18 @@ def preflight(batch=None):
     admission = (json.loads(admission_path.read_text(encoding="utf-8"))
                  if admission_path.is_file() else {"cases": []})
     admitted = [case for case in admission["cases"] if case.get("completion_succeeded") is True]
-    generation_ready = bool(admitted and cache_ok and client_ok)
+    # Runtime-only legacy preflight cannot authorize a new robot experiment.
+    # Batch-bound channel/authorization gates live in pilot_restored --plan.
+    generation_ready = False
     result = {"time": stamp(), "classification": "READY" if generation_ready else "ACCESS_BLOCKED", "python": sys.executable,
               "python_version": sys.version.split()[0], "versions": versions, "upstream_sha": upstream,
               "client_provenance_pass": client_ok, "cache_path": str(CACHE),
               "cache_sha256": CACHE_SHA if cache_ok else None, "cache_pass": cache_ok,
               "input_binding": inputs, "canonical_kit": str(KIT), "input_baseline": BASELINE,
               "admission_evidence_present": admission_path.is_file(),
+              "runtime_available": bool(cache_ok and client_ok),
+              "channel_admitted": False, "experiment_authorized": False,
+              "authorization_reason": "Use pilot_restored preflight with an explicit v2 batch plan",
               "selected_credential_present": bool(os.environ.get("SMART_AGI_API_KEY", "").strip()),
               "admission": admission["cases"], "admitted_candidates": len(admitted), "generation_ready": generation_ready,
               "image_binding": "PLANNED: identical original PNG bytes as image_url data URI, once per instance; NOT_SENT",

@@ -1,0 +1,65 @@
+{
+  "evidence_category": "AUTHOR_LOCAL_VERIFICATION",
+  "recorded_at": "2026-09-23T15:13:15.463707+00:00",
+  "start_sha": "94d25ec9459ccff9d64d786d920552b1af99f445",
+  "branch": "deadline/alternate-access-20260923",
+  "plan_sha256": "924d1d6881d7b7bcf0ebfffa319530c5c28b4760407301d080f10548fd74c38d",
+  "model_requests": 0,
+  "real_robot_generation": "NOT_RUN",
+  "real_frozen_robot_output": "NOT_CREATED",
+  "real_independent_robot_evaluation": "NOT_RUN",
+  "web_reviewer_verification": "NOT_PERFORMED",
+  "commands": [
+    {
+      "command": ".tools/pilot-client/bin/python -B model_comparison/tools/pilot_restored.py prepare --spec model_comparison/batches/ubuntu_execution_20260923_v2.spec.json --plan model_comparison/records/ubuntu_execution_20260923_v2/plan.json",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/pilot-client/bin/python -B model_comparison/tools/pilot_restored.py preflight --plan model_comparison/records/ubuntu_execution_20260923_v2/plan.json --result results/pilot_20260923/ubuntu_execution_20260923_v2/preflight_01.json",
+      "exit_code": 2,
+      "classification": "ACCESS_BLOCKED",
+      "evidence": "preflight_01.json"
+    },
+    {
+      "command": ".tools/pilot-client/bin/python -B model_comparison/tools/pilot_restored.py run --plan model_comparison/records/ubuntu_execution_20260923_v2/plan.json --slot model_A",
+      "exit_code": 2,
+      "stderr": {
+        "classification": "CONFIG_OR_GATE_BLOCKED",
+        "error_class": "ValueError",
+        "message": "generation blocked before client setup: ACCESS_BLOCKED"
+      }
+    },
+    {
+      "command": ".tools/pilot-client/bin/python -I -B -m unittest discover -s model_comparison/tests -p test_pilot_batch.py -v",
+      "exit_code": 0,
+      "tests": 9,
+      "evidence": "test_pilot_batch.txt",
+      "mode": "OFFLINE_MOCKED_BOUNDARIES"
+    },
+    {
+      "command": ".tools/api-smoke/bin/python -B -m unittest discover -s model_comparison/records/api_smoke_20260923_v1 -p test_smoke.py -v",
+      "exit_code": 0,
+      "tests": 10,
+      "evidence": "../deepseek_image_20260923_v1/test_smoke.txt",
+      "mode": "SYNTHETIC_MOCK_TRANSPORT"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "local_artifacts": {
+    "kit": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/input_kit",
+    "output_root": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "results_root": "results/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "record_root": "model_comparison/records/ubuntu_execution_20260923_v2",
+    "addendum": "model_comparison/records/ubuntu_execution_20260923_v2/PROMPT_ADDENDUM.md"
+  },
+  "runtime_validation": "reuse historical restoration evidence and passive file/package metadata; no repeated environment/CAD execution",
+  "initial_test_fixture_failure": "In-process fake worker scrubbed parent environment; fixture now restores child environment boundary. Final suite passed.",
+  "remaining_blockers": [
+    "A: Key absent; one getpass terminal request pending",
+    "B: no batch-bound Harness/image admission",
+    "B: formal budget/deadline/robot authorization absent"
+  ]
+}

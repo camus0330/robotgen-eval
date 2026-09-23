@@ -1,0 +1,14 @@
+test_accepted_intake_passes_explicit_kit_to_rebuild_and_measurement (test_pilot_batch.BatchPlumbing.test_accepted_intake_passes_explicit_kit_to_rebuild_and_measurement) ... ok
+test_independent_negative_gates (test_pilot_batch.BatchPlumbing.test_independent_negative_gates) ... ok
+test_legacy_runtime_preflight_cannot_authorize_generation (test_pilot_batch.BatchPlumbing.test_legacy_runtime_preflight_cannot_authorize_generation) ... ok
+test_old_sdk_or_other_config_admission_cannot_open_gate (test_pilot_batch.BatchPlumbing.test_old_sdk_or_other_config_admission_cannot_open_gate) ... ok
+test_parent_and_direct_worker_block_before_client_or_output (test_pilot_batch.BatchPlumbing.test_parent_and_direct_worker_block_before_client_or_output) ... ok
+test_positive_gate_and_existing_evidence_not_overwritten (test_pilot_batch.BatchPlumbing.test_positive_gate_and_existing_evidence_not_overwritten) ... ok
+test_real_worker_message_cad_flag_snapshots_and_evaluator_paths (test_pilot_batch.BatchPlumbing.test_real_worker_message_cad_flag_snapshots_and_evaluator_paths) ... ok
+test_standalone_worker_refuses_existing_journal_and_extra_kit_files (test_pilot_batch.BatchPlumbing.test_standalone_worker_refuses_existing_journal_and_extra_kit_files) ... ok
+test_switching_explicit_batches_does_not_reuse_old_paths (test_pilot_batch.BatchPlumbing.test_switching_explicit_batches_does_not_reuse_old_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.377s
+
+OK

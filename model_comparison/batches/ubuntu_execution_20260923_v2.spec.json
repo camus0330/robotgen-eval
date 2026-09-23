@@ -1,0 +1,59 @@
+{
+  "schema_version": "pilot-restored-batch/2",
+  "batch_id": "ubuntu_execution_20260923_v2",
+  "mode": "PILOT_RESTORED",
+  "paths": {
+    "kit": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/input_kit",
+    "output_root": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "results_root": "results/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "record_root": "model_comparison/records/ubuntu_execution_20260923_v2",
+    "addendum": "model_comparison/records/ubuntu_execution_20260923_v2/PROMPT_ADDENDUM.md"
+  },
+  "addendum_source": "model_comparison/batches/native_cad_addendum_v1.md",
+  "models": {
+    "model_A": {
+      "provider": "smart_agi_gateway",
+      "model": "deepseek-v4-pro",
+      "base_url": "https://big-model.smart-agi.com/v1",
+      "api_path": "/chat/completions",
+      "api_key_env": "SMART_AGI_API_KEY",
+      "request": {
+        "timeout_s": 120,
+        "max_retries": 0,
+        "stream": false,
+        "temperature": 0,
+        "max_tokens": null
+      }
+    }
+  },
+  "run_names": {
+    "model_A": "deepseek_robot_01"
+  },
+  "serial_order": [
+    "model_A"
+  ],
+  "runtime": {
+    "client_python": ".tools/pilot-client/bin/python",
+    "cad_venv": ".tools/cad-runtime",
+    "cache": ".tools/tiktoken-cache",
+    "evidence": {
+      "path": "model_comparison/records/runtime_restore_20260923_v1/restoration.json",
+      "sha256": "913595bf1ba5eaa64948834ca17b4f766faf7b2144c0149b95c1e1bd0c60e193"
+    }
+  },
+  "deadline": null,
+  "authorization": {
+    "robot_generation": false,
+    "source": null
+  },
+  "budget": {
+    "scope": "per_run",
+    "wall_time_s": null,
+    "max_queries": null,
+    "cost_limit": null,
+    "cost_limit_semantics": "library_estimate_usd_not_billing_cap",
+    "max_consecutive_format_errors": null,
+    "provider_retries": 0,
+    "human_design_edits": 0
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "provider": "smart_agi_gateway",
+  "model": "deepseek-v4-pro",
+  "base_url": "https://big-model.smart-agi.com/v1",
+  "api_path": "/chat/completions",
+  "api_key_env": "SMART_AGI_API_KEY",
+  "request": {
+    "timeout_s": 120,
+    "max_retries": 0,
+    "stream": false,
+    "temperature": 0,
+    "max_tokens": null
+  }
+}

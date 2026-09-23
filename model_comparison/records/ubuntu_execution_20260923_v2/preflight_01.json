@@ -1,0 +1,15 @@
+{
+  "batch_id": "ubuntu_execution_20260923_v2",
+  "plan_sha256": "924d1d6881d7b7bcf0ebfffa319530c5c28b4760407301d080f10548fd74c38d",
+  "runtime_available": true,
+  "channel_admitted": {
+    "model_A": false
+  },
+  "experiment_authorized": false,
+  "credential_available": {
+    "model_A": false
+  },
+  "generation_ready": false,
+  "classification": "ACCESS_BLOCKED",
+  "exit_code": 2
+}

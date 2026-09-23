@@ -21,6 +21,7 @@ IMAGE = ROOT / "model_comparison/inputs/assets/reference.png"
 BASE_URL = "https://big-model.smart-agi.com/v1"
 TARGET = BASE_URL + "/chat/completions"
 IMAGE_PROMPT = "仅根据附图，描述主体的姿态、主要颜色和三项可见结构细节。不清楚的地方明确说明，不推测尺寸，不生成设计或代码。"
+IMAGE_ONLY_BATCH = ROOT / "model_comparison/records/deepseek_image_20260923_v1"
 
 
 def stamp():
@@ -50,8 +51,9 @@ def save(path, data, key):
 def request_once(client, key, run, index, model, messages, max_tokens, image_sha=None):
     record = dict(request_model=model, expected_target=TARGET, actual_target=None,
                   started_at=stamp(), elapsed_s=None, http_status=None,
-                  reply=None, error=None, returned_model=None, finish_reason=None,
+                  reply=None, refusal=None, error=None, returned_model=None, finish_reason=None,
                   usage=None, request_id=None, client_max_retries=0,
+                  identity_level="gateway_declared", upstream_identity_verified=False,
                   outcome="STARTED_OUTCOME_UNKNOWN", valid_completion=False,
                   image_sha256=image_sha, image_in_request=image_sha is not None,
                   image_send_attempted=False, image_server_accepted=None,
@@ -81,24 +83,28 @@ def request_once(client, key, run, index, model, messages, max_tokens, image_sha
         response = raw.parse()
         choice = response.choices[0] if response.choices else None
         content = choice.message.content if choice else None
+        refusal = getattr(choice.message, "refusal", None) if choice else None
         finish = choice.finish_reason if choice else None
         usage = response.usage
-        record.update(returned_model=response.model, reply=content,
+        record.update(returned_model=response.model, reply=content, refusal=refusal,
                       finish_reason=finish,
                       usage={name: getattr(usage, name, None) for name in
                              ("prompt_tokens", "completion_tokens", "total_tokens")}
                       if usage else None)
         nonempty = isinstance(content, str) and bool(content.strip())
-        record["valid_completion"] = nonempty and finish == "stop"
-        record["outcome"] = ("EMPTY_CONTENT" if not nonempty else
+        record["valid_completion"] = nonempty and finish == "stop" and not refusal
+        record["outcome"] = ("REFUSAL" if refusal else "EMPTY_CONTENT" if not nonempty else
                              "LENGTH_LIMIT" if finish == "length" else
                              "VALID_COMPLETION" if finish == "stop" else
                              "OTHER_FINISH_REASON")
-        if index == 1:
+        if model == "glm-5.3":
             record["exact_OK"] = content == "OK"
         if image_sha:
             record["image_server_accepted"] = True
             record["visual_review"] = "PENDING_MANUAL_COMPARISON_WITH_ORIGINAL_PNG"
+    except KeyboardInterrupt:
+        record.update(outcome="INTERRUPTED_OUTCOME_UNKNOWN", error={"class": "KeyboardInterrupt"})
+        raise
     except APIStatusError as error:
         record.update(http_status=error.status_code, request_id=error.request_id,
                       outcome="HTTP_ERROR_OUTCOME_UNKNOWN")
@@ -138,6 +144,19 @@ def run_checks(client, key, run):
     return 0 if second["valid_completion"] else 2
 
 
+def run_image_only(client, key, run):
+    """One new authorization, no call to the historical two-request workflow."""
+    data = IMAGE.read_bytes()
+    if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+        raise ValueError("reference image is not PNG")
+    messages = [{"role": "user", "content": [
+        {"type": "text", "text": IMAGE_PROMPT},
+        {"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(data).decode("ascii")}}]}]
+    result = request_once(client, key, run, 1, "deepseek-v4-pro", messages, 1024,
+                          hashlib.sha256(data).hexdigest())
+    return 0 if result["valid_completion"] else 2
+
+
 def validate_run(run, resume_unstarted):
     if not run.exists():
         return
@@ -175,7 +194,7 @@ def other_smoke_processes():
     return found
 
 
-def locked_main(resume_unstarted):
+def locked_main(resume_unstarted, image_only=False):
     run = BATCH / "live"
     try:
         validate_run(run, resume_unstarted)
@@ -194,12 +213,12 @@ def locked_main(resume_unstarted):
                           "model_requests": 0}), flush=True)
         return 3
     try:
-        return authenticated_main(run, transport)
+        return authenticated_main(run, transport, image_only=image_only)
     finally:
         transport.close()
 
 
-def authenticated_main(run, transport):
+def authenticated_main(run, transport, image_only=False):
     # Process-local only: inherited SDK debug logging must not dump bodies or
     # headers. All permitted evidence is emitted explicitly below.
     logging.disable(logging.CRITICAL)
@@ -222,7 +241,7 @@ def authenticated_main(run, transport):
     save(record, {
         "started_at": stamp(), "sdk": "openai",
         "sdk_version": importlib.metadata.version("openai"),
-        "python": sys.version.split()[0], "max_chat_requests": 2,
+        "python": sys.version.split()[0], "max_chat_requests": 1 if image_only else 2,
         "client_max_retries": 0, "timeout_s": 120.0,
         "proxy_policy": "inherited unchanged; no headers or proxy values logged",
         "scope": "CHANNEL_SMOKE_ONLY_NOT_HARNESS_ADMISSION_OR_ROBOT_GENERATION"
@@ -230,14 +249,21 @@ def authenticated_main(run, transport):
     # Disable redirect following so credentials and requests stay on TARGET.
     with OpenAI(api_key=key, base_url=BASE_URL, max_retries=0, timeout=120.0,
                 http_client=transport) as client:
-        return run_checks(client, key, run)
+        return run_image_only(client, key, run) if image_only else run_checks(client, key, run)
 
 
 def main(argv=None):
+    global BATCH
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--resume-unstarted", action="store_true",
                         help="resume only an inspected environment-only startup; never replay requests")
+    parser.add_argument("--image-only", action="store_true", help="one newly authorized image request in its own fixed batch")
     args = parser.parse_args(argv)
+    if args.image_only:
+        if args.resume_unstarted:
+            parser.error("image-only is a new batch, not recovery of an old attempt")
+        BATCH = IMAGE_ONLY_BATCH
+        BATCH.mkdir(parents=True, exist_ok=True)
     logging.disable(logging.CRITICAL)
     # A process-wide lock spans both prechecks and getpass. Legacy invocations
     # without this lock are also detected before proceeding.
@@ -247,7 +273,10 @@ def main(argv=None):
         except BlockingIOError:
             print("Another smoke process holds the lock; no request made.", file=sys.stderr)
             return 4
-        return locked_main(args.resume_unstarted)
+        try:
+            return locked_main(args.resume_unstarted, image_only=args.image_only)
+        except KeyboardInterrupt:
+            return 130
 
 
 if __name__ == "__main__":

@@ -1,0 +1,128 @@
+{
+  "schema_version": "pilot-restored-batch/2",
+  "batch_id": "ubuntu_execution_20260923_v2",
+  "mode": "PILOT_RESTORED",
+  "paths": {
+    "kit": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/input_kit",
+    "output_root": "outputs/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "results_root": "results/pilot_20260923/ubuntu_execution_20260923_v2/runs",
+    "record_root": "model_comparison/records/ubuntu_execution_20260923_v2",
+    "addendum": "model_comparison/records/ubuntu_execution_20260923_v2/PROMPT_ADDENDUM.md"
+  },
+  "addendum_source": "model_comparison/batches/native_cad_addendum_v1.md",
+  "models": {
+    "model_A": {
+      "provider": "smart_agi_gateway",
+      "model": "deepseek-v4-pro",
+      "base_url": "https://big-model.smart-agi.com/v1",
+      "api_path": "/chat/completions",
+      "api_key_env": "SMART_AGI_API_KEY",
+      "request": {
+        "timeout_s": 120,
+        "max_retries": 0,
+        "stream": false,
+        "temperature": 0,
+        "max_tokens": null
+      }
+    }
+  },
+  "run_names": {
+    "model_A": "deepseek_robot_01"
+  },
+  "serial_order": [
+    "model_A"
+  ],
+  "runtime": {
+    "client_python": ".tools/pilot-client/bin/python",
+    "cad_venv": ".tools/cad-runtime",
+    "cache": ".tools/tiktoken-cache",
+    "evidence": {
+      "path": "model_comparison/records/runtime_restore_20260923_v1/restoration.json",
+      "sha256": "913595bf1ba5eaa64948834ca17b4f766faf7b2144c0149b95c1e1bd0c60e193"
+    }
+  },
+  "deadline": null,
+  "authorization": {
+    "robot_generation": false,
+    "source": null
+  },
+  "budget": {
+    "scope": "per_run",
+    "wall_time_s": null,
+    "max_queries": null,
+    "cost_limit": null,
+    "cost_limit_semantics": "library_estimate_usd_not_billing_cap",
+    "max_consecutive_format_errors": null,
+    "provider_retries": 0,
+    "human_design_edits": 0
+  },
+  "frozen_input_baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b",
+  "input_files": [
+    {
+      "path": "PROMPT.md",
+      "sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2"
+    },
+    {
+      "path": "SUBMISSION_SPEC.md",
+      "sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb"
+    },
+    {
+      "path": "TASK_SPEC.md",
+      "sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206"
+    },
+    {
+      "path": "assets/reference.png",
+      "sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+    },
+    {
+      "path": "assets/xl330_m288_t.step",
+      "sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6"
+    },
+    {
+      "path": "environment.lock.txt",
+      "sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d"
+    },
+    {
+      "path": "legacy_digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b"
+    },
+    {
+      "path": "legacy_metrics_reference.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041"
+    },
+    {
+      "path": "motion_profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3"
+    },
+    {
+      "path": "robustness_cases_public.jsonl",
+      "sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466"
+    },
+    {
+      "path": "templates/design_manifest.json",
+      "sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a"
+    },
+    {
+      "path": "templates/submission.json",
+      "sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc"
+    }
+  ],
+  "input_manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+  "addendum_sha256": "f4d134570758b2d49518b6d748efba8a76cc32c12b64be42d065ff33fc591f02",
+  "system_prompt_sha256": "a3773e9cb3f50b137400ba44246653bb795658d7e6b1e9f98f35ba8fb90ed21c",
+  "code_sha256": {
+    "model_comparison/tools/pilot_batch.py": "444635ae5cf53210aa93d52e9653151f0c4bc078770b3454d7654cbd2628bb43",
+    "model_comparison/tools/pilot_restored.py": "c0415f8d92ffea7c1fdaa4e5dd32fd987a88824d9d31d71fe75fef3e8adbc814",
+    "model_comparison/tools/pilot_run.py": "7d9e863e77e5ba282d41ab5dd78d33ef12049bd5f369a4a1a9283e67c90c7006",
+    "model_comparison/tools/pilot_sandbox.py": "7fec39fc751846638e17ea08cec7f7254926412fd02165fff9ad273ef8b65f15",
+    "model_comparison/tools/pilot_snapshot.py": "94fd0ac46631f007cab10bf466c6e3e5fe28efc94fe964b0f791ae3227636f70",
+    "model_comparison/tools/pilot_cad.py": "b287f326ed21e88d34934364e0fc5c542f96bed4212dd987885e79f8b8db48fa",
+    "model_comparison/tools/pilot_evaluate.py": "16e39c1dcc5b878c866ce20a5ef52c598af9d54b93200124178140c38c704a82",
+    "model_comparison/tools/experiment.py": "a206da02af2fde073e6aaf19783bcbaaf56b2d47ae05226bb9eac0f97b85dbe2",
+    "model_comparison/spikes/mini_swe_gateway_agent_e2e.py": "3839dc36b5a9e604a7581d8128e09f0ca7fe59c535925ffe0c0a8a4dc481e1ce"
+  }
+}

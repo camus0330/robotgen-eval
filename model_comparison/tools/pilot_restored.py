@@ -11,6 +11,8 @@ import subprocess
 import sys
 import tempfile
 import time
+import uuid
+import pilot_batch as batch_config
 
 from pilot_run import ROOT, KIT, CACHE, SYSTEM_PROMPT, stamp
 from pilot_snapshot import safe_snapshot, SnapshotRejected
@@ -28,6 +30,53 @@ ALLOWED = {model for values in CANDIDATES.values() for model in values[1:]}
 DEADLINE = dt.datetime(2026, 9, 23, 4, tzinfo=dt.timezone.utc)
 CLIENT = Path(sys.executable)
 MULTIMODAL = r"(?s)<MSWEA_MULTIMODAL_CONTENT><CONTENT_TYPE>(.+?)</CONTENT_TYPE>(.+?)</MSWEA_MULTIMODAL_CONTENT>"
+ACTIVE_PLAN = None
+
+
+def activate_batch(plan):
+    """One CLI process owns one explicit batch; every worker reloads its plan."""
+    global ACTIVE_PLAN, BATCH, KIT, CACHE, RECORD, RUNTIME, OUTPUT, CLIENT, CANDIDATES, ALLOWED, DEADLINE
+    ACTIVE_PLAN = plan
+    BATCH = plan["batch_id"]
+    KIT, OUTPUT, RUNTIME, RECORD = (batch_config.local(plan["paths"][k])
+                                   for k in ("kit", "output_root", "results_root", "record_root"))
+    CACHE = batch_config.local(plan["runtime"]["cache"])
+    CLIENT = batch_config.local(plan["runtime"]["client_python"], interpreter=True)
+    CANDIDATES = {s: (c["provider"], c["model"]) for s, c in plan["models"].items()}
+    ALLOWED = {c["model"] for c in plan["models"].values()}
+    DEADLINE = dt.datetime.fromisoformat(plan["deadline"]) if plan["deadline"] else None
+    import pilot_sandbox
+    pilot_sandbox.CAD_VENV = str(batch_config.local(plan["runtime"]["cad_venv"]))
+
+
+def run_name(plan, slot):
+    return plan["run_names"][slot] if plan.get("schema_version") == batch_config.SCHEMA else slot
+
+
+def require_generation(plan, plan_path, admission_path, slot):
+    if plan.get("schema_version") != batch_config.SCHEMA:
+        raise ValueError("historical generation entry disabled; explicit v2 batch plan required")
+    gate = batch_config.gates(plan, plan_path, admission_path, slot)
+    if not gate["generation_ready"]:
+        raise ValueError("generation blocked before client setup: " + gate["classification"])
+    return gate
+
+
+def client_environment(plan):
+    # Process-only allowlist; retain the working HTTP(S)/NO_PROXY values. Never
+    # inject the historical NO_PROXY='*', ALL_PROXY or Python startup paths.
+    allowed = ("PATH", "LANG", "LC_ALL", "HOME", "TMPDIR", "SSL_CERT_FILE", "SSL_CERT_DIR",
+               "HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy", "NO_PROXY", "no_proxy")
+    env = {k: os.environ[k] for k in allowed if k in os.environ}
+    for config in plan["models"].values():
+        name = config["api_key_env"]
+        if name in os.environ:
+            env[name] = os.environ[name]
+    env.update(PYTHON_DOTENV_DISABLED="1", MSWEA_SILENT_STARTUP="1",
+               LITELLM_LOCAL_MODEL_COST_MAP="True", LITELLM_MODE="PRODUCTION",
+               MSWEA_MODEL_RETRY_STOP_AFTER_ATTEMPT="1",
+               ROBOTGEN_CAD_VENV=str(batch_config.local(plan["runtime"]["cad_venv"])))
+    return env
 
 
 def read(path):
@@ -69,6 +118,11 @@ def write_config(path, model):
 
 
 def validate_config(config, model):
+    if ACTIVE_PLAN is not None:
+        batch_config.validate_config(config)
+        if config.get("model") != model or config not in ACTIVE_PLAN["models"].values():
+            raise ValueError("model config differs from this explicit batch plan")
+        return
     if model not in ALLOWED or config != new_config(model):
         raise ValueError("config must match exact reviewed endpoint, model, credential source and request policy")
 
@@ -135,21 +189,35 @@ def error_fields(error, key):
 
 def client_setup(model_id, config, work):
     validate_config(config, model_id)  # MUST precede credential access/imports.
-    key = os.environ.get("SMART_AGI_API_KEY","")
+    key = os.environ.get(config.get("api_key_env", "SMART_AGI_API_KEY"), "")
     if not key.strip():
         raise ValueError("CONFIG_BLOCKED: selected credential absent")
     sys.path.insert(0, str(ROOT / "model_comparison/spikes"))
     from mini_swe_gateway_agent_e2e import scrub_environment, check_cache, provenance, import_upstream
-    scrub_environment()
+    if ACTIVE_PLAN is None:
+        scrub_environment()
+    else:
+        env = client_environment(ACTIVE_PLAN)
+        # The client retains the selected key only in memory; tools get a fresh
+        # empty environment through the unchanged bubblewrap executor.
+        for c in ACTIVE_PLAN["models"].values():
+            env.pop(c["api_key_env"], None)
+        os.environ.clear()
+        os.environ.update(env)
     global_dir = work / "global-config"
     global_dir.mkdir(parents=True, exist_ok=False)
     os.environ["MSWEA_GLOBAL_CONFIG_DIR"] = str(global_dir)
     check_cache(CACHE)
     verified = provenance()
     Agent, _, Model = import_upstream(CACHE)
+    kwargs = {"api_base": config["base_url"] if ACTIVE_PLAN else "https://big-model.smart-agi.com/v1",
+              "api_key": key, "timeout": config["request"]["timeout_s"],
+              "max_retries": 0, "num_retries": 0, "stream": False}
+    for name in ("temperature", "max_tokens"):
+        if config["request"].get(name) is not None:
+            kwargs[name] = config["request"][name]
     model = Model(model_name="openai/"+model_id, multimodal_regex=MULTIMODAL, cost_tracking="ignore_errors",
-                  model_kwargs={"api_base":"https://big-model.smart-agi.com/v1", "api_key":key,
-                                "timeout":600,"max_retries":0,"num_retries":0,"stream":False})
+                  model_kwargs=kwargs)
     return Agent, Model, model, key, verified
 
 
@@ -159,6 +227,9 @@ def observe_queries(Model, state, save, deadline):
             if event == "call":
                 if time.monotonic() >= deadline:
                     raise TimeoutError("attempt budget exhausted before query")
+                limit = state.get("budget", {}).get("max_queries")
+                if limit is not None and state["client_query_calls"] >= limit:
+                    raise TimeoutError("query budget exhausted before provider call")
                 state["client_query_calls"] += 1
                 state["query_records"].append({"started_at":stamp(), "image_url_at_model_boundary":has_image(frame.f_locals["messages"])})
                 save()
@@ -213,6 +284,11 @@ def admission_worker(model_id, plan_path, config_path, result_path):
 
 
 def selected(plan, admission, slot):
+    if plan.get("schema_version") == batch_config.SCHEMA:
+        # Binding to the plan hash is checked at all executable entrypoints.
+        if batch_config.channel_gate(plan, plan["_plan_sha256"], admission, slot):
+            return plan["models"][slot]["model"]
+        return None
     assert plan["batch_id"] == admission["batch_id"] == BATCH
     candidates = plan["candidates"][slot][1:]
     for model in candidates:
@@ -267,6 +343,11 @@ def admission_batch(plan_path, output):
 
 def verify_plan(plan_path):
     plan = read(plan_path)
+    if plan.get("schema_version") == batch_config.SCHEMA:
+        batch_config.verify(plan)
+        activate_batch(plan)
+        plan["_plan_sha256"] = sha(plan_path)
+        return plan
     if plan["batch_id"] != BATCH or plan["candidates"] != {k:list(v) for k,v in CANDIDATES.items()}:
         raise ValueError("wrong batch/candidates")
     if sha(RECORD / "PROMPT_ADDENDUM.md") != plan["addendum_sha256"]:
@@ -279,8 +360,16 @@ def verify_plan(plan_path):
     return plan
 
 
-def preflight_batch(plan_path, admission_path):
+def preflight_batch(plan_path, admission_path, result_path=None):
     plan = verify_plan(plan_path)
+    if plan.get("schema_version") == batch_config.SCHEMA:
+        evidence = batch_config.gates(plan, plan_path, admission_path)
+        target = result_path or RUNTIME.parent / ("preflight_" + uuid.uuid4().hex + ".json")
+        if not Path(target).absolute().is_relative_to(RUNTIME.parent):
+            raise ValueError("preflight evidence must stay in this batch")
+        batch_config.write_new(target, evidence)
+        print(json.dumps(dict(evidence, evidence_path=str(target))), flush=True)
+        return evidence["exit_code"]
     admission = read(admission_path)
     if admission.get("plan_sha256") != sha(plan_path): raise ValueError("admission bound to another plan")
     models = {slot:selected(plan,admission,slot) for slot in CANDIDATES}
@@ -296,8 +385,8 @@ def preflight_batch(plan_path, admission_path):
 def operator_metadata(slot, model_id, run_id, state):
     return {"submission_id":run_id.replace("/","_"),"model_slot":slot,"phase":"pilot","attempt":1,
             "status":"COMPLETED" if state.get("exit_status")=="Submitted" and state.get("model_wrote_submission") is True else "GENERATION_FAILED",
-            "model_provider":"Smart AGI Gateway (gateway_declared)","model_exact_version":model_id,
-            "invocation_mode":"DefaultAgent text action / WSL bubblewrap CAD", "session_id":run_id,
+            "model_provider":(ACTIVE_PLAN["models"][slot]["provider"] if ACTIVE_PLAN else "Smart AGI Gateway") + " (gateway_declared)","model_exact_version":model_id,
+            "invocation_mode":"DefaultAgent text action / native Linux bubblewrap CAD", "session_id":run_id,
             "generation_seed":None,"input_manifest_sha256":sha(KIT / "records/input_manifest.json"),
             "prompt_sha256":sha(KIT / "inputs/PROMPT.md"),"actual_elapsed_s":state.get("actual_elapsed_s",0),
             "feedback_rounds":0,"human_edit_minutes":0,"human_edits":[],"actual_cost":None,"usage_tokens":None,
@@ -323,23 +412,32 @@ def query_timeout(budget, calls, remaining):
 
 def pilot_worker(plan_path, admission_path, slot, config_path, run_id):
     plan = verify_plan(plan_path)
+    require_generation(plan, plan_path, admission_path, slot)
+    if run_id != BATCH + "/" + run_name(plan, slot):
+        raise ValueError("unexpected batch/run ID")
     model_id = selected(plan,read(admission_path),slot)
     if not model_id: raise ValueError("slot not admitted by new batch evidence")
     config = read(config_path)
     validate_config(config,model_id)
-    out = OUTPUT / slot
-    runtime = RUNTIME / slot
+    if config != plan["models"][slot]:
+        raise ValueError("config belongs to another slot")
+    out = OUTPUT / run_name(plan, slot)
+    runtime = RUNTIME / run_name(plan, slot)
+    if (runtime / "run.json").exists():
+        raise ValueError("worker request journal already exists; refusing replay/overwrite")
     work = out / "work"
     work.mkdir(parents=True,exist_ok=False)
     budget = plan["budget"]
     started = time.monotonic()
-    deadline = started + budget["wall_time_s"]
+    deadline = started + min(budget["wall_time_s"], (DEADLINE-dt.datetime.now(dt.timezone.utc)).total_seconds())
     state = {"batch_id":BATCH,"mode":plan["mode"],"run_id":run_id,"slot":slot,"request_model_id":model_id,
              "identity_level":"gateway_declared","independent_backend_attestation":"not_observed",
              "started_at":stamp(),"classification":"RUNNING","stage":"startup","client_query_calls":0,
              "query_records":[],"real_shell_launches":0,"tool_records":[],"fixture_calls":0,"provider_retries":0,
              "real_llm_api_calls":None,"real_llm_api_calls_source":"not_observed","tool_stopped":True,
              "budget":budget,"human_design_edits":0,"visible_messages":[]}
+    state.update(plan_sha256=sha(plan_path), model_config_sha256=batch_config.config_hash(config),
+                 input_kit=str(KIT), addendum_sha256=plan["addendum_sha256"], deadline=plan["deadline"])
     key = ""
     def save(): write(runtime / "run.json",state,key)
     save()
@@ -352,7 +450,7 @@ def pilot_worker(plan_path, admission_path, slot, config_path, run_id):
         # pinned _query, parser, provider, or any response.
         class BudgetModel(Model):
             def query(self, messages, **kwargs):
-                self.config.model_kwargs["timeout"] = query_timeout(budget,state["client_query_calls"],deadline-time.monotonic())
+                self.config.model_kwargs["timeout"] = min(config["request"]["timeout_s"], query_timeout(budget,state["client_query_calls"],deadline-time.monotonic()))
                 state["current_query_timeout_s"] = self.config.model_kwargs["timeout"]
                 try:
                     return super().query(messages,**kwargs)
@@ -386,17 +484,18 @@ def pilot_worker(plan_path, admission_path, slot, config_path, run_id):
                     raise Submitted({"role":"exit","content":"".join(lines[1:]),"extra":{"exit_status":"Submitted","submission":"".join(lines[1:])}})
                 return {"output":output,"returncode":child.returncode,"exception_info":"" if child.returncode==0 else "isolated tool failed"}
             def get_template_vars(self,**kwargs): return kwargs
-            def serialize(self): return {"info":{"environment":"WSL bubblewrap CAD, no credentials/network"}}
+            def serialize(self): return {"info":{"environment":"native Linux bubblewrap CAD, no credentials/network"}}
         metadata = operator_metadata(slot,model_id,run_id,state)
         metadata["status"] = "NOT_STARTED"
         write(work / "operator_metadata.json",metadata)
         write(work / "runner_log.json",{"state":"RUNNING","run_id":run_id})
         task = "\n\n".join((KIT / "inputs" / name).read_text(encoding="utf-8") for name in ("PROMPT.md","TASK_SPEC.md","SUBMISSION_SPEC.md"))
-        task += "\n\n" + (RECORD / "PROMPT_ADDENDUM.md").read_text(encoding="utf-8")
+        task += "\n\n" + batch_config.local(plan["paths"]["addendum"]).read_text(encoding="utf-8")
+        task += "\n\nThis batch's execution limits: " + json.dumps(budget) + "; deadline=" + plan["deadline"]
         task += "\n\nOperator metadata is in /work/operator_metadata.json. Read and copy it into submission.json; the runner will finalize observed process metadata after tools stop."
         agent = Agent(model=model,env=Environment(),system_template=SYSTEM_PROMPT,instance_template="{{task}}",
                       step_limit=budget["max_queries"],wall_time_limit_seconds=budget["wall_time_s"],
-                      max_consecutive_format_errors=2,cost_limit=budget["cost_limit"],output_path=None)
+                      max_consecutive_format_errors=budget["max_consecutive_format_errors"],cost_limit=budget["cost_limit"],output_path=None)
         previous = sys.getprofile()
         state["stage"] = "agent_run"
         save()
@@ -421,18 +520,23 @@ def pilot_worker(plan_path, admission_path, slot, config_path, run_id):
 
 def run_pilot(plan_path, admission_path, slot, config_path, run_id):
     plan = verify_plan(plan_path)
+    require_generation(plan, plan_path, admission_path, slot)
     if read(admission_path).get("plan_sha256") != sha(plan_path): raise ValueError("admission belongs to another plan")
     model_id = selected(plan,read(admission_path),slot)
     if not model_id: raise ValueError("unadmitted slot")
     validate_config(read(config_path),model_id)
-    if run_id != BATCH+"/"+slot: raise ValueError("unexpected run id")
-    runtime = RUNTIME / slot
+    if read(config_path) != plan["models"][slot]:
+        raise ValueError("config belongs to another slot")
+    if run_id != BATCH+"/"+run_name(plan, slot): raise ValueError("unexpected run id")
+    runtime = RUNTIME / run_name(plan, slot)
+    if (OUTPUT / run_name(plan, slot)).exists():
+        raise FileExistsError("run output already exists; refusing reuse")
     runtime.mkdir(parents=True,exist_ok=False)
     argv=[str(CLIENT),"-B","-u",str(Path(__file__).resolve()),"pilot-worker","--plan",str(plan_path),
           "--admission",str(admission_path),"--slot",slot,"--config",str(config_path),"--run-id",run_id]
     start=time.monotonic()
     try:
-        child=subprocess.run(argv,capture_output=True,timeout=plan["budget"]["wall_time_s"])
+        child=subprocess.run(argv,capture_output=True,timeout=plan["budget"]["wall_time_s"],env=client_environment(plan))
         rc=child.returncode
     except subprocess.TimeoutExpired:
         rc=124
@@ -440,7 +544,7 @@ def run_pilot(plan_path, admission_path, slot, config_path, run_id):
     state=read(evidence) if evidence.exists() else {"run_id":run_id,"classification":"WORKER_FAILED","client_query_calls":0}
     state.update(child_os_exit_code=rc,worker_argv=argv,parent_elapsed_s=time.monotonic()-start)
     if rc==124: state.update(classification="HOST_TIMEOUT",exit_code=124)
-    out=OUTPUT / slot
+    out=OUTPUT / run_name(plan, slot)
     try:
         raw=safe_snapshot(out/"work",out/"model_final",tool_stopped=state.get("tool_stopped") is True)
         state["model_final_snapshot"]=raw
@@ -455,9 +559,40 @@ def run_pilot(plan_path, admission_path, slot, config_path, run_id):
         state["snapshot_status"]="COMPLETE"
     except (SnapshotRejected,OSError) as error:
         state.update(snapshot_status="REJECTED",snapshot_exception_class=type(error).__name__)
+    result_code = rc if rc else (0 if state.get("snapshot_status") == "COMPLETE" and state.get("classification") == "SUBMITTED" else 2)
+    state["exit_code"] = result_code
     write(evidence,state)
     print(json.dumps({k:state.get(k) for k in ("run_id","classification","child_os_exit_code","client_query_calls","real_shell_launches","snapshot_status")}),flush=True)
-    return rc
+    return result_code
+
+
+def evaluation_argv(plan, plan_path, slot, submission):
+    name = run_name(plan, slot)
+    return [str(CLIENT), "-B", "-u", str(ROOT / "model_comparison/tools/pilot_evaluate.py"),
+            "--integration", "--mode", plan["mode"], "--batch-id", BATCH,
+            "--run-id", BATCH + "/" + name + "/evaluation", "--record-id", name + "/evaluation",
+            "--execution-plan", str(Path(plan_path).absolute()), "--slot", slot,
+            "--kit", str(KIT), "--results-root", str(RUNTIME), "--submission", str(submission)]
+
+
+def evaluate_run(plan_path, slot):
+    plan = verify_plan(plan_path)
+    state = read(RUNTIME / run_name(plan, slot) / "run.json")
+    if state.get("plan_sha256") != sha(plan_path) or state.get("snapshot_status") != "COMPLETE":
+        raise ValueError("missing frozen submission from this exact plan")
+    expected = OUTPUT / run_name(plan, slot) / "final"
+    if Path(state["final_snapshot_path"]) != expected or safe_snapshot(expected) != state["final_snapshot"]:
+        raise ValueError("frozen submission binding changed")
+    argv = evaluation_argv(plan, plan_path, slot, expected)
+    if (RUNTIME / run_name(plan, slot) / "evaluation").exists() or (RUNTIME / run_name(plan, slot) / "evaluation_command.json").exists():
+        raise FileExistsError("evaluation already recorded; choose a separate reviewed evaluation run")
+    evaluator_env = client_environment(plan)
+    for config in plan["models"].values():
+        evaluator_env.pop(config["api_key_env"], None)
+    child = subprocess.run(argv, capture_output=True, env=evaluator_env)
+    batch_config.write_new(RUNTIME / run_name(plan, slot) / "evaluation_command.json",
+                           {"argv": argv, "os_exit_code": child.returncode})
+    return child.returncode
 
 
 ADDENDUM = """# Restored three-model pilot: common public addendum v1
@@ -563,6 +698,18 @@ def prepare_batch():
 
 def run_batch(plan_path, admission_path):
     plan=verify_plan(plan_path)
+    if plan.get("schema_version") == batch_config.SCHEMA:
+        if preflight_batch(plan_path, admission_path):
+            return 2
+        result = 0
+        for slot in plan["serial_order"]:
+            rc = run_pilot(plan_path, admission_path, slot, RECORD / (slot + ".config.json"),
+                           BATCH + "/" + run_name(plan, slot))
+            result = result or rc
+            state = read(RUNTIME / run_name(plan, slot) / "run.json")
+            if state.get("snapshot_status") == "COMPLETE":
+                result = evaluate_run(plan_path, slot) or result
+        return result
     admission=read(admission_path)
     preflight_rc=preflight_batch(plan_path,admission_path)
     if preflight_rc: return preflight_rc
@@ -665,21 +812,38 @@ def summarize(plan_path, admission_path):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("command",choices=("prepare","admission","admit-worker","preflight","run","pilot-worker","run-batch","summary"))
-    p.add_argument("--plan",type=Path,default=RECORD/"plan.json")
+    p.add_argument("command",choices=("prepare","preflight","run","pilot-worker","run-batch","evaluate"))
+    p.add_argument("--plan",type=Path,required=True)
+    p.add_argument("--spec",type=Path)
     p.add_argument("--model");p.add_argument("--config",type=Path);p.add_argument("--result",type=Path)
-    p.add_argument("--admission",type=Path,default=RECORD/"admission.json")
-    p.add_argument("--slot",choices=tuple(CANDIDATES));p.add_argument("--run-id")
+    p.add_argument("--admission",type=Path)
+    p.add_argument("--slot",choices=("model_A", "model_B", "model_C"));p.add_argument("--run-id")
     a=p.parse_args()
-    if a.command=="prepare": return prepare_batch()
-    if a.command=="admission": return admission_batch(a.plan,a.admission)
-    if a.command=="preflight": return preflight_batch(a.plan,a.admission)
+    if a.command=="prepare":
+        if a.spec is None: p.error("prepare requires --spec")
+        plan = batch_config.prepare(a.spec, a.plan)
+        print(json.dumps({"plan":str(a.plan),"batch_id":plan["batch_id"],"model_requests":0}))
+        return 0
+    if read(a.plan).get("schema_version") != batch_config.SCHEMA:
+        p.error("historical implicit batch execution disabled; prepare an explicit v2 plan")
+    plan = verify_plan(a.plan)
+    a.admission = a.admission or RECORD / "admission.json"
+    if a.command in ("run", "pilot-worker", "evaluate"):
+        if a.slot not in plan["models"]: p.error("--slot must be configured in this plan")
+        a.config = a.config or RECORD / (a.slot + ".config.json")
+        a.run_id = a.run_id or BATCH + "/" + run_name(plan, a.slot)
+    if a.command=="preflight": return preflight_batch(a.plan,a.admission,a.result)
     if a.command=="run-batch": return run_batch(a.plan,a.admission)
-    if a.command=="summary": return summarize(a.plan,a.admission)
+    if a.command=="evaluate": return evaluate_run(a.plan,a.slot)
     if a.command=="run": return run_pilot(a.plan,a.admission,a.slot,a.config,a.run_id)
     if a.command=="pilot-worker": return pilot_worker(a.plan,a.admission,a.slot,a.config,a.run_id)
-    return admission_worker(a.model,a.plan,a.config,a.result)
+    raise ValueError("unsupported command")
 
 
 if __name__=="__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except (ValueError, OSError, KeyError) as error:
+        print(json.dumps({"classification":"CONFIG_OR_GATE_BLOCKED", "error_class":type(error).__name__,
+                          "message":str(error)}), file=sys.stderr)
+        raise SystemExit(2)

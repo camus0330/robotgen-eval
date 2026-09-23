@@ -18,11 +18,13 @@ ENGINEERING = ("clean_rebuild", "step_kernel_readback", "solid_validity_volume_c
 INTEGRATION_RUN = "offline_integration_eval_20260922_v3"
 
 
-def intake(submission):
+def intake(submission, *, kit=None, results_root=None):
+    kit = Path(kit) if kit is not None else KIT
+    results_root = Path(results_root) if results_root is not None else RESULTS
     source = "import sys,json; from pathlib import Path; sys.path.insert(0,'/kit/tools'); import experiment; print(json.dumps(experiment.validate(Path('/submission'),Path('/kit'))))"
-    parent = Path(tempfile.mkdtemp(prefix="intake-v2-", dir=RESULTS))
+    parent = Path(tempfile.mkdtemp(prefix="intake-v2-", dir=results_root))
     safe_snapshot(submission, parent / "received")
-    child = execute_python(source, kit=KIT, submission=parent / "received")
+    child = execute_python(source, kit=kit, submission=parent / "received")
     if child.returncode:
         return {"intake_status": "EVALUATOR_ERROR", "child_exit_code": child.returncode}
     result = json.loads(child.stdout)
@@ -50,13 +52,14 @@ def _xml_measure(path, root_name):
             "parse_pass": root.tag == root_name}
 
 
-def _structure_metrics(submission):
+def _structure_metrics(submission, *, kit=None):
+    kit = Path(kit) if kit is not None else KIT
     # Caller supplies the immutable safe snapshot of NEW rebuilt outputs.
     safe_snapshot(submission)
     manifest = json.loads((submission / "design_manifest.json").read_text(encoding="utf-8"))
     paths = sorted({relative_name(manifest["files"]["assembly_step"])} |
                    {relative_name(p["step"]) for p in manifest["parts"]})
-    step = step_readback(submission, paths, kit=KIT)
+    step = step_readback(submission, paths, kit=kit)
     available = step.get("environment") == "PASS" and step["os_exit_code"] == 0
     step_pass = available and bool(step.get("parts")) and all(p["status"] == "PASS" for p in step["parts"])
     rows = [("step_kernel_readback", step, "mm3", "PASS" if step_pass else "FAIL" if available else "NA",
@@ -90,24 +93,29 @@ def _structure_metrics(submission):
     return rows
 
 
-def evaluate_integration(submission, run_id=INTEGRATION_RUN, mode="OFFLINE_INTEGRATION"):
+def evaluate_integration(submission, run_id=INTEGRATION_RUN, mode="OFFLINE_INTEGRATION", *,
+                         kit=None, results_root=None, record_id=None, batch_id=None, execution_context=None):
+    kit = Path(kit) if kit is not None else KIT
+    results_root = Path(results_root) if results_root is not None else RESULTS
     relative_name(run_id)
-    record_dir = RESULTS / run_id
+    record_dir = results_root / relative_name(record_id or run_id)
     record_dir.mkdir(parents=True, exist_ok=False)
     evidence_file = record_dir / "evaluation.json"
     evidence = {"run_id":run_id,"mode":mode,"rule_version":VERSION,"submission":str(submission),
+                "batch_id":batch_id,"input_kit":str(kit),
+                "execution_context":execution_context,
                 "rebuild_attempted":False,"rebuild_os_exit_code":None,"engineering_evaluation":"NOT_RUN",
                 "evaluator_hash":hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     metrics = []
     try:
         evidence["received_snapshot"] = safe_snapshot(submission, record_dir / "received")
-        evidence["intake"] = intake(record_dir / "received")
+        evidence["intake"] = intake(record_dir / "received", kit=kit, results_root=results_root)
         if evidence["intake"].get("intake_status") != "FILE_CONTRACT_ACCEPTED":
             raise RebuildContractError("FILE_CONTRACT")
-        rebuilt, rebuild = source_rebuild(record_dir / "received", record_dir, kit=KIT)
+        rebuilt, rebuild = source_rebuild(record_dir / "received", record_dir, kit=kit)
         evidence.update(rebuild=rebuild, rebuild_attempted=True, rebuild_os_exit_code=rebuild["os_exit_code"],
                         measured_directory=str(rebuilt))
-        rows = _structure_metrics(rebuilt)
+        rows = _structure_metrics(rebuilt, kit=kit)
         cad_ok = all(next(r for r in rows if r[0] == key)[3] == "PASS"
                      for key in ("step_kernel_readback", "stl_triangle_proxy"))
         passed = rebuild["outputs_created"] and cad_ok
@@ -162,6 +170,19 @@ def evaluate(slot, submission=None):
     return {"slot": slot, "metrics": metrics, "evidence": evidence}
 
 
+def batch_evaluation_context(plan_path, slot):
+    import pilot_batch as batch
+    plan = batch.read(plan_path)
+    batch.verify(plan)
+    if slot not in plan["models"]:
+        raise ValueError("evaluation slot absent from plan")
+    return plan, {"plan_sha256": batch.sha(plan_path), "slot": slot,
+                  "model_config_sha256": batch.config_hash(plan["models"][slot]),
+                  "deadline": plan["deadline"], "budget": plan["budget"],
+                  "addendum_sha256": plan["addendum_sha256"],
+                  "policy": "Independent evaluation of frozen output; never authorizes another model request"}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--slot", choices=("model_A", "model_B", "model_C"))
@@ -169,11 +190,31 @@ def main():
     parser.add_argument("--integration", action="store_true")
     parser.add_argument("--run-id")
     parser.add_argument("--mode", default="OFFLINE_INTEGRATION")
+    parser.add_argument("--kit", type=Path)
+    parser.add_argument("--results-root", type=Path)
+    parser.add_argument("--record-id")
+    parser.add_argument("--batch-id")
+    parser.add_argument("--execution-plan", type=Path)
     args = parser.parse_args()
     if args.integration:
         if args.submission is None:
             parser.error("--integration requires --submission")
-        raise SystemExit(evaluate_integration(args.submission, run_id=args.run_id or INTEGRATION_RUN, mode=args.mode))
+        context = None
+        if args.execution_plan is not None:
+            import pilot_batch as batch
+            plan, context = batch_evaluation_context(args.execution_plan, args.slot)
+            name = plan["run_names"][args.slot]
+            expected = {"kit":batch.local(plan["paths"]["kit"]),
+                        "results_root":batch.local(plan["paths"]["results_root"]),
+                        "submission":batch.local(plan["paths"]["output_root"]) / name / "final"}
+            if any(getattr(args,k) is None or getattr(args,k).absolute() != v for k,v in expected.items()):
+                parser.error("evaluation paths differ from batch plan")
+            if (args.batch_id, args.run_id, args.record_id, args.mode) != (
+                    plan["batch_id"], plan["batch_id"]+"/"+name+"/evaluation", name+"/evaluation", plan["mode"]):
+                parser.error("evaluation identity differs from batch plan")
+        raise SystemExit(evaluate_integration(args.submission, run_id=args.run_id or INTEGRATION_RUN, mode=args.mode,
+                                             kit=args.kit, results_root=args.results_root,
+                                             record_id=args.record_id, batch_id=args.batch_id, execution_context=context))
     if args.slot is None:
         parser.error("--slot is required unless --integration is used")
     result = evaluate(args.slot, args.submission)

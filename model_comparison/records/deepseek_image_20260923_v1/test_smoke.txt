@@ -1,0 +1,16 @@
+test_502_stops_after_one_and_redacts_key (test_smoke.SmokeTests.test_502_stops_after_one_and_redacts_key) ... ok
+test_empty_or_length_never_start_image_request (test_smoke.SmokeTests.test_empty_or_length_never_start_image_request) ... ok
+test_exact_two_payloads_and_original_image_bytes (test_smoke.SmokeTests.test_exact_two_payloads_and_original_image_bytes) ... ok
+test_existing_run_cannot_be_replayed (test_smoke.SmokeTests.test_existing_run_cannot_be_replayed) ... live/ exists; no replay. Use --resume-unstarted only for an environment-only startup.
+ok
+test_image_cancellation_is_durable_without_replay (test_smoke.SmokeTests.test_image_cancellation_is_durable_without_replay) ... ok
+test_new_image_only_mode_never_enters_old_flow (test_smoke.SmokeTests.test_new_image_only_mode_never_enters_old_flow) ... ok
+test_public_refusal_is_preserved_without_visual_pass (test_smoke.SmokeTests.test_public_refusal_is_preserved_without_visual_pass) ... ok
+test_recovery_preserves_environment_and_still_sends_only_two (test_smoke.SmokeTests.test_recovery_preserves_environment_and_still_sends_only_two) ... ok
+test_resume_only_environment_before_any_request (test_smoke.SmokeTests.test_resume_only_environment_before_any_request) ... ok
+test_timeout_no_replay_unknown_status (test_smoke.SmokeTests.test_timeout_no_replay_unknown_status) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.220s
+
+OK
