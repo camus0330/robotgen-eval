@@ -1,0 +1,150 @@
+{
+  "recorded_at": "2026-09-23T14:26:37.629053+00:00",
+  "execution_code_sha": "0e6037d297b352c6cba09c79cae2659dee6373a2",
+  "scope": "RESTORE_LOCAL_CAD_CLIENT_CACHE_WITHOUT_MODEL_REQUESTS",
+  "status": "CAD_CLIENT_CACHE_PASS_GENERATION_GATE_CLOSED",
+  "local_paths": {
+    "cad_runtime": "/home/camus/robotgen-eval-v2/.tools/cad-runtime",
+    "model_client": "/home/camus/robotgen-eval-v2/.tools/pilot-client",
+    "tokenizer_cache": "/home/camus/robotgen-eval-v2/.tools/tiktoken-cache",
+    "full_setup_logs": "/home/camus/robotgen-eval-v2/results/runtime_restore_20260923_v1"
+  },
+  "cad_version_policy": "Restore recorded historical 2.6.1/7.8.1.1.post1 override; remaining CAD constraints copied from frozen environment.lock.txt without modifying frozen inputs. This is not a new comparison freeze.",
+  "client_version_policy": "Original mini-swe Git commit and three pinned client versions retained. Transitive versions resolved and frozen separately in client-constraints.txt; no claim of identical historical transitive dependencies.",
+  "installer_ambient_warning": "Both installs exited 0 but reported inherited ROS PYTHONPATH launch-ros/setuptools conflict. Isolated Python -I pip checks exited 0 in both venvs; isolated inventories match installed report packages. ROS/system packages were not changed.",
+  "install_report_packages_match_isolated_inventory": true,
+  "validation": [
+    {
+      "check": "cad dependency resolution",
+      "exit_code": 0
+    },
+    {
+      "check": "client dependency resolution",
+      "exit_code": 0
+    },
+    {
+      "check": "cad install",
+      "exit_code": 0
+    },
+    {
+      "check": "client install",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/cad-runtime/bin/python -I .tools/api-smoke/pip.pyz --isolated check",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/pilot-client/bin/python -I .tools/api-smoke/pip.pyz --isolated check",
+      "exit_code": 0
+    },
+    {
+      "check": "cad import + existing motor STEP readback + isolation",
+      "evidence": "cad_probe.json",
+      "exit_code": 0
+    },
+    {
+      "check": "client provenance/import/tokenizer in network-disabled namespace",
+      "evidence": "client_probe.json",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/pilot-client/bin/python -I -B -c \"import sys; sys.path.insert(0, 'model_comparison/tools'); import pilot_run; raise SystemExit(pilot_run.preflight('runtime_restore_20260923_v1'))\"",
+      "exit_code": 2,
+      "classification": "ACCESS_BLOCKED",
+      "client_provenance_pass": true,
+      "cache_pass": true,
+      "generation_ready": false
+    }
+  ],
+  "tokenizer_cache": {
+    "url": "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken",
+    "filename": "9b5ad71b2ce5302211f9c61530b329a4922fc6a4",
+    "sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+  },
+  "cad_probe_scope": "Read original supplied motor STEP: 15 valid solids. No new CAD shape generated; not robot engineering evidence.",
+  "model_requests_during_restore": 0,
+  "cube_runs": 0,
+  "robot_generation": "NOT_STARTED",
+  "independent_robot_evaluation": "NOT_RUN",
+  "mujoCo_restored": false,
+  "benchmark_or_harness_code_changed": false,
+  "evidence_class": "AUTHOR_LOCAL_RUNTIME_CHECKS_NOT_INDEPENDENT_REVIEW",
+  "remaining": [
+    "Image-channel outcome unknown; no further request authorized",
+    "Full generation still needs a reviewed shared budget/deadline/channel admission",
+    "No full MuJoCo/dynamics environment or generalized dynamics evaluator claim"
+  ],
+  "local_log_hashes": [
+    {
+      "path": "results/runtime_restore_20260923_v1/cad_install.json",
+      "sha256": "28f0bf9aa71a863e3c8c2b924c0d3be32cc1c501cf85af73b71b3e4e5c3d7de7"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/cad_install.log",
+      "sha256": "d36b7f9fcb1c05aad5471197593714c89e637180d6c39032bd83eb806beff955"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/cad_probe.json",
+      "sha256": "a0d4110f37672b8d923d6920b107f918c3d41c6f042a00cefc61cf9168f9a938"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/cad_resolve.json",
+      "sha256": "eaef5041f5ea5322cb628d0fb180ef2f4a70f4a10d2cd7605e0d32e82f7e293f"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/cad_resolve.log",
+      "sha256": "0d6a8d7ac20712781a30eaaf3537730f4914160fc147d0760343713a5ae0d998"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/client_install.json",
+      "sha256": "5819ebe112eac42838fae0d66f15244d4127e5516f4b4285fb1d046e6256570e"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/client_install.log",
+      "sha256": "d60c6690920da91255a6e9953ed1dfa0880962148d367f580ea289ee66244734"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/client_probe.json",
+      "sha256": "99ff860a2d3a3df5b918f8190bfce56b16119324709a14f7dff18bbce2958c87"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/client_resolve.json",
+      "sha256": "a121cb8bdb97b218a3049aeb802ccd56d3d657ce997498f38608698b37bd5e47"
+    },
+    {
+      "path": "results/runtime_restore_20260923_v1/client_resolve.log",
+      "sha256": "188b31deeaa303344cc1c5c5707ffb02cbac667d3637ba6a8c0912bf452ad5f4"
+    }
+  ],
+  "committed_evidence_hashes": [
+    {
+      "path": "cad-constraints.txt",
+      "sha256": "3a6696bc41b89b6f214c55db82e9965fb516f393ebafd0da57402d4d96b1de58"
+    },
+    {
+      "path": "cad-runtime-packages.json",
+      "sha256": "d979f1412f84d5e4c04463b59b225cf02c92bb40c2460e570e666e8e9b6e57bc"
+    },
+    {
+      "path": "cad_probe.json",
+      "sha256": "a0d4110f37672b8d923d6920b107f918c3d41c6f042a00cefc61cf9168f9a938"
+    },
+    {
+      "path": "client-constraints.txt",
+      "sha256": "50e4ec5432b06240e9823263fd1217642586833f13ec4c17de8ec5a03ca2ddde"
+    },
+    {
+      "path": "client_probe.json",
+      "sha256": "99ff860a2d3a3df5b918f8190bfce56b16119324709a14f7dff18bbce2958c87"
+    },
+    {
+      "path": "pilot-client-packages.json",
+      "sha256": "7e907a77e37b72a3351349d499fd2fc01581fbe3202e6ee6d415a700b4c3598b"
+    },
+    {
+      "path": "preflight.json",
+      "sha256": "68d5a7a871e34cfce73ecaae07286c3fd3feea36ca1e8cc4db123ccd64ac3eff"
+    }
+  ]
+}
