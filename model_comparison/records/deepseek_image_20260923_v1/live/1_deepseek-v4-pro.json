@@ -1,0 +1,32 @@
+{
+  "request_model": "deepseek-v4-pro",
+  "expected_target": "https://big-model.smart-agi.com/v1/chat/completions",
+  "actual_target": "https://big-model.smart-agi.com/v1/chat/completions",
+  "started_at": "2026-09-23T15:16:33.727571+00:00",
+  "elapsed_s": 20.051,
+  "http_status": 502,
+  "reply": null,
+  "refusal": null,
+  "error": {
+    "class": "InternalServerError",
+    "type": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/"
+  },
+  "returned_model": null,
+  "finish_reason": null,
+  "usage": null,
+  "request_id": null,
+  "client_max_retries": 0,
+  "identity_level": "gateway_declared",
+  "upstream_identity_verified": false,
+  "outcome": "HTTP_ERROR_OUTCOME_UNKNOWN",
+  "valid_completion": false,
+  "image_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b",
+  "image_in_request": true,
+  "image_send_attempted": true,
+  "image_server_accepted": null,
+  "answer_matches_image": null,
+  "visual_review": "NOT_PERFORMED",
+  "client_request_started": true,
+  "http_send_attempts": 1,
+  "ended_at": "2026-09-23T15:16:53.779323+00:00"
+}

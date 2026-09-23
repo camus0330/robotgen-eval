@@ -1,0 +1,73 @@
+{
+  "recorded_at": "2026-09-23T15:19:15.599545+00:00",
+  "status": "CLOSED_HTTP_502_OUTCOME_UNKNOWN",
+  "evidence_category": "USER_OPERATED_REAL_API_ATTEMPT_WITH_ASSISTANT_LOCAL_JOURNAL_INSPECTION",
+  "start_sha": "37e9f54d2f721d531c4b4249e82561db7af423be",
+  "branch": "deadline/alternate-access-20260923",
+  "authorized_max_requests": 1,
+  "recorded_http_send_attempts": 1,
+  "assistant_additional_api_requests": 0,
+  "client_max_retries": 0,
+  "live_command_exit_code": null,
+  "upstream_execution": null,
+  "gateway_billing": null,
+  "harness_admission": false,
+  "robot_generation": "NOT_RUN",
+  "frozen_robot_output": "NOT_CREATED",
+  "independent_robot_evaluation": "NOT_RUN",
+  "web_review": "NOT_PERFORMED",
+  "live_api_independent_reproduction": "NOT_PERFORMED",
+  "request_record": {
+    "request_model": "deepseek-v4-pro",
+    "expected_target": "https://big-model.smart-agi.com/v1/chat/completions",
+    "actual_target": "https://big-model.smart-agi.com/v1/chat/completions",
+    "started_at": "2026-09-23T15:16:33.727571+00:00",
+    "elapsed_s": 20.051,
+    "http_status": 502,
+    "reply": null,
+    "refusal": null,
+    "error": {
+      "class": "InternalServerError",
+      "type": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/"
+    },
+    "returned_model": null,
+    "finish_reason": null,
+    "usage": null,
+    "request_id": null,
+    "client_max_retries": 0,
+    "identity_level": "gateway_declared",
+    "upstream_identity_verified": false,
+    "outcome": "HTTP_ERROR_OUTCOME_UNKNOWN",
+    "valid_completion": false,
+    "image_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b",
+    "image_in_request": true,
+    "image_send_attempted": true,
+    "image_server_accepted": null,
+    "answer_matches_image": null,
+    "visual_review": "NOT_PERFORMED",
+    "client_request_started": true,
+    "http_send_attempts": 1,
+    "ended_at": "2026-09-23T15:16:53.779323+00:00"
+  },
+  "verification": {
+    "command": ".tools/api-smoke/bin/python -B - (stdin assertions; details in RESULT.md)",
+    "exit_code": 0,
+    "network_requests": 0,
+    "checks": [
+      "exact live file inventory",
+      "original PNG SHA-256 matches journal",
+      "exact target URL and requested model",
+      "one HTTP send attempt and zero retries",
+      "HTTP 502 and no valid completion",
+      "authorization max_chat_requests=1",
+      "validate_run(live, False) rejects replay",
+      "validate_run(live, True) rejects recovery of request journal"
+    ]
+  },
+  "files_sha256": {
+    "live/environment.json": "bce402fc3d22ecce27d00c1f068444277e87f42d5230f038710957b02ac93922",
+    "live/1_deepseek-v4-pro.json": "1357a8d97071266c95ea320cde9a0750162104f5baa1850da7dc9585632bff63",
+    "RESULT.md": "94b7674cf9093f8c444cdcdb774655af6b8ff922946061606ad10b940ea90074"
+  },
+  "next_step": "Review this failure evidence; no additional model request without new authorization."
+}
