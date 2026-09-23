@@ -58,3 +58,41 @@ After actual terminal execution, review and commit only these safe `live/`
 records and a manual visual comparison; no extra requests to fill logging gaps.
 Full robot generation remains unauthorized. CAD/pinned client restoration is
 still outstanding; do not repeat the text OK test during that restoration.
+
+## Startup-only recovery after the reported FileExistsError
+
+The inspected `live/` contains only `environment.json`, originally timestamped
+2026-09-23T14:12:51.215688+00:00. No request journal exists. The reported second
+launch stopped at mkdir before constructing the client or entering a request.
+A separate constructor-only test reproduced a ValueError from inherited
+`ALL_PROXY`/`all_proxy` with the unsupported `socks://` scheme. Existing HTTPS
+proxy variables use `http://`; no proxy values or credentials are recorded.
+The exact reason the first terminal launch exited was not captured, so the
+constructor diagnosis is a reproduction, not a recovered traceback.
+
+For this inspected environment-only state, run:
+
+```bash
+cd /home/camus/robotgen-eval-v2
+env -u ALL_PROXY -u all_proxy .tools/api-smoke/bin/python -B \
+  model_comparison/records/api_smoke_20260923_v1/smoke.py --resume-unstarted
+```
+
+This command removes only the unsupported generic proxy variables from that
+child process, retaining HTTPS/HTTP/NO_PROXY and system settings unchanged.
+Constructor-only validation with this environment passed, with zero HTTP calls.
+
+The recovery flag accepts exactly a regular `environment.json` with the expected
+scope, with no other entries. It rejects any existing request journal, including
+STARTED_OUTCOME_UNKNOWN, and does not delete, rename or overwrite old evidence.
+The old environment file remains unchanged; the recovery creates a separate
+`startup_recovery.json`. Recovery is not permitted again after that file exists
+without separate inspection. A batch lock and legacy-process check prevent
+concurrent launches. Existing-state and SDK transport checks run before getpass.
+If an older terminal invocation is still active, end it with Ctrl+C before using
+the command. No increase to the two-request budget or zero-retry policy occurs.
+
+Seven synthetic tests passed after this repair. They include environment-only
+recovery, original-record preservation and refusal to recover after any request
+journal exists. `startup_repair.json` records the author-local checks and original
+environment hash. No model request or vision assessment occurred during repair.

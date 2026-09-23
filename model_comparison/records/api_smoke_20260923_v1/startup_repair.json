@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-23T14:17:26.651847+00:00",
+  "start_sha": "92d2c580cb0cab4f8a1d599c88bb2d97c8619d69",
+  "user_report": "FileExistsError at live.mkdir before request entry",
+  "observed_live_files": [
+    "environment.json"
+  ],
+  "request_journals_observed": 0,
+  "original_environment_sha256": "660605f1433fc14c5a2ea1cfe01a1ec223d12e17a14712a39a8e2949d547f015",
+  "diagnosis": {
+    "kind": "AUTHOR_LOCAL_CONSTRUCTOR_ONLY_REPRODUCTION",
+    "default_inherited_proxy_constructor": "FAIL",
+    "error_class": "ValueError",
+    "unsupported_proxy_scheme": "socks",
+    "variables": [
+      "ALL_PROXY",
+      "all_proxy"
+    ],
+    "https_proxy_scheme": "http",
+    "first_terminal_startup_exception": "NOT_CAPTURED"
+  },
+  "repair_verification": {
+    "constructor_with_child_ALL_PROXY_removed": "PASS",
+    "environment_only_resume_gate": "PASS",
+    "active_smoke_processes_at_final_check": [],
+    "actual_model_requests_this_turn": 0,
+    "system_proxy_modified": false,
+    "http_https_no_proxy_preserved": true
+  },
+  "tests": {
+    "command": ".tools/api-smoke/bin/python -B -m unittest discover -s model_comparison/records/api_smoke_20260923_v1 -p test_smoke.py -v",
+    "exit_code": 0,
+    "passed": 7,
+    "kind": "AUTHOR_LOCAL_SYNTHETIC_TRANSPORT_ONLY"
+  },
+  "scope": "Startup repair only; at most two original Chat Completions requests remain authorized; no automatic replay or robot generation.",
+  "image_sent_this_turn": false,
+  "image_server_accepted": null,
+  "answer_matches_image": null,
+  "unrelated_work_preserved": [
+    "paper/"
+  ]
+}

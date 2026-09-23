@@ -1,7 +1,9 @@
 """One-shot SDK channel test. Never executes a completion or starts an Agent."""
+import argparse
 import base64
 import datetime as dt
 import getpass
+import fcntl
 import hashlib
 import importlib.metadata
 import json
@@ -136,7 +138,68 @@ def run_checks(client, key, run):
     return 0 if second["valid_completion"] else 2
 
 
-def main():
+def validate_run(run, resume_unstarted):
+    if not run.exists():
+        return
+    if run.is_symlink() or not run.is_dir():
+        raise ValueError("unsafe live directory")
+    if not resume_unstarted:
+        raise ValueError("live/ exists; no replay. Use --resume-unstarted only for an environment-only startup.")
+    # Before every SDK request, request_once durably writes its journal. An
+    # environment-only directory can therefore be resumed without replaying a
+    # request. Unknown files, journals and uncertain states remain blocked.
+    if {p.name for p in run.iterdir()} != {"environment.json"}:
+        raise ValueError("live/ contains request or unknown evidence; recovery refused")
+    env = run / "environment.json"
+    if env.is_symlink() or not env.is_file():
+        raise ValueError("unsafe environment record")
+    data = json.loads(env.read_text())
+    if data.get("scope") != "CHANNEL_SMOKE_ONLY_NOT_HARNESS_ADMISSION_OR_ROBOT_GENERATION":
+        raise ValueError("unrecognized environment record")
+
+
+def other_smoke_processes():
+    """Also detect old pre-lock script versions, without logging process args."""
+    script = Path(__file__).resolve()
+    found = []
+    for entry in Path('/proc').iterdir():
+        if not entry.name.isdigit() or int(entry.name) == os.getpid():
+            continue
+        try:
+            args = (entry / 'cmdline').read_bytes().split(b'\0')
+            cwd = (entry / 'cwd').resolve()
+            if any(arg and (cwd / os.fsdecode(arg)).resolve() == script for arg in args):
+                found.append(int(entry.name))
+        except (OSError, ValueError):
+            continue
+    return found
+
+
+def locked_main(resume_unstarted):
+    run = BATCH / "live"
+    try:
+        validate_run(run, resume_unstarted)
+    except (ValueError, OSError) as error:
+        print(str(error), file=sys.stderr)
+        return 4
+    if other_smoke_processes():
+        print("Another smoke process is active; stop the older terminal invocation first. No request made.", file=sys.stderr)
+        return 4
+    # Validate SDK/proxy construction before asking for a Key or reserving a
+    # run. This is local setup, with no HTTP/model request.
+    try:
+        transport = DefaultHttpxClient(follow_redirects=False)
+    except Exception as error:
+        print(json.dumps({"status": "CLIENT_STARTUP_FAILED", "error_class": type(error).__name__,
+                          "model_requests": 0}), flush=True)
+        return 3
+    try:
+        return authenticated_main(run, transport)
+    finally:
+        transport.close()
+
+
+def authenticated_main(run, transport):
     # Process-local only: inherited SDK debug logging must not dump bodies or
     # headers. All permitted evidence is emitted explicitly below.
     logging.disable(logging.CRITICAL)
@@ -149,10 +212,14 @@ def main():
     if not key:
         print("Empty Key; no request made.", file=sys.stderr)
         return 3
-    run = BATCH / "live"
-    # A rerun must never replay an uncertain or completed request.
-    run.mkdir(mode=0o700, exist_ok=False)
-    save(run / "environment.json", {
+    if run.exists():
+        # Original environment.json remains byte-for-byte unchanged. Further
+        # startup-only recovery requires separate inspection, never auto-replay.
+        record = run / "startup_recovery.json"
+    else:
+        run.mkdir(mode=0o700, exist_ok=False)
+        record = run / "environment.json"
+    save(record, {
         "started_at": stamp(), "sdk": "openai",
         "sdk_version": importlib.metadata.version("openai"),
         "python": sys.version.split()[0], "max_chat_requests": 2,
@@ -162,8 +229,25 @@ def main():
     }, key)
     # Disable redirect following so credentials and requests stay on TARGET.
     with OpenAI(api_key=key, base_url=BASE_URL, max_retries=0, timeout=120.0,
-                http_client=DefaultHttpxClient(follow_redirects=False)) as client:
+                http_client=transport) as client:
         return run_checks(client, key, run)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--resume-unstarted", action="store_true",
+                        help="resume only an inspected environment-only startup; never replay requests")
+    args = parser.parse_args(argv)
+    logging.disable(logging.CRITICAL)
+    # A process-wide lock spans both prechecks and getpass. Legacy invocations
+    # without this lock are also detected before proceeding.
+    with (BATCH / ".smoke.lock").open("a") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("Another smoke process holds the lock; no request made.", file=sys.stderr)
+            return 4
+        return locked_main(args.resume_unstarted)
 
 
 if __name__ == "__main__":

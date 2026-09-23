@@ -108,9 +108,41 @@ class SmokeTests(unittest.TestCase):
             with patch.object(smoke, "BATCH", root), \
                  patch.dict(smoke.os.environ, {"SMART_AGI_API_KEY": KEY}), \
                  patch.object(smoke, "OpenAI") as client:
-                with self.assertRaises(FileExistsError):
-                    smoke.main()
+                self.assertEqual(smoke.main([]), 4)
                 client.assert_not_called()
+
+    def test_resume_only_environment_before_any_request(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run = Path(directory)
+            original = json.dumps({"scope": "CHANNEL_SMOKE_ONLY_NOT_HARNESS_ADMISSION_OR_ROBOT_GENERATION"})
+            (run / "environment.json").write_text(original)
+            smoke.validate_run(run, True)
+            with self.assertRaises(ValueError):
+                smoke.validate_run(run, False)
+            (run / "1_glm-5.3.json").write_text('{"outcome":"STARTED_OUTCOME_UNKNOWN"}')
+            with self.assertRaises(ValueError):
+                smoke.validate_run(run, True)
+            self.assertEqual((run / "environment.json").read_text(), original)
+
+    def test_recovery_preserves_environment_and_still_sends_only_two(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run = Path(directory)
+            original = '{"scope":"CHANNEL_SMOKE_ONLY_NOT_HARNESS_ADMISSION_OR_ROBOT_GENERATION"}'
+            (run / "environment.json").write_text(original)
+            smoke.validate_run(run, True)
+            sent = []
+            def handler(request):
+                sent.append(True)
+                return httpx.Response(200, json=completion())
+            transport = DefaultHttpxClient(transport=httpx.MockTransport(handler), follow_redirects=False)
+            with patch.dict(smoke.os.environ, {"SMART_AGI_API_KEY": KEY}), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(smoke.authenticated_main(run, transport), 0)
+            self.assertEqual(len(sent), 2)
+            self.assertEqual((run / "environment.json").read_text(), original)
+            self.assertTrue((run / "startup_recovery.json").is_file())
+            with self.assertRaises(ValueError):
+                smoke.validate_run(run, True)
 
 
 if __name__ == "__main__":
