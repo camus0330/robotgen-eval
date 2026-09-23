@@ -26,7 +26,7 @@ CANDIDATES = {"model_A": ("DeepSeek", "deepseek-v4-pro", "deepseek-v4.1-flash"),
               "model_C": ("GLM", "glm-5.3", "glm-5.3-flash")}
 ALLOWED = {model for values in CANDIDATES.values() for model in values[1:]}
 DEADLINE = dt.datetime(2026, 9, 23, 4, tzinfo=dt.timezone.utc)
-CLIENT = Path(r"C:\Users\hp\AppData\Local\Temp\robotgen-offline-agent-de53eee2e2ea4f1a88d777a566a5cb05\venv\Scripts\python.exe")
+CLIENT = Path(sys.executable)
 MULTIMODAL = r"(?s)<MSWEA_MULTIMODAL_CONTENT><CONTENT_TYPE>(.+?)</CONTENT_TYPE>(.+?)</MSWEA_MULTIMODAL_CONTENT>"
 
 

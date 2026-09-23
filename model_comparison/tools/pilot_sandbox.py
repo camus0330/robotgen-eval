@@ -1,18 +1,24 @@
-"""Pilot WSL/bubblewrap actions and independent CAD checks.
+"""Pilot native Linux/bubblewrap actions and independent CAD checks.
 
 No inherited credentials, host home or external network; optional dedicated CAD
 venv is read-only. Each tool namespace has its own bounded lifetime.
 """
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import shlex
 import subprocess
 
-CAD_VENV = "/home/camus/robotgen-pilot-runtime-20260922"
+CAD_VENV = os.environ.get("ROBOTGEN_CAD_VENV", "/home/camus/robotgen-pilot-runtime-20260922")
 
 
 def cad_mount():
     # Reuse the dedicated, existing CAD venv read-only; never mount user home.
+    runtime = Path(CAD_VENV)
+    if not PurePosixPath(CAD_VENV).is_absolute() or str(runtime) == "/cad":
+        raise ValueError("ROBOTGEN_CAD_VENV must name a dedicated host virtualenv, not /cad")
+    if os.name != "nt" and not ((runtime / "pyvenv.cfg").is_file()
+                                  and (runtime / "bin/python").is_file()):
+        raise FileNotFoundError("CAD host virtualenv unavailable; set ROBOTGEN_CAD_VENV to an existing environment")
     return ["--ro-bind", CAD_VENV, "/cad", "--setenv", "PATH", "/cad/bin:/usr/bin",
             "--setenv", "HOME", "/tmp", "--setenv", "XDG_CONFIG_HOME", "/tmp/config"]
 
@@ -20,6 +26,13 @@ def cad_mount():
 def child_environment():
     # No model credential, inherited proxy, home, or Python startup variables.
     return {name: os.environ[name] for name in ("SystemRoot", "WINDIR") if name in os.environ}
+
+
+def host_command(inner):
+    if os.name != "nt":
+        return inner
+    executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
+    return [str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
 
 
 def linux_path(path):
@@ -34,7 +47,6 @@ def linux_path(path):
 
 
 def execute_python(source, *, kit, submission=None, writable_output=None, seconds=10, cad=False):
-    executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
     inner = ["/usr/bin/timeout", "--kill-after=2", str(seconds),
                "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--new-session",
                "--ro-bind", "/usr", "/usr", "--symlink", "usr/bin", "/bin",
@@ -49,8 +61,7 @@ def execute_python(source, *, kit, submission=None, writable_output=None, second
     if cad:
         inner += cad_mount()
     inner += ["--chdir", "/tmp", "/cad/bin/python" if cad else "/usr/bin/python3", "-I", "-B", "-c", source]
-    command = ([str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
-               if os.name == "nt" else inner)
+    command = host_command(inner)
     # Linux timeout owns the namespace/process group; the outer timeout bounds a
     # stuck WSL launch for these checks. execute_command handles design actions.
     return subprocess.run(command, env=child_environment(), capture_output=True, text=True,
@@ -61,7 +72,6 @@ def execute_command(command_text, *, kit, writable_output, seconds=30, cad=False
     """Execute one model action inside the no-network, no-credential namespace."""
     if not isinstance(command_text, str) or not command_text.strip():
         raise ValueError("empty action")
-    executable = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/wsl.exe"
     limits = "ulimit -t 30 -f 10240 -n 128 -u 32; "
     inner = ["/usr/bin/timeout", "--kill-after=2", str(seconds),
              "/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--new-session",
@@ -73,7 +83,6 @@ def execute_command(command_text, *, kit, writable_output, seconds=30, cad=False
     if cad:
         inner += cad_mount()
     inner += ["--chdir", "/work", "/bin/sh", "-c", limits + "exec /bin/sh -c " + shlex.quote(command_text)]
-    cmd = ([str(executable), "-d", "Ubuntu-24.04", "--", "sh", "-c", shlex.join(inner)]
-           if os.name == "nt" else inner)
+    cmd = host_command(inner)
     return subprocess.run(cmd, env=child_environment(), capture_output=True, text=True,
                           encoding="utf-8", errors="replace", timeout=seconds + 20)

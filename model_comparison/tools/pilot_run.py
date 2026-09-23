@@ -15,14 +15,14 @@ import sys
 import base64
 import tempfile
 from types import SimpleNamespace
-from pilot_snapshot import safe_snapshot, SnapshotRejected
+from pilot_snapshot import safe_snapshot, SnapshotRejected, relative_name
 
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE = "f1d77516e35d7191a942d842b83f7ae23bb0710b"
 RECORDS = ROOT / "model_comparison/records/pilot_20260923"
 RESULTS = ROOT / "results/pilot_20260923"
 KIT = ROOT / "outputs/pilot_20260923/input_kit"
-CACHE = Path(r"C:\Users\hp\AppData\Local\Temp\robotgen-tokenizer-cache-569bm_v2")
+CACHE = Path(os.environ.get("TIKTOKEN_CACHE_DIR", str(ROOT / ".tools/tiktoken-cache")))
 CACHE_NAME = "9b5ad71b2ce5302211f9c61530b329a4922fc6a4"
 CACHE_SHA = "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
 SYSTEM_PROMPT = """Use one text action per response, with exactly this literal fence syntax:
@@ -103,22 +103,47 @@ def bind_inputs():
     return observed
 
 
-def preflight():
+def preflight(batch=None):
+    # A fresh checkout has no historical runtime evidence. Keep new checks in a
+    # caller-named batch without changing the frozen input commit or old records.
+    global KIT
+    if batch is not None:
+        relative_name(batch)
+        if "/" in batch:
+            raise ValueError("batch must be a single directory name")
+        target = RESULTS / batch / "preflight.json"
+        KIT = ROOT / "outputs/pilot_20260923" / batch / "input_kit"
+    else:
+        target = RESULTS / "preflight.json"
+    if target.exists():
+        raise ValueError("Preflight evidence exists; choose a new --batch")
     inputs = bind_inputs()
     cache_ok = (CACHE / CACHE_NAME).is_file() and digest((CACHE / CACHE_NAME).read_bytes()) == CACHE_SHA
-    versions = {name: importlib.metadata.version(name)
-                for name in ("mini-swe-agent", "litellm", "tiktoken")}
-    dist = importlib.metadata.distribution("mini-swe-agent")
-    upstream = json.loads(dist.read_text("direct_url.json"))["vcs_info"]["commit_id"]
+    versions = {}
+    for name in ("mini-swe-agent", "litellm", "tiktoken"):
+        try:
+            versions[name] = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            versions[name] = None
+    upstream = None
+    if versions["mini-swe-agent"] is not None:
+        dist = importlib.metadata.distribution("mini-swe-agent")
+        try:
+            upstream = json.loads(dist.read_text("direct_url.json") or "{}").get("vcs_info", {}).get("commit_id")
+        except (ValueError, AttributeError):
+            pass  # Unverifiable provenance cannot pass the existing gate.
     client_ok = versions == {"mini-swe-agent": "2.4.6", "litellm": "1.102.0", "tiktoken": "0.14.0"} and upstream == "04d809ceab9df28f9adaed044884180159172930"
-    admission = json.loads((RESULTS / "admission.json").read_text(encoding="utf-8"))
+    admission_path = target.parent / "admission.json"
+    admission = (json.loads(admission_path.read_text(encoding="utf-8"))
+                 if admission_path.is_file() else {"cases": []})
     admitted = [case for case in admission["cases"] if case.get("completion_succeeded") is True]
     generation_ready = bool(admitted and cache_ok and client_ok)
     result = {"time": stamp(), "classification": "READY" if generation_ready else "ACCESS_BLOCKED", "python": sys.executable,
               "python_version": sys.version.split()[0], "versions": versions, "upstream_sha": upstream,
               "client_provenance_pass": client_ok, "cache_path": str(CACHE),
               "cache_sha256": CACHE_SHA if cache_ok else None, "cache_pass": cache_ok,
-              "input_binding": inputs, "canonical_kit": str(KIT),
+              "input_binding": inputs, "canonical_kit": str(KIT), "input_baseline": BASELINE,
+              "admission_evidence_present": admission_path.is_file(),
               "selected_credential_present": bool(os.environ.get("SMART_AGI_API_KEY", "").strip()),
               "admission": admission["cases"], "admitted_candidates": len(admitted), "generation_ready": generation_ready,
               "image_binding": "PLANNED: identical original PNG bytes as image_url data URI, once per instance; NOT_SENT",
@@ -126,7 +151,7 @@ def preflight():
               "exit_code": 2}
     if not cache_ok or not client_ok:
         result["classification"] = "ENVIRONMENT_BLOCKED"
-    write_json(RESULTS / "preflight.json", result)
+    write_json(target, result)
     print(json.dumps({k: result[k] for k in ("classification", "client_provenance_pass", "cache_pass", "generation_ready", "exit_code")}))
     return 2
 
@@ -425,14 +450,15 @@ def run_offline_integration(cache: Path) -> int:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("preflight")
+    preflight_parser = sub.add_parser("preflight")
+    preflight_parser.add_argument("--batch", help="new independent preflight/input-kit directory")
     run_parser = sub.add_parser("run")
     run_parser.add_argument("--slot", choices=("model_A", "model_B", "model_C"))
     run_parser.add_argument("--config", type=Path)
     run_parser.add_argument("--offline-integration", action="store_true")
     run_parser.add_argument("--integration-only-config", type=Path)
     args = parser.parse_args()
-    if args.command == "preflight": return preflight()
+    if args.command == "preflight": return preflight(args.batch)
     if args.offline_integration: return run_offline_integration(CACHE)
     if args.integration_only_config: return run_real_integration(args.integration_only_config)
     if not args.slot: parser.error("run requires --slot or --offline-integration")

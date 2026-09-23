@@ -1,0 +1,123 @@
+{
+  "time": "2026-09-23T13:05:00.624562+00:00",
+  "classification": "ENVIRONMENT_BLOCKED",
+  "python": "/usr/bin/python3",
+  "python_version": "3.12.3",
+  "versions": {
+    "mini-swe-agent": null,
+    "litellm": null,
+    "tiktoken": null
+  },
+  "upstream_sha": null,
+  "client_provenance_pass": false,
+  "cache_path": "/home/camus/robotgen-eval-v2/.tools/tiktoken-cache",
+  "cache_sha256": null,
+  "cache_pass": false,
+  "input_binding": [
+    {
+      "path": "PROMPT.md",
+      "sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2",
+      "checkout_sha256": "45847a6767a96536f409e7d9c2dc9a0aee879372537ec99e8a20de7d97cf40c2",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "SUBMISSION_SPEC.md",
+      "sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb",
+      "checkout_sha256": "13d299917ddd384648ff28df219c39c8e3cf420f78f4b6a1b52fede8c94a9bfb",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "TASK_SPEC.md",
+      "sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206",
+      "checkout_sha256": "2f8fef719828b899bd3f3c2c51aa883d6c1a41962be2a11254d222294e812206",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "assets/reference.png",
+      "sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b",
+      "checkout_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b",
+      "checkout_exact": true,
+      "checkout_crlf_only": false
+    },
+    {
+      "path": "assets/xl330_m288_t.step",
+      "sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6",
+      "checkout_sha256": "e2f7b060801a1d6a21f23bca2554f29a402f7d73b8498cb201c9e6adf3139eb6",
+      "checkout_exact": true,
+      "checkout_crlf_only": false
+    },
+    {
+      "path": "environment.lock.txt",
+      "sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d",
+      "checkout_sha256": "36d0e823a04f99f1fbdcb3b861d6843f73f7bc669005c81c3a1d8aef88eb508d",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "legacy_digital_profile.json",
+      "sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b",
+      "checkout_sha256": "940a96f2e778dd49a9aaa91b43bd9d6eaa6dae8e708573154810da3b6928389b",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "legacy_metrics_reference.csv",
+      "sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041",
+      "checkout_sha256": "e4019353150fecd5a2f4b8944f9c6838c0e3aa1fd2cc380216113addcc7d6041",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "motion_profile.json",
+      "sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b",
+      "checkout_sha256": "1515646461573b8309192b95e2fdd5c18bb0e67c49c847d4fbfb29a5d7704d4b",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3",
+      "checkout_sha256": "17333a4dfc03c92023a31348daccbbeacf7f3cc055a70b74d6844b713cbf06f3",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "robustness_cases_public.jsonl",
+      "sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466",
+      "checkout_sha256": "3fb68ab817a0938d20fef98c391f01fe454bb2729e5e5cf83f4bb2add4438466",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "templates/design_manifest.json",
+      "sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a",
+      "checkout_sha256": "2a35633bb254de936c1253cab313744018a6872ed9c613a03c76da255270116a",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    },
+    {
+      "path": "templates/submission.json",
+      "sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc",
+      "checkout_sha256": "fe968a4c9ffa0a6912d9af6a71f3ad023dbebe716b81d6dc8c68feacaba8b9dc",
+      "checkout_exact": true,
+      "checkout_crlf_only": true
+    }
+  ],
+  "canonical_kit": "/home/camus/robotgen-eval-v2/outputs/pilot_20260923/ubuntu_migration_20260923_v1/input_kit",
+  "input_baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b",
+  "admission_evidence_present": false,
+  "selected_credential_present": false,
+  "admission": [],
+  "admitted_candidates": 0,
+  "generation_ready": false,
+  "image_binding": "PLANNED: identical original PNG bytes as image_url data URI, once per instance; NOT_SENT",
+  "uncompleted_gates": [
+    "candidate completion + native protocol admission",
+    "generation environment and hard lifecycle validation",
+    "frozen executable runner and image transport validation"
+  ],
+  "exit_code": 2
+}

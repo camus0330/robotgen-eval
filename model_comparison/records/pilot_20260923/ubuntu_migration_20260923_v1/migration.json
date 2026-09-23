@@ -1,0 +1,121 @@
+{
+  "recorded_at": "2026-09-23T13:05:57.575454+00:00",
+  "batch_id": "ubuntu_migration_20260923_v1",
+  "execution_baseline": "8ab4b57d262b0a66eb4fbdebef750fffd5166418",
+  "branch": "deadline/alternate-access-20260923",
+  "checkout": "/home/camus/robotgen-eval-v2",
+  "clone": {
+    "target_including_hidden_files_empty": true,
+    "shallow": false,
+    "baseline_diff": false
+  },
+  "applicable_agents_md": [],
+  "system": {
+    "platform": "Linux",
+    "python": "/usr/bin/python3",
+    "python_version": "3.12.3",
+    "bubblewrap": "bubblewrap 0.9.0"
+  },
+  "available_host_modules": {
+    "cadquery": false,
+    "OCP": false,
+    "mujoco": false,
+    "minisweagent": false,
+    "litellm": false,
+    "tiktoken": false
+  },
+  "legacy_cad_runtime_exists": false,
+  "reusable_cad_or_model_client_runtime": "NOT_FOUND_IN_INSPECTED_LOCATIONS",
+  "environment_search_scope": [
+    "/home/camus (depth 7; excluded credentials/config, .git, caches, node_modules and Trash)",
+    "/home/camus/.cache (depth 6)",
+    "/home/camus/.local (depth 6)",
+    "/tmp (depth 6)",
+    "/opt (depth 6)"
+  ],
+  "deleted_environment_candidates": "Trash entries were not executed, restored or mounted",
+  "preflight": {
+    "command": [
+      "python3",
+      "-B",
+      "model_comparison/tools/pilot_run.py",
+      "preflight",
+      "--batch",
+      "ubuntu_migration_20260923_v1"
+    ],
+    "os_exit_code": 2,
+    "classification": "ENVIRONMENT_BLOCKED",
+    "evidence": "preflight.json",
+    "sha256": "d784f0542d8cb25bf7ffd6c740c8b5f659d6386633d7334d6c6bb3f39ffda623"
+  },
+  "validation": {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "model_comparison/tests",
+      "-p",
+      "test_pilot_ubuntu.py",
+      "-v"
+    ],
+    "tests": 4,
+    "os_exit_code": 0,
+    "initial_development_failure": "One test mistakenly used a temporary non-Git cwd; fixed test-only Git lookup and reran successfully.",
+    "actual_checks": [
+      "native bubblewrap launch",
+      "cleared credential/proxy environment",
+      "host home hidden",
+      "other participant directory hidden",
+      "public input read-only",
+      "network namespace only loopback and external connect unavailable",
+      "writable own output",
+      "timeout exit 124",
+      "stopped partial-output snapshot",
+      "symlink rejection",
+      "missing runtime/cache/client/admission fails closed",
+      "preflight evidence overwrite rejected"
+    ]
+  },
+  "input_verification": {
+    "command": [
+      "python3",
+      "-B",
+      "model_comparison/tools/experiment.py",
+      "verify-inputs"
+    ],
+    "os_exit_code": 0,
+    "manifest_sha256": "31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d",
+    "frozen_baseline": "f1d77516e35d7191a942d842b83f7ae23bb0710b"
+  },
+  "channel_candidates": [
+    {
+      "provider": "Google Gemini official API",
+      "vision_source": "https://ai.google.dev/gemini-api/docs/image-understanding",
+      "status": "DOCUMENTED_IMAGE_INPUT_ACCOUNT_ACCESS_NOT_TESTED"
+    },
+    {
+      "provider": "Anthropic Claude official API",
+      "vision_source": "https://platform.claude.com/docs/en/build-with-claude/vision",
+      "status": "DOCUMENTED_IMAGE_INPUT_ACCOUNT_ACCESS_NOT_TESTED"
+    }
+  ],
+  "model_api_calls": 0,
+  "cad_fixture_runs": 0,
+  "packages_installed": 0,
+  "generation": "NOT_STARTED",
+  "independent_robot_evaluation": "NOT_RUN",
+  "current_deadline": null,
+  "current_timezone_confirmation": null,
+  "current_shared_budget": null,
+  "blockers": [
+    "CAD runtime unavailable",
+    "Pinned model client and tokenizer cache unavailable",
+    "Channel/account configuration not supplied to this process",
+    "Current deadline/timezone/shared budget await user confirmation"
+  ],
+  "benchmark_thresholds_changed": false,
+  "evaluator_scope": "Existing pilot CAD evaluator retained; dynamics, motion and robustness metrics still not implemented, no full engineering score claimed."
+}

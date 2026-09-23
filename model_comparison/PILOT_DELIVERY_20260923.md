@@ -534,3 +534,84 @@ Backend identities remain unverified. `prior_failure_annotation.json` adds failu
 No replacement source, CAD artifact or first/final robot snapshot exists. File-contract assessment, source rebuild, STEP/STL/XML measurements and all other engineering metrics are NOT_RUN/NA; no total score is reported. Replacement worker commands were prepared in the new plan but **not executed**. This follows the explicit instruction to stop real design startup if the single short model tool check fails; sufficient time remains, but elapsed time cannot override that gate.
 
 Safe short-check records are retained in `results/pilot_20260923/alternate_access_20260923/continuation_20260923_0332/code_mode_fix_20260923/tool_check`, with committed copies `short_check.json`, `short_tool_state.json`, and snapshot/path/hash bindings in `closure.json`. Runtime process inspection at 05:04:22 +08:00 found no remaining client, host, worker or MCP process. The remaining blocker is the CAD MCP approval configuration conflicting with approval_policy=never. No user credentials, global settings, old CAD environment, evaluator or formal configuration were changed.
+
+## Ubuntu migration — independent batch `ubuntu_migration_20260923_v1`
+
+The active checkout is now `/home/camus/robotgen-eval-v2` on Ubuntu/Bash.
+The target was empty including hidden files before a full, non-shallow clone.
+Branch `deadline/alternate-access-20260923`, local HEAD and origin initially all
+matched review baseline `8ab4b57d262b0a66eb4fbdebef750fffd5166418`.
+No applicable ancestor or repository `AGENTS.md` was found. Historical Windows
+paths and session budgets above describe prior runs only.
+
+Host `/usr/bin/python3` is 3.12.3; `/usr/bin/bwrap` is 0.9.0. Native namespace
+checks passed: no inherited synthetic credential/proxy, no host home or other
+participant directory, read-only public inputs, writable own output, no external
+network, timeout exit 124 and safe stopped-output snapshots. No cube or echo
+model session was run. These checks do not establish CAD package availability.
+
+The old `/home/camus/robotgen-pilot-runtime-20260922` does not exist here. No
+usable CAD or pinned model-client environment was found in the inspected local
+locations. Host Python lacks CadQuery/OCP, MuJoCo, mini-swe, LiteLLM and tiktoken.
+Deleted environment entries found in Trash were not executed or restored.
+No dependencies were installed. Historical ignored outputs/results and tokenizer
+cache were absent; no historical attempt was reconstructed as a new result.
+
+Minimal portability changes retain the existing Harness and evaluator:
+
+- `pilot_sandbox.py` uses the native Linux argv without constructing a Windows
+  launcher on Linux. `ROBOTGEN_CAD_VENV` selects an existing dedicated host venv,
+  mounted read-only at `/cad`; `/cad` itself is rejected as a host setting.
+  Missing environments fail before launching CAD. Namespace and mount policy
+  are retained; no credential mount or network relaxation was added.
+- `pilot_run.py` uses `TIKTOKEN_CACHE_DIR`, defaulting to the checkout's
+  `.tools/tiktoken-cache`. No cache download is implicit. Its preflight records
+  absent packages/provenance/cache/admission as blocked instead of crashing.
+  `preflight --batch NAME` writes a separate input kit and report, and refuses
+  to overwrite an existing preflight report. An admission record from an older
+  batch cannot open this batch's gate.
+- The historical restored worker launcher uses `sys.executable` instead of a
+  deleted Windows interpreter. Its old candidate list and budgets remain
+  historical and were not executed or reused for the new three-provider scope.
+
+The frozen input commit remains `f1d77516e35d7191a942d842b83f7ae23bb0710b`.
+`experiment.py verify-inputs` exited 0 with manifest hash
+`31c147981b08a2a6c335e1b270de86520042ca9006c0c028929c705893588e9d`.
+The reference and motor remain `assets/reference.png` and
+`assets/xl330_m288_t.step` relative to `model_comparison/inputs`.
+No benchmark thresholds, public inputs, snapshot code or evaluator definitions
+were changed. The legacy benchmark entrypoints already use `sys.executable`
+and repo-relative paths, but assume the existing gorilla8 layout; they were not
+run against a nonexistent new design. The pilot evaluator still cannot claim
+full dynamics/motion/robustness scores.
+
+```bash
+python3 -B model_comparison/tools/experiment.py verify-inputs
+# exit 0
+python3 -B -m unittest discover -s model_comparison/tests -p test_pilot_ubuntu.py -v
+# exit 0; 4 tests, actual Linux isolation included
+python3 -B model_comparison/tools/pilot_run.py preflight --batch ubuntu_migration_20260923_v1
+# exit 2; ENVIRONMENT_BLOCKED, generation_ready=false
+```
+
+The first test development run had one test-only Git cwd error; it was corrected
+and the four tests passed. The full historical suite was not run because parts
+require absent runtimes and recreate CAD fixtures excluded from this task.
+Safe evidence and the preflight copy are in
+`records/pilot_20260923/ubuntu_migration_20260923_v1/`.
+
+Continuation scope is DeepSeek/Gemini/Claude, with no GPT expansion.
+[Google's official image-input documentation](https://ai.google.dev/gemini-api/docs/image-understanding)
+establishes a source-backed Gemini channel candidate;
+[Anthropic's vision documentation](https://platform.claude.com/docs/en/build-with-claude/vision)
+establishes a Claude candidate. This is documentation evidence, not successful
+account admission or confirmed backend identity. No model route was selected
+or queried. The current process has no standard API-key variable for these
+providers or the old Smart AGI gateway; only presence booleans were checked.
+
+Real API work is blocked pending current deadline/timezone/shared-budget
+confirmation and a usable, securely configured channel. CAD and the pinned
+client/cache also need an existing verified runtime or a scoped restoration.
+The old deadline and budget are not authorization for new requests.
+Actual model calls = 0; real generation = NOT_STARTED; independent robot
+evaluation = NOT_RUN. No design or score is claimed by this migration batch.
