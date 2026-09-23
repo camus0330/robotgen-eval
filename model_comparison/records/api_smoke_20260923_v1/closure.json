@@ -1,0 +1,79 @@
+{
+  "recorded_at": "2026-09-23T14:20:40.941531+00:00",
+  "execution_code_sha": "481864e309175243989a113bb7ed41301c84bd6c",
+  "status": "PARTIAL_TEXT_CHANNEL_CONFIRMED_VISION_OUTCOME_UNKNOWN",
+  "client_chat_completions_calls": 2,
+  "http_send_attempts": 2,
+  "client_retries": 0,
+  "new_model_requests_during_closure": 0,
+  "remaining_authorized_requests": 0,
+  "text": {
+    "model": "glm-5.3",
+    "http_status": 200,
+    "reply": "OK",
+    "elapsed_s": 7.694,
+    "returned_model": "glm-5.3",
+    "finish_reason": "stop",
+    "usage": {
+      "prompt_tokens": 1286,
+      "completion_tokens": 3,
+      "total_tokens": 1289
+    },
+    "request_id": "8d181642-37c9-4401-b716-45b6b73c85d8",
+    "result": "VALID_COMPLETION_EXACT_OK"
+  },
+  "image": {
+    "model": "deepseek-v4-pro",
+    "elapsed_s": 11.379,
+    "http_status": null,
+    "reply": null,
+    "returned_model": null,
+    "finish_reason": null,
+    "usage": null,
+    "request_id": null,
+    "result": "INTERRUPTED_OUTCOME_UNKNOWN",
+    "failure_layer": "USER_TERMINAL_KEYBOARD_INTERRUPT_WHILE_WAITING_FOR_RESPONSE_HEADERS",
+    "failure_source": "USER_PASTED_TERMINAL_TRACEBACK",
+    "image_send_attempted": true,
+    "image_server_accepted": null,
+    "answer_matches_image": null,
+    "visual_review": "NOT_POSSIBLE_NO_REPLY",
+    "server_execution": null,
+    "billing": null,
+    "reference_png_sha256": "518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b"
+  },
+  "evidence_classification": {
+    "requests": "LOCAL_SDK_JOURNALS_FROM_USER_TERMINAL_EXECUTION",
+    "interrupt": "USER_PASTED_TERMINAL_OUTPUT",
+    "closure_checks": "AUTHOR_LOCAL_EVIDENCE_COMPARISON_ONLY",
+    "independent_reexecution": false,
+    "web_reviewer_review": false
+  },
+  "pasted_output_matches_local_json": true,
+  "pasted_output_sha256": "9f1fcc01a8665d329829c32e5adb28ac04ccfd7a8432a9d87563f24992ed2507",
+  "files": [
+    {
+      "path": "live/1_glm-5.3.json",
+      "sha256": "c701315d2db3c0efe54781c5fb75faf5166dea1be9806549fedbe358e0fc21ad"
+    },
+    {
+      "path": "live/2_deepseek-v4-pro.json",
+      "sha256": "91bce108c253a489ee64d210ef9062d8bab12179faa9e880f43bc08e4f257977"
+    },
+    {
+      "path": "live/environment.json",
+      "sha256": "660605f1433fc14c5a2ea1cfe01a1ec223d12e17a14712a39a8e2949d547f015"
+    },
+    {
+      "path": "live/startup_recovery.json",
+      "sha256": "22013bd983a8e08036fa921e16ea22d987fd29311e20da1eaf6f781557ba8b57"
+    }
+  ],
+  "raw_records_preserved": true,
+  "harness_generation_admission": "UNCHANGED_CLOSED",
+  "robot_generation": "NOT_STARTED",
+  "independent_robot_evaluation": "NOT_RUN",
+  "upstream_identity_verified": false,
+  "stability_verified": false,
+  "no_replay": "Both allowed request slots consumed; interruption does not authorize replay."
+}

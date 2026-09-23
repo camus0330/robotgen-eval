@@ -1,5 +1,12 @@
 # SDK-only channel smoke test
 
+**Closed after real terminal execution: two request slots consumed, no replay.**
+GLM returned HTTP 200 / `OK`; DeepSeek's image request was interrupted with
+Ctrl+C before response headers were received. Its HTTP status, response, usage,
+server execution and billing remain unknown. Vision is **not verified**. See
+`closure.json` and the original `live/` journals. The preparation/recovery
+instructions below are historical; do not use them to repeat these requests.
+
 Status at handoff: **NOT_STARTED_MISSING_KEY; actual model requests = 0**.
 This is not a successful channel admission, a robot attempt, a visual capability
 result, or an independent review. See `preparation.json` for local setup evidence.
@@ -96,3 +103,31 @@ Seven synthetic tests passed after this repair. They include environment-only
 recovery, original-record preservation and refusal to recover after any request
 journal exists. `startup_repair.json` records the author-local checks and original
 environment hash. No model request or vision assessment occurred during repair.
+
+## Actual channel outcome
+
+| Requested model | HTTP | Elapsed seconds | Visible reply | Returned model | Finish reason | Usage input/output/total |
+|---|---|---:|---|---|---|---|
+| glm-5.3 | 200 | 7.694 | OK | glm-5.3 | stop | 1286 / 3 / 1289 |
+| deepseek-v4-pro | null | 11.379 | null | null | null | null |
+
+The GLM request ID is `8d181642-37c9-4401-b716-45b6b73c85d8`;
+DeepSeek's request ID is null. Both journals identify the required exact endpoint,
+one HTTP send attempt and zero client retries. The user-pasted terminal traceback
+ends in KeyboardInterrupt while receiving response headers; it is evidence of
+interruption, not a provider rejection, SDK timeout or confirmed zero billing.
+
+The image request contains the original PNG data URI. The recorded PNG SHA-256
+`518def2bf44234a9476f505319ae167a3d831d1178a2f4c70b1c3c23f3f1761b`
+matches the current public reference file. Sending was attempted; server
+acceptance is unknown. No reply exists to compare against the image, so visual
+correctness remains null. No backend identity or stability is established.
+
+Author-local closure checks compared both pasted JSON records with the local
+journals and verified the PNG hash. No model request was made to fill log gaps.
+Original `STARTED_OUTCOME_UNKNOWN` and null error fields were not rewritten;
+`closure.json` separately annotates the user-reported interruption and binds
+the original journal hashes. The process exit code was not captured and is not
+inferred from the traceback. There was no independent model reexecution, web
+reviewer validation, robot generation or independent robot engineering evaluation.
+The Harness generation gate remains closed.

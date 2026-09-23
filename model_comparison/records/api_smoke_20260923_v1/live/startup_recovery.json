@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-09-23T14:18:19.680142+00:00",
+  "sdk": "openai",
+  "sdk_version": "3.19.0",
+  "python": "3.12.3",
+  "max_chat_requests": 2,
+  "client_max_retries": 0,
+  "timeout_s": 120.0,
+  "proxy_policy": "inherited unchanged; no headers or proxy values logged",
+  "scope": "CHANNEL_SMOKE_ONLY_NOT_HARNESS_ADMISSION_OR_ROBOT_GENERATION"
+}

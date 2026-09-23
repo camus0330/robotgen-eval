@@ -1,0 +1,31 @@
+{
+  "request_model": "glm-5.3",
+  "expected_target": "https://big-model.smart-agi.com/v1/chat/completions",
+  "actual_target": "https://big-model.smart-agi.com/v1/chat/completions",
+  "started_at": "2026-09-23T14:18:19.689528+00:00",
+  "elapsed_s": 7.694,
+  "http_status": 200,
+  "reply": "OK",
+  "error": null,
+  "returned_model": "glm-5.3",
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 1286,
+    "completion_tokens": 3,
+    "total_tokens": 1289
+  },
+  "request_id": "8d181642-37c9-4401-b716-45b6b73c85d8",
+  "client_max_retries": 0,
+  "outcome": "VALID_COMPLETION",
+  "valid_completion": true,
+  "image_sha256": null,
+  "image_in_request": false,
+  "image_send_attempted": false,
+  "image_server_accepted": null,
+  "answer_matches_image": null,
+  "visual_review": "NOT_PERFORMED",
+  "client_request_started": true,
+  "http_send_attempts": 1,
+  "exact_OK": true,
+  "ended_at": "2026-09-23T14:18:27.384587+00:00"
+}
